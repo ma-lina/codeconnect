@@ -1,7 +1,7 @@
 .env
 /.pnp
 .pnp.js
-
+package-lock.json
 
 # dependencies
 node_modules/
@@ -10,7 +10,7 @@ node_modules/
 /coverage
 
 # production
-/build
+server/build
 
 # misc
 .DS_Store
