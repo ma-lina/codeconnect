@@ -19,29 +19,20 @@ const userSchema : Schema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    location: {
-        type: String,
-    },
-    tech_offer:{
-        type:Array,
-        }, 
-    y_xp:{
-        type:Number,
-    }, 
-    avail_frequency:{
+    user_name:{
         type:String,
     }, 
-    avail_timeslots:{
+    is_admin:{
+        type:Boolean,
+    }, 
+    stared_mentorship:{
         type:Array,
     }, 
-    mentee_level:{
+    stared_coworking:{
         type:Array,
     }, 
-    start_date:{
-        type:String,
-    }, 
-    description:{
-        type:String,
+    stared_shadowing:{
+        type:Array,
     }, 
     image:{
         type:String,
