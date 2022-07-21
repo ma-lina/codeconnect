@@ -1,4 +1,4 @@
-interface Signup {
+interface SignUp {
   firstName: string;
   lastName: string;
   username: string;

@@ -3,10 +3,10 @@ import { useEffect, useState, createContext } from "react";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [newUser, setNewUser] = useState({});
+  const [selectedFile, setSelectedFile] = useState<null | string>(null);
+  const [newUser, setNewUser] = useState<SignUp>({});
 
-  const submitImage = async (e) => {
+  const submitImage = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", selectedFile);
@@ -22,7 +22,7 @@ export const AuthContextProvider = (props) => {
         requestOptions
       );
       const result = await response.json();
-      setNewUser({ ...newUser, avatarPicture: result.imageUrL });
+      setNewUser({ ...newUser, image: result.imageUrL });
       console.log("image uploaded", newUser);
     } catch (error) {
       console.log('"error submiting picture"', error);

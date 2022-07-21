@@ -9,7 +9,7 @@ const Signup: React.FC = () => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
 
-  const attachFileHandler = (e) => {
+  const attachFileHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(e.target.files[0]);
   };
 
