@@ -78,9 +78,14 @@ const register = async (req: Request, res: Response) => {
 };
 
 const login = async (req: Request, res: Response) => {
-  try {
+    try {
+    const existingUser = await userModel.findOne({ email: req.body.email });
 
-
+    if (!existingUser) {
+      res.status(400).json({
+        message: "User with this email does not exist, register first.",
+      });
+    } 
   } catch (error) {
     res.status(500).json({
       message: "Server error, we couldn't login the user. Please try again.",
