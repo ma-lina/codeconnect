@@ -3,6 +3,18 @@ import { v2 as cloudinary } from "cloudinary";
 import { userModel } from '../models/userModel';
 import { encryptPassword } from '../utils/bcrypt';
 
+//TODO define the types for the function below and for the user
+    const selectDataFields = (...keys) => {
+        const getNewUserObject = (userObject) => {
+            const newUserObject = {};
+            keys.forEach(key => {
+                newUserObject[key] = userObject[key];
+            });
+            return newUserObject;
+        }
+        return getNewUserObject;
+    };
+
 const register = async (req: Request, res: Response) => {
   try {
 //first check if the user already exists in mongoDB: code 400 Bad Request or proceed to create a new user
