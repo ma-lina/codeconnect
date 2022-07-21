@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { ApolloServer, gql } from "apollo-server-express";
 import { schema } from "./graphql/schema";
 import { cloudinaryConfig } from "./config/cloudinaryConfig";
+import usersRoute from "./routes/usersRoute"
 
 const app = express();
 dotenv.config();
@@ -20,6 +21,7 @@ const startServer = () => {
 
 const loadRoutes = () => {
   //routes
+  app.use('/users', usersRoute);
 };
 
 const middlewareSetup = () => {
