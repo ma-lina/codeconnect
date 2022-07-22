@@ -1,4 +1,5 @@
 //TODO do we need _id, timestamps passed in user data to FE?
+//TODO rewrite this and simplify, only need 1 or 2? 
 interface UserLoginData {
     password: string;
     email: string;
