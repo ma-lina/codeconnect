@@ -5,6 +5,8 @@ interface ResponseJson {
     image?: string;
     error?: any;
 }
+
+//TODO consider adding _id, timestamps to user data
 interface UserRegistrationData {
     first_name: string,
     last_name: string,
