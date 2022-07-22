@@ -2,11 +2,11 @@ import {Schema} from 'mongoose';
 import * as mongoose from 'mongoose';
 
 const userSchema : Schema = new mongoose.Schema({
-    first_name:{ 
+    firstName:{ 
       type:String,
       required: true
     },
-    last_name:{ 
+    lastName:{ 
       type:String,
       required: true
      },
@@ -19,23 +19,23 @@ const userSchema : Schema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    is_loggedin: {
+    isLoggedin: {
         type: Boolean, 
         required: true,
     },
-    user_name:{
+    username:{
         type:String,
     }, 
-    is_admin:{
+    isAdmin:{
         type:Boolean,
     }, 
-    starred_mentorship:{
+    starredMentorship:{
         type:Array,
     }, 
-    starred_coworking:{
+    starredCoworking:{
         type:Array,
     }, 
-    starred_shadowing:{
+    starredShadowing:{
         type:Array,
     }, 
     image:{
