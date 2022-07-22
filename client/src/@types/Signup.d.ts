@@ -4,6 +4,11 @@ interface SignUp {
   username: string;
   password: string;
   email: string;
-  image: string;
+  image?: string;
   isAdmin: boolean;
 }
+
+type State = {
+  userInput: string;
+  files: FileList | null;
+};

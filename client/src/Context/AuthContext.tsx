@@ -29,6 +29,29 @@ export const AuthContextProvider = (props) => {
     }
   };
 
+  const signUp = async (): Promise<void> => {
+    let urlencoded = new URLSearchParams();
+    urlencoded.append("firstName", newUser.firstName);
+    urlencoded.append("lastName", newUser.lastName);
+    urlencoded.append("username", newUser.username);
+    urlencoded.append("email", newUser.email);
+    urlencoded.append("password", newUser.password);
+    urlencoded.append("image", newUser.image ? newUser.image : "");
+
+    var requestOptions = {
+      method: "POST",
+      body: urlencoded,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/", requestOptions);
+      const result = await response.json();
+      console.log("results", result);
+    } catch (error) {
+      console.log("error fetching", error);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -37,6 +60,7 @@ export const AuthContextProvider = (props) => {
         newUser,
         setNewUser,
         submitImage,
+        signUp,
       }}
     >
       {props.children}

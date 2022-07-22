@@ -1,12 +1,13 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 
 const Signup: React.FC = () => {
   const { newUser, setNewUser, selectedFile, setSelectedFile, submitImage } =
     useContext(AuthContext);
 
   const handleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewUser({ ...newUser, [e.target.name]: e.target.value });
+    setNewUser({ ...newUser, [e.target.name]: { userInput: e.target.value } });
   };
 
   const attachFileHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,11 +47,11 @@ const Signup: React.FC = () => {
         <TextField
           error={}
           variant="outlined"
-          label="username"
+          label="User Name"
           id="username"
-          name="userName"
+          name="username"
           type="text"
-          value={newUser.userName ? newUser.userName : ""}
+          value={newUser.username ? newUser.username : ""}
           helperText={}
           onChange={}
           required
@@ -82,6 +83,7 @@ const Signup: React.FC = () => {
           required
           fullWidth
         />
+        <Button>Sign up</Button>
       </div>
     </div>
   );
