@@ -71,7 +71,29 @@ namespace Mentoring {
     vue = "Vue.js",
   }
 
-  enum TimeSlots {}
+  enum TimeSlots {
+    "Monday morning",
+    "Monday afternoon",
+    "Monday evening",
+    "Tuesday morning",
+    "Tuesday afternoon",
+    "Tuesday evening",
+    "Wednesday morning",
+    "Wednesday afternoon",
+    "Wednesday evening",
+    "Thursday morning",
+    "Thursday afternoon",
+    "Thursday evening",
+    "Friday morning",
+    "Friday afternoon",
+    "Friday evening",
+    "Saturday morning",
+    "Saturday afternoon",
+    "Saturday evening",
+    "Sunday morning",
+    "Sunday afternoon",
+    "Sunday evening",
+  }
   interface Offer {
     field: (keyof typeof Field)[];
     techKnowHow: (keyof typeof TechKnowHow)[];
