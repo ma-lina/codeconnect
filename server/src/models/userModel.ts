@@ -19,6 +19,10 @@ const userSchema : Schema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    is_loggedin: {
+        type: Boolean, 
+        required: true,
+    },
     user_name:{
         type:String,
     }, 
