@@ -1,11 +1,3 @@
-interface ResponseJson {
-    message: string;
-    user?: UserRegistrationData;
-    token?: string;
-    image?: string;
-    error?: any;
-}
-
 //TODO do we need _id, timestamps passed in user data to FE?
 interface UserLoginData {
     password: string;
