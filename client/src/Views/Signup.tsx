@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
+import { AuthContext } from "../Context/AuthContext";
 
 const Signup: React.FC = () => {
   const { newUser, setNewUser, selectedFile, setSelectedFile, submitImage } =
@@ -19,70 +20,84 @@ const Signup: React.FC = () => {
       <div>Signup</div>
       <div>
         <TextField
-          error={}
+          //  error={}
           variant="outlined"
           label="First Name"
           id="firstname"
           name="firstName"
           type="text"
           value={newUser.firstName ? newUser.firstName : ""}
-          helperText={}
-          onChange={}
+          //   helperText={}
+          onChange={handleChangeHandler}
           required
           fullWidth
         />
         <TextField
-          error={}
+          //  error={}
           variant="outlined"
           label="Last Name"
           id="lastname"
           name="lastName"
           type="text"
           value={newUser.lastName ? newUser.lastName : ""}
-          helperText={}
-          onChange={}
+          // helperText={}
+          onChange={handleChangeHandler}
           required
           fullWidth
         />
         <TextField
-          error={}
+          //   error={}
           variant="outlined"
           label="User Name"
           id="username"
           name="username"
           type="text"
           value={newUser.username ? newUser.username : ""}
-          helperText={}
-          onChange={}
+          //    helperText={}
+          onChange={handleChangeHandler}
           required
           fullWidth
         />
         <TextField
-          error={}
+          // error={}
           label="Email Address"
           variant="outlined"
           name="email"
           id="email"
           type="email"
           value={newUser.email ? newUser.email : ""}
-          helperText={helperEmail}
-          onChange={handleChangeEmail}
+          // helperText={}
+          onChange={handleChangeHandler}
           required
           fullWidth
         />
         <TextField
-          error={}
+          // error={}
           variant="outlined"
           name="password"
           id="password"
           label="Password"
           type="password"
           value={newUser.password ? newUser.password : ""}
-          helperText={}
-          onChange={}
+          //  helperText={}
+          onChange={handleChangeHandler}
           required
           fullWidth
         />
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={attachFileHandler}
+          >
+            upload file
+          </Button>
+          <input
+            ref={attachFileHandler}
+            type="file"
+            style={{ display: "none" }}
+          />
+        </div>
         <Button>Sign up</Button>
       </div>
     </div>

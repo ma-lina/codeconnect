@@ -1,8 +1,15 @@
 import { useEffect, useState, createContext } from "react";
 
-export const AuthContext = createContext();
+interface AuthContextInterface {
+/*   setNewUser: 
+  selectedFile: 
+  setSelectedFile:  */
+  submitImage(): void;
+}
 
-export const AuthContextProvider = (props) => {
+export const AuthContext = createContext({} as AuthContextInterface);
+
+export const AuthContextProvider = (props: { children: React.ReactNode; })) => {
   const [selectedFile, setSelectedFile] = useState<null | string>(null);
   const [newUser, setNewUser] = useState<SignUp>({});
 
