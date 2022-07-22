@@ -1,24 +1,26 @@
 import { Request, Response } from 'express';
 import { v2 as cloudinary } from "cloudinary";
 import { userModel } from '../models/userModel';
-import { encryptPassword } from '../utils/bcrypt';
+import { encryptPassword, verifyPassword } from '../utils/bcrypt';
 
 //TODO define the types for the function below and for the user
-    const selectDataFields = (...keys) => {
-        const getNewUserObject = (userObject) => {
-            const newUserObject = {};
-            keys.forEach(key => {
-                newUserObject[key] = userObject[key];
-            });
-            return newUserObject;
-        }
-        return getNewUserObject;
-    };
 
-const register = async (req: Request, res: Response) => {
+//function allowing to create a new object with chosen keys from another object
+//TODO specify the userObject as a typescript interface
+const getNewUserObject = (userObject: object, keys: Array<string>) => {
+    const newUserObject: object = {};
+    keys.forEach(key => {
+        newUserObject[key] = userObject[key];
+        });  
+    return newUserObject;
+};
+
+//TODO define the request
+
+const register = async (req: Request, res: Response<ResponseJson>) => {
   try {
-//first check if the user already exists in mongoDB: code 400 Bad Request or proceed to create a new user
-      const checkIfUserExists = await userModel.findOne({
+      //first check if the user already exists in mongoDB: code 400 Bad Request or proceed to create a new user
+      const checkIfUserExists : UserData | null = await userModel.findOne({
       email: req.body.email,
     });
 
@@ -28,35 +30,27 @@ const register = async (req: Request, res: Response) => {
           "User with this email address already exists.",
       });
     } else {
-
-      // TODO: validate the password using express validator middleware
-
+      //user with this email does not exist yet, creating a new user object with a hashed password
+      const newUserData = getNewUserObject(req.body, ["firstName", "lastName", "username", "email", "image", "isLoggedin"]);
       const hashedPassword = await encryptPassword(req.body.password);
-
-      const newUser = new userModel({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        user_name: req.body.user_name,
-        password: hashedPassword,
-        email: req.body.email,
-        image: req.body.image,
-      });
+      newUserData["password"] = hashedPassword; 
+      
+      //creating a mongoose model, saving it in mongoDB with a mongoose save() method, creating the user profile object
+      const newUser = new userModel(newUserData); 
 
       try {
         const savedUser = await newUser.save();
+        const userProfile = getNewUserObject(savedUser, ["firstName", "lastName", "isLoggedin", "username", "email", "image", "_id"]);
+
+        //generating a token for the user, passing the user profile and token to the response
+        // const token: string = issueToken(userProfile._id)
+
         res.status(201).json({
           message:
-            "New user account has been created. Please log in.",
-//TODO need to decide if the user logs in or is already logged in after registration. No need to return user object if login required. 
-            // user: {
-          //   first_name: savedUser.first_name,
-          //   last_name: savedUser.last_name,
-          //   user_name: savedUser.user_name,
-          //   password: hashedPassword,
-          //   email: savedUser.email,
-          //   image: savedUser.image,
-          // },
-        });
+            "New user account has been created. Welcome to codeconnect",
+          user: userProfile
+          // token: token
+          });
       } catch (error) {
         res
           .status(400)
@@ -68,7 +62,6 @@ const register = async (req: Request, res: Response) => {
         console.log("error", error, res);
       }
     }
-
   } catch (error) {
     res.status(500).json({
       message: "Server error, we couldn't register the user. Please try again.",
@@ -77,7 +70,7 @@ const register = async (req: Request, res: Response) => {
   }
 };
 
-const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response<ResponseJson>) => {
     try {
     const existingUser = await userModel.findOne({ email: req.body.email });
 
@@ -85,7 +78,40 @@ const login = async (req: Request, res: Response) => {
       res.status(400).json({
         message: "User with this email does not exist, register first.",
       });
-    } 
+//     } else {
+//       try {
+// //
+//         const isAuthenticated = await verifyPassword(
+//           req.body.password,
+//           existingUser.password
+//         );
+//         if (!isAuthenticated) {
+//           res.status(400).json({
+//             passVerified: isAuthenticated,
+//             message: "Wrong password, please try again.",
+//           });
+//         } else {
+//           const token = issueToken(existingUser._id);
+//           res.status(200).json({
+//             message: "You have been logged in.",
+//             user: {
+
+//             },
+//             token: token,
+//           });
+//         }
+//       } catch (error) {
+//         res.status(400).json({
+//           message:
+//             "Server error, password verification failed. Please try again.",
+//           error: error,
+//         });
+//         console.log(
+//           "Cannot verify password, database or bcrypt error: ",
+//           error
+//         );
+//       }
+    }
   } catch (error) {
     res.status(500).json({
       message: "Server error, we couldn't login the user. Please try again.",
@@ -95,7 +121,7 @@ const login = async (req: Request, res: Response) => {
 };
 
 // photo upload
-const uploadPhoto = async (req: Request, res: Response) => {
+const uploadPhoto = async (req: Request, res: Response<ResponseJson>) => {
   try {
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "codeconnect_user_photos",
@@ -106,7 +132,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
     .status(200)
     .json({
         message: "The photo you chose was successfully uploaded.",
-        imageURL: uploadResult.url,
+        image: uploadResult.url,
     })
 
   } catch (error) {
