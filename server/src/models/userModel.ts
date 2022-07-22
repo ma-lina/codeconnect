@@ -25,13 +25,13 @@ const userSchema : Schema = new mongoose.Schema({
     is_admin:{
         type:Boolean,
     }, 
-    stared_mentorship:{
+    starred_mentorship:{
         type:Array,
     }, 
-    stared_coworking:{
+    starred_coworking:{
         type:Array,
     }, 
-    stared_shadowing:{
+    starred_shadowing:{
         type:Array,
     }, 
     image:{
