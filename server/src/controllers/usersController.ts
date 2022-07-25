@@ -2,27 +2,28 @@ import { Request, Response } from 'express';
 import { v2 as cloudinary } from "cloudinary";
 import { userModel } from '../models/userModel';
 import { encryptPassword, verifyPassword } from '../utils/bcrypt';
-import { issueToken } from '../utils/jwt';
+import { issueToken } from "../utils/jwt"
+import { UserProfileEnum, UserRegistrationEnum } from '../utils/userEnums';
 
-//TODO define the types for the function below and for the user
-//TODO define the userProfile array
 
 //function allowing to create a new object with chosen keys from another object
-//TODO specify the userObject as a typescript interface
 const getNewUserObject = (userObject: object, keys: Array<string>) => {
-    const newUserObject: object = {};
-    keys.forEach(key => {
-        newUserObject[key] = userObject[key];
-        });  
+  const newUserObject: object = {};
+  keys.forEach(key => {
+    if (userObject[key]) {
+      newUserObject[key] = userObject[key];
+    }
+  }) 
     return newUserObject;
 };
 
 //TODO define the request
 
 const register = async (req: Request, res: Response<ResponseJson>) => {
+        console.log("enum keys", Object.values(UserProfileEnum) )
   try {
       //first check if the user already exists in mongoDB: code 400 Bad Request or proceed to create a new user
-      const checkIfUserExists : UserData | null = await userModel.findOne({
+      const checkIfUserExists : UserN.UserData | null = await userModel.findOne({
       email: req.body.email,
     });
 
@@ -33,17 +34,19 @@ const register = async (req: Request, res: Response<ResponseJson>) => {
       });
     } else {
       //user with this email does not exist yet, creating a new user object with a hashed password
-      const newUserData = getNewUserObject(req.body, ["firstName", "lastName", "username", "email", "image", "isLoggedin"]);
+      const newUserData = getNewUserObject(req.body, Object.values(UserRegistrationEnum));
+      console.log("enum keys", Object.values(UserRegistrationEnum) )
       const hashedPassword = await encryptPassword(req.body.password);
       newUserData["password"] = hashedPassword; 
       
-      //creating a mongoose model, saving it in mongoDB with a mongoose save() method, creating the user profile object
+      //creating a mongoose model, saving it in mongoDB with a mongoose save() method
       const newUser = new userModel(newUserData); 
 
       try {
         const savedUser = await newUser.save();
-        //the _id sent to the frontend is an object; change if FE requires a string
-        const userProfile = getNewUserObject(savedUser, ["firstName", "lastName", "isLoggedin", "username", "email", "image", "_id"]);
+        // creating the user profile object, the keys are defined in the UserProfile enum
+        const userProfile = getNewUserObject(savedUser, Object.values(UserProfileEnum));
+        //the _id sent to the frontend is an object; change if FE requires a string; here changing it to a string for jwt
         const userID: string = savedUser._id.toString();
 
         //generating a token for the user, passing the user profile and token to the response
@@ -53,7 +56,13 @@ const register = async (req: Request, res: Response<ResponseJson>) => {
           message: "New user account has been created. Welcome to codeconnect",
           user: userProfile, 
           token: token,
-          });
+        })
+          
+        //cookie with token for secure storing -> not functional
+          // .cookie('access_token', token, {
+          // httpOnly: true,
+          // maxAge: 172800,
+          // });
       } catch (error) {
         res
           .status(400)
@@ -95,7 +104,7 @@ const login = async (req: Request, res: Response<ResponseJson>) => {
         } else {
           //generating user profile object, a token for the user, passing the user profile and token to the response
           //the _id sent to the frontend is an object; change if FE requires a string
-          const userProfile = getNewUserObject(existingUser, ["firstName", "lastName", "isLoggedin", "username", "email", "image", "_id"]);
+          const userProfile = getNewUserObject(existingUser, Object.values(UserProfileEnum));
           const userID: string = existingUser._id.toString();
 
         //generating a token for the user, passing the user profile and token to the response
@@ -105,6 +114,11 @@ const login = async (req: Request, res: Response<ResponseJson>) => {
             user: userProfile,
             isAuthenticated: isAuthenticated,
             token: token,
+          })
+        //cookie with token for secure storing -> not functional
+          .cookie('access_token', token, {
+          httpOnly: true,
+          maxAge: 172800,
           });
         }
       } catch (error) {
@@ -121,6 +135,11 @@ const login = async (req: Request, res: Response<ResponseJson>) => {
       error: error,
     });
   }
+};
+
+const logout = async (req: Request, res: Response<ResponseJson>) => {
+    // isLoggedin: set to false in mongoose
+    // clear the cookie
 };
 
 // photo upload
