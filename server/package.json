@@ -5,7 +5,8 @@
   "main": "./build/server.js",
   "scripts": {
     "start": "concurrently \"tsc\"  \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
-    "dev": "concurrently \"tsc\" \"nodemon ./build/server.js\" \"cd ../client && npm start\""
+    "dev": "concurrently \"tsc\" \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
+    "testdev":"concurrently \"tsc\"  \"nodemon ./build/server.js\""
   },
   "author": "Marta, Angelina",
   "license": "ISC",
