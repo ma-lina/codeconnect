@@ -1,19 +1,60 @@
-import { useEffect, useState, createContext } from "react";
+import { AnySrvRecord } from "dns";
+import {
+  useEffect,
+  useState,
+  createContext,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
-interface AuthContextInterface {
-/*   setNewUser: 
-  selectedFile: 
-  setSelectedFile:  */
-  submitImage(): void;
+interface AuthContextType {
+  newUser: SignUp;
+  selectedFile: Blob | string;
+  submitImage: (e: React.FormEvent<HTMLFormElement>) => void;
+  signUp: () => void;
+  setSelectedFile: (selectedFile: string) => void;
+  setNewUser: (newUser: SignUp) => void;
 }
 
-export const AuthContext = createContext({} as AuthContextInterface);
+// const authContextDefaultValues: AuthContextType = {
+//   newUser: {
+//     firstName: "",
+//     lastName: "",
+//     username: "",
+//     password: "",
+//     email: "",
+//     image: "",
+//     isAdmin: false,
+//   },
+//   selectedFile: "",
+//     submitImage: () => {
+//       console.log("Submit Image Initial state")
+//   },
+//   signUp: () => {},
+//   setSelectedFile: () => {},
+//   setNewUser: () => {},
+// };
 
-export const AuthContextProvider = (props: { children: React.ReactNode; })) => {
-  const [selectedFile, setSelectedFile] = useState<null | string>(null);
-  const [newUser, setNewUser] = useState<SignUp>({});
+interface Props {
+  children: ReactNode;
+}
 
-  const submitImage = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+export const AuthContext = createContext<AuthContextType>(undefined!);
+
+export const AuthContextProvider: React.FC<Props> = ({ children }) => {
+  const [selectedFile, setSelectedFile] = useState<string | Blob>("");
+  const [newUser, setNewUser] = useState<SignUp>({
+    firstName: "",
+    lastName: "",
+    username: "",
+    password: "",
+    email: "",
+    image: "",
+    isAdmin: false,
+  });
+
+  const submitImage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", selectedFile);
@@ -36,26 +77,27 @@ export const AuthContextProvider = (props: { children: React.ReactNode; })) => {
     }
   };
 
-  const signUp = async (): Promise<void> => {
+  const signUp = async () => {
     let urlencoded = new URLSearchParams();
-    urlencoded.append("firstName", newUser.firstName);
-    urlencoded.append("lastName", newUser.lastName);
-    urlencoded.append("username", newUser.username);
-    urlencoded.append("email", newUser.email);
-    urlencoded.append("password", newUser.password);
-    urlencoded.append("image", newUser.image ? newUser.image : "");
+    if (newUser !== null) {
+      urlencoded.append("firstName", newUser.firstName);
+      urlencoded.append("lastName", newUser.lastName);
+      urlencoded.append("username", newUser.username);
+      urlencoded.append("email", newUser.email);
+      urlencoded.append("password", newUser.password);
+      urlencoded.append("image", newUser.image ? newUser.image : "");
+      var requestOptions = {
+        method: "POST",
+        body: urlencoded,
+      };
 
-    var requestOptions = {
-      method: "POST",
-      body: urlencoded,
-    };
-
-    try {
-      const response = await fetch("http://localhost:5000/", requestOptions);
-      const result = await response.json();
-      console.log("results", result);
-    } catch (error) {
-      console.log("error fetching", error);
+      try {
+        const response = await fetch("http://localhost:5000/", requestOptions);
+        const result = await response.json();
+        console.log("results", result);
+      } catch (error) {
+        console.log("error fetching", error);
+      }
     }
   };
 
@@ -66,11 +108,11 @@ export const AuthContextProvider = (props: { children: React.ReactNode; })) => {
         setSelectedFile,
         newUser,
         setNewUser,
-        submitImage,
         signUp,
+        submitImage,
       }}
     >
-      {props.children}
+      {children}
     </AuthContext.Provider>
   );
 };

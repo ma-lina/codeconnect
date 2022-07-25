@@ -3,16 +3,18 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { AuthContext } from "../Context/AuthContext";
 
-const Signup: React.FC = () => {
-  const { newUser, setNewUser, selectedFile, setSelectedFile, submitImage } =
+const Signup = () => {
+  const { newUser, setNewUser, setSelectedFile, submitImage } =
     useContext(AuthContext);
 
-  const handleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewUser({ ...newUser, [e.target.name]: { userInput: e.target.value } });
   };
 
-  const attachFileHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(e.target.files[0]);
+  const attachFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
   };
 
   return (
@@ -93,7 +95,7 @@ const Signup: React.FC = () => {
             upload file
           </Button>
           <input
-            ref={attachFileHandler}
+            onChange={attachFileHandler}
             type="file"
             style={{ display: "none" }}
           />
