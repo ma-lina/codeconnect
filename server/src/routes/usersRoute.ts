@@ -13,6 +13,7 @@ router.get("/test", (req: Request, res: Response) => {
 
 router.post("/register", register);
 router.post("/login", login);
+// router.post("/logout", logout);
 router.post("/profile/photoUpload", multerUploads.single("image"), uploadPhoto);
 
 export default router;
