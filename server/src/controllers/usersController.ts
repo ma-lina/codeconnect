@@ -2,8 +2,10 @@ import { Request, Response } from 'express';
 import { v2 as cloudinary } from "cloudinary";
 import { userModel } from '../models/userModel';
 import { encryptPassword, verifyPassword } from '../utils/bcrypt';
+import { issueToken } from '../utils/jwt';
 
 //TODO define the types for the function below and for the user
+//TODO define the userProfile array
 
 //function allowing to create a new object with chosen keys from another object
 //TODO specify the userObject as a typescript interface
@@ -40,16 +42,17 @@ const register = async (req: Request, res: Response<ResponseJson>) => {
 
       try {
         const savedUser = await newUser.save();
+        //the _id sent to the frontend is an object; change if FE requires a string
         const userProfile = getNewUserObject(savedUser, ["firstName", "lastName", "isLoggedin", "username", "email", "image", "_id"]);
+        const userID: string = savedUser._id.toString();
 
         //generating a token for the user, passing the user profile and token to the response
-        // const token: string = issueToken(userProfile._id)
+        const token: string = issueToken(userID)
 
         res.status(201).json({
-          message:
-            "New user account has been created. Welcome to codeconnect",
-          user: userProfile
-          // token: token
+          message: "New user account has been created. Welcome to codeconnect",
+          user: userProfile, 
+          token: token,
           });
       } catch (error) {
         res
@@ -78,39 +81,39 @@ const login = async (req: Request, res: Response<ResponseJson>) => {
       res.status(400).json({
         message: "User with this email does not exist, register first.",
       });
-//     } else {
-//       try {
-// //
-//         const isAuthenticated = await verifyPassword(
-//           req.body.password,
-//           existingUser.password
-//         );
-//         if (!isAuthenticated) {
-//           res.status(400).json({
-//             passVerified: isAuthenticated,
-//             message: "Wrong password, please try again.",
-//           });
-//         } else {
-//           const token = issueToken(existingUser._id);
-//           res.status(200).json({
-//             message: "You have been logged in.",
-//             user: {
+    } else {
+      try {
+        const isAuthenticated = await verifyPassword(
+          req.body.password,
+          existingUser.password
+        );
+        if (!isAuthenticated) {
+          res.status(400).json({
+            message: "Wrong password, please try again.",
+            isAuthenticated: isAuthenticated,
+          });
+        } else {
+          //generating user profile object, a token for the user, passing the user profile and token to the response
+          //the _id sent to the frontend is an object; change if FE requires a string
+          const userProfile = getNewUserObject(existingUser, ["firstName", "lastName", "isLoggedin", "username", "email", "image", "_id"]);
+          const userID: string = existingUser._id.toString();
 
-//             },
-//             token: token,
-//           });
-//         }
-//       } catch (error) {
-//         res.status(400).json({
-//           message:
-//             "Server error, password verification failed. Please try again.",
-//           error: error,
-//         });
-//         console.log(
-//           "Cannot verify password, database or bcrypt error: ",
-//           error
-//         );
-//       }
+        //generating a token for the user, passing the user profile and token to the response
+          const token: string = issueToken(userID);
+          res.status(200).json({
+            message: "You have been logged in.",
+            user: userProfile,
+            isAuthenticated: isAuthenticated,
+            token: token,
+          });
+        }
+      } catch (error) {
+        res.status(400).json({
+          message: "Server error, password verification failed. Please try again.",
+          error: error,
+        });
+        console.log("Cannot verify password, database or bcrypt error: ", error);
+      }
     }
   } catch (error) {
     res.status(500).json({
