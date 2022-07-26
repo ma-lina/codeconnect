@@ -2,7 +2,7 @@ import bcrypt from "bcrypt"
 
 const encryptPassword = async (password: string) => {
     try {
-        const saltRounds = 10;
+        const saltRounds: number = 10;
         const salt = await bcrypt.genSalt(saltRounds);
         const hashPassword = await bcrypt.hash(password, salt);
 
