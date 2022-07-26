@@ -7,6 +7,8 @@ import { Input, IconButton, Avatar } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import { AuthContext } from "../Context/AuthContext";
 
+//TODO Validation
+
 const Signup = () => {
   const {
     newUser,
@@ -51,7 +53,7 @@ const Signup = () => {
           <div>
             <TextField
               //  error={}
-              variant="outlined"
+              size="small"
               label="First Name"
               id="firstname"
               name="firstName"
@@ -66,7 +68,7 @@ const Signup = () => {
           <div>
             <TextField
               //  error={}
-              variant="outlined"
+              size="small"
               label="Last Name"
               id="lastname"
               name="lastName"
@@ -81,8 +83,8 @@ const Signup = () => {
           <div>
             <TextField
               //   error={}
-              variant="outlined"
-              label="User Name"
+              size="small"
+              label="Username"
               id="username"
               name="username"
               type="text"
@@ -96,10 +98,10 @@ const Signup = () => {
           <div>
             <TextField
               // error={}
-              label="Email Address"
-              variant="outlined"
-              name="email"
+              size="small"
+              label="E-mail"
               id="email"
+              name="email"
               type="email"
               value={newUser.email ? newUser.email : ""}
               // helperText={}
@@ -111,7 +113,7 @@ const Signup = () => {
           <div>
             <TextField
               // error={}
-              variant="outlined"
+              size="small"
               name="password"
               id="password"
               label="Password"
