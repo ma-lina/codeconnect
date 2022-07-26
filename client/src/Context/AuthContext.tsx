@@ -5,8 +5,12 @@ interface AuthContextType {
   selectedFile: Blob | string;
   submitImage: (e: React.MouseEvent<HTMLFormElement>) => void;
   signUp: () => void;
+  logIn: () => void;
   setSelectedFile: (selectedFile: Blob | string) => void;
   setNewUser: (newUser: SignUp) => void;
+  user: Boolean;
+  loginUser: Login;
+  setLoginUser: (loginUser: Login) => void;
 }
 
 // const authContextDefaultValues: AuthContextType = {
@@ -22,6 +26,7 @@ interface Props {
 export const AuthContext = createContext<AuthContextType>(undefined!);
 
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
+  const [user, setUser] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | Blob>("");
   const [newUser, setNewUser] = useState<SignUp>({
     firstName: "",
@@ -31,6 +36,11 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     email: "",
     image: "",
     isAdmin: false,
+  });
+  const [loginUser, setLoginUser] = useState<Login>({
+    email: "",
+    password: "",
+    token: "",
   });
 
   const submitImage = async (e: React.MouseEvent<HTMLFormElement>) => {
@@ -80,6 +90,32 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
+  const logIn = async () => {
+    let urlencoded = new URLSearchParams();
+    urlencoded.append("email", loginUser.email);
+    urlencoded.append("password", loginUser.password);
+    var requestOptions = {
+      method: "POST",
+      body: urlencoded,
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/users/login",
+        requestOptions
+      );
+      const result = await response.json();
+      const { token, user } = result;
+      if (token) {
+        localStorage.setItem("token", token);
+      } else {
+        console.log("error seting token");
+      }
+      console.log("result", result);
+    } catch (error) {
+      console.log("login error", error);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -89,6 +125,10 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         setNewUser,
         signUp,
         submitImage,
+        user,
+        loginUser,
+        setLoginUser,
+        logIn,
       }}
     >
       {children}

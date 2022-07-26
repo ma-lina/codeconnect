@@ -1,5 +1,5 @@
 interface Login {
-  password: string;
   email: string;
+  password: string;
   token: string;
 }

@@ -9,6 +9,5 @@ interface SignUp {
 }
 
 type State = {
-  userInput: string;
   files: FileList | null;
 };

@@ -3,16 +3,22 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
-import { Input, IconButton } from "@mui/material";
+import { Input, IconButton, Avatar } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import { AuthContext } from "../Context/AuthContext";
 
 const Signup = () => {
-  const { newUser, setNewUser, setSelectedFile, submitImage, signUp } =
-    useContext(AuthContext);
+  const {
+    newUser,
+    setNewUser,
+    selectedFile,
+    setSelectedFile,
+    submitImage,
+    signUp,
+  } = useContext(AuthContext);
 
   const handleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewUser({ ...newUser, [e.target.name]: { userInput: e.target.value } });
+    setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
 
   const attachFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,10 +33,11 @@ const Signup = () => {
       setSelectedFile(blob);
     }
   };
-
+  console.log("newUser", newUser);
   return (
     <div>
       <div>Signup</div>
+
       <div>
         <Box
           component="form"
@@ -118,6 +125,10 @@ const Signup = () => {
           </div>
           <div>
             <FormControl>
+              <Avatar
+                src={newUser?.image ? newUser.image : ""}
+                sx={{ width: 56, height: 56, mr: "10px" }}
+              />
               <label htmlFor="icon-button-file">
                 <Input
                   id="icon-button-file"
@@ -125,7 +136,7 @@ const Signup = () => {
                   onChange={() => attachFileHandler}
                   style={{ display: "none" }}
                 />
-                Choose Image
+                {/*     "Choose Image" */}
                 <IconButton
                   color="primary"
                   aria-label="upload picture"
@@ -145,23 +156,7 @@ const Signup = () => {
               </Button>
             </FormControl>
           </div>
-          {/*  <Button variant="contained" color="primary">
-              choose image
-              <input
-                accept=".jpg"
-                type="file"
-                style={{ display: "none" }}
-                onChange={() => attachFileHandler}
-              />
-            </Button>
 
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => submitImage}
-            >
-              upload image
-            </Button>*/}
           <Button variant="contained" color="primary" onClick={signUp}>
             Sign up
           </Button>
