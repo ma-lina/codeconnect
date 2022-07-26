@@ -2,7 +2,6 @@
 
 {
   "compilerOptions": {
-    "typeRoots": ["./src/@types"],
     "module": "commonjs",
     "target": "ESnext",
     "moduleResolution": "node",
