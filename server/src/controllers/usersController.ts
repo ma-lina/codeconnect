@@ -6,8 +6,12 @@ import { issueAccessToken,issueRefreshToken } from "../utils/jwt"
 import { UserProfileEnum, UserRegistrationEnum } from '../utils/userEnums';
 
 //function allowing to create a new object with chosen keys from another object
-const getNewUserObject = (userObject: object, keys: Array<string>): UserN.UserRegistrationData | UserN.UserProfileData => {
-  let newUserObject: UserN.UserRegistrationData | UserN.UserProfileData;
+// const getNewUserObject = (userObject: object, keys: Array<string>): UserN.UserRegistrationData | UserN.UserProfileData => {
+  const getNewUserObject = (userObject: object, keys: Array<string>) => {
+
+    // let newUserObject: UserN.UserRegistrationData | UserN.UserProfileData;
+    let newUserObject = {};
+
   keys.forEach(key => {
     if (userObject[key]) {
       newUserObject[key] = userObject[key];
@@ -19,10 +23,10 @@ const getNewUserObject = (userObject: object, keys: Array<string>): UserN.UserRe
 //TODO define the request
 
 const register = async (req: Request, res: Response<ResponseJson>) => {
-        console.log("enum keys", Object.values(UserProfileEnum) )
   try {
       //first check if the user already exists in mongoDB: code 400 Bad Request or proceed to create a new user
-      const checkIfUserExists : UserN.UserData | null = await userModel.findOne({
+    const checkIfUserExists: UserN.UserData | null = await userModel.findOne({
+
       email: req.body.email,
     });
 
@@ -34,7 +38,6 @@ const register = async (req: Request, res: Response<ResponseJson>) => {
     } else {
       //user with this email does not exist yet, creating a new user object with a hashed password
       const newUserData = getNewUserObject(req.body, Object.values(UserRegistrationEnum));
-      // console.log("enum keys", Object.values(UserRegistrationEnum) )
       const hashedPassword = await encryptPassword(req.body.password);
       newUserData["password"] = hashedPassword; 
       
@@ -112,8 +115,10 @@ const login = async (req: Request, res: Response<ResponseJson>) => {
 
             //generating refresh / access tokens for the user, passing the user profile and tokens to the response (refresh in a cookie)
             const userID: string = loggedinUser._id.toString();
+
             const accessToken: string = issueAccessToken(userID)
             const refreshToken: string = issueRefreshToken(userID)
+
             //cookie with a refresh token
             res.cookie('refreshToken', refreshToken, {
               httpOnly: true,
@@ -197,7 +202,7 @@ const updateProfile = async (req, res: Response<ResponseJson>) => {
     }
   } catch (error) {
       res.status(500).json({
-      message: "Server error, we couldn't logout the user. Please try again.",
+      message: "Server error, we couldn't update the profile. Please try again.",
       error: error,
     });
   }
