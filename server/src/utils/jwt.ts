@@ -14,7 +14,7 @@ const issueToken = (userId: string) => {
 
   const jwt = jsonwebtoken.sign(
     payload,
-    process.env.SECRET,
+    process.env.TOKEN_SECRET,
     signOptions
   );
   return jwt;
