@@ -1,5 +1,7 @@
 //TODO do we need _id, timestamps passed in user data to FE?
 //TODO rewrite this and simplify, only need 1 or 2? 
+//TODO import { Document, Model } from "mongoose" -> extend the mongoose types with interfaces matching the user object
+
 declare namespace UserN {
     interface UserLoginData {
         password: string;
