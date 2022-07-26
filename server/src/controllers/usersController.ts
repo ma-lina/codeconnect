@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { v2 as cloudinary } from "cloudinary";
 import { userModel } from '../models/userModel';
 import { encryptPassword, verifyPassword } from '../utils/bcrypt';
-import { issueToken } from "../utils/jwt"
+import { issueAccessToken,issueRefreshToken } from "../utils/jwt"
 import { UserProfileEnum, UserRegistrationEnum } from '../utils/userEnums';
 
 
@@ -50,19 +50,18 @@ const register = async (req: Request, res: Response<ResponseJson>) => {
         const userID: string = savedUser._id.toString();
 
         //generating a token for the user, passing the user profile and token to the response
-        const token: string = issueToken(userID)
-
+        const accessToken: string = issueAccessToken(userID)
+        const refreshToken: string = issueRefreshToken(userID)
+        //cookie with token for secure storing -> not functional
+          res.cookie('access_token', token, {
+          httpOnly: true,
+          maxAge: 172800,
+          });
         res.status(201).json({
           message: "New user account has been created. Welcome to codeconnect",
           user: userProfile, 
           token: token,
         })
-          
-        //cookie with token for secure storing -> not functional
-          // .cookie('access_token', token, {
-          // httpOnly: true,
-          // maxAge: 172800,
-          // });
       } catch (error) {
         res
           .status(400)
@@ -107,19 +106,22 @@ const login = async (req: Request, res: Response<ResponseJson>) => {
           const userProfile = getNewUserObject(existingUser, Object.values(UserProfileEnum));
           const userID: string = existingUser._id.toString();
 
+          //set isLoggedIn to true in the database
+
         //generating a token for the user, passing the user profile and token to the response
           const token: string = issueToken(userID);
+        //cookie with token for secure storing -> not functional
+          res.cookie('access_token', token, {
+          httpOnly: true,
+          maxAge: 172800,
+          });
           res.status(200).json({
             message: "You have been logged in.",
             user: userProfile,
             isAuthenticated: isAuthenticated,
             token: token,
           })
-        //cookie with token for secure storing -> not functional
-          .cookie('access_token', token, {
-          httpOnly: true,
-          maxAge: 172800,
-          });
+
         }
       } catch (error) {
         res.status(400).json({
