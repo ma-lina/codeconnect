@@ -35,7 +35,7 @@ const register = async (req: Request, res: Response<ResponseJson>) => {
     } else {
       //user with this email does not exist yet, creating a new user object with a hashed password
       const newUserData = getNewUserObject(req.body, Object.values(UserRegistrationEnum));
-      console.log("enum keys", Object.values(UserRegistrationEnum) )
+      // console.log("enum keys", Object.values(UserRegistrationEnum) )
       const hashedPassword = await encryptPassword(req.body.password);
       newUserData["password"] = hashedPassword; 
       
@@ -148,9 +148,36 @@ const login = async (req: Request, res: Response<ResponseJson>) => {
   }
 };
 
-const logout = async (req: Request, res: Response<ResponseJson>) => {
-    // isLoggedin: set to false in mongoose
-    // clear the cookie with the refresh token
+//TODO check 403 response for unsuccesful login
+
+const logout = async (req, res: Response<ResponseJson>) => {
+
+//TODO had to remove the req. type, as it was referring to the express request and not to passport. What to do here?
+
+  try {
+    const userToLogout = req.user
+    userToLogout.isLoggedin = false;
+    const loggedoutUser = await userToLogout.save()
+    if (!loggedoutUser) {
+      res.status(500).json({
+        message: "Server error, we couldn't logout the user. Please try again.",
+      })
+    } else {
+      //TODO how to clear the refresh cookie
+      res.clearCookie('refreshToken', {
+        httpOnly: true,
+      })
+      res.status(200).json({
+        message: "You have been logged out."
+      })
+    }
+  } catch (error) {
+      res.status(500).json({
+      message: "Server error, we couldn't logout the user. Please try again.",
+      error: error,
+    });
+  }
+
 };
 
 // photo upload
@@ -176,4 +203,7 @@ const uploadPhoto = async (req: Request, res: Response<ResponseJson>) => {
   }
 };
 
-export { register, login, uploadPhoto }
+
+//TODO write get/update profile -> routes requiring autorisation
+
+export { getNewUserObject, register, login, logout, uploadPhoto }
