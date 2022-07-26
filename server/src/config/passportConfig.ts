@@ -3,6 +3,8 @@ import * as dotenv from "dotenv";
 import { userModel } from '../models/userModel';
 dotenv.config();
 
+//TODO using the access token; what happend when the token expires? 
+
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.ACCESS_TOKEN_SECRET
