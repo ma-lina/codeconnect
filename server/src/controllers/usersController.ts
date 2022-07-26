@@ -46,21 +46,21 @@ const register = async (req: Request, res: Response<ResponseJson>) => {
         const savedUser = await newUser.save();
         // creating the user profile object, the keys are defined in the UserProfile enum
         const userProfile = getNewUserObject(savedUser, Object.values(UserProfileEnum));
-        //the _id sent to the frontend is an object; change if FE requires a string; here changing it to a string for jwt
-        const userID: string = savedUser._id.toString();
+            
+//TODO the _id sent to the frontend is an object; change if FE requires a string
 
-        //generating a token for the user, passing the user profile and token to the response
+        //generating refresh / access tokens for the user, passing the user profile and tokens to the response (refresh in a cookie)
+        const userID: string = savedUser._id.toString();
         const accessToken: string = issueAccessToken(userID)
         const refreshToken: string = issueRefreshToken(userID)
-        //cookie with token for secure storing -> not functional
-          res.cookie('access_token', token, {
+          //cookie with a refresh token
+          res.cookie('refreshToken', refreshToken, {
           httpOnly: true,
-          maxAge: 172800,
           });
         res.status(201).json({
           message: "New user account has been created. Welcome to codeconnect",
           user: userProfile, 
-          token: token,
+          accessToken: accessToken,
         })
       } catch (error) {
         res
@@ -101,27 +101,36 @@ const login = async (req: Request, res: Response<ResponseJson>) => {
             isAuthenticated: isAuthenticated,
           });
         } else {
-          //generating user profile object, a token for the user, passing the user profile and token to the response
-          //the _id sent to the frontend is an object; change if FE requires a string
-          const userProfile = getNewUserObject(existingUser, Object.values(UserProfileEnum));
-          const userID: string = existingUser._id.toString();
+          //updating the isLoggedin value in the database to true
+          existingUser.isLoggedin = true; 
 
-          //set isLoggedIn to true in the database
+          try {        
+            const loggedinUser = await existingUser.save()
+            //generating user profile object, a token for the user, passing the user profile and token to the response
+            const userProfile = getNewUserObject(loggedinUser, Object.values(UserProfileEnum));
+            
+//TODO the _id sent to the frontend is an object; change if FE requires a string
 
-        //generating a token for the user, passing the user profile and token to the response
-          const token: string = issueToken(userID);
-        //cookie with token for secure storing -> not functional
-          res.cookie('access_token', token, {
-          httpOnly: true,
-          maxAge: 172800,
-          });
-          res.status(200).json({
-            message: "You have been logged in.",
-            user: userProfile,
-            isAuthenticated: isAuthenticated,
-            token: token,
-          })
-
+            //generating refresh / access tokens for the user, passing the user profile and tokens to the response (refresh in a cookie)
+            const userID: string = loggedinUser._id.toString();
+            const accessToken: string = issueAccessToken(userID)
+            const refreshToken: string = issueRefreshToken(userID)
+            //cookie with a refresh token
+            res.cookie('refreshToken', refreshToken, {
+              httpOnly: true,
+            });
+            res.status(200).json({
+              message: "You have been logged in.",
+              user: userProfile,
+              isAuthenticated: isAuthenticated,
+              accessToken: accessToken,
+            })
+          } catch (error) {
+              res.status(500).json({
+              message: "Server error, we couldn't login the user: saving the login status in the database failed. Please try again.",
+              error: error,
+                });
+          }
         }
       } catch (error) {
         res.status(400).json({
@@ -141,7 +150,7 @@ const login = async (req: Request, res: Response<ResponseJson>) => {
 
 const logout = async (req: Request, res: Response<ResponseJson>) => {
     // isLoggedin: set to false in mongoose
-    // clear the cookie
+    // clear the cookie with the refresh token
 };
 
 // photo upload
