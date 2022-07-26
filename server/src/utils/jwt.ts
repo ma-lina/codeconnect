@@ -3,21 +3,39 @@ import jsonwebtoken from "jsonwebtoken";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const issueToken = (userId: string) => {
+const issueAccessToken = (userId: string) => {
   const payload = {
     sub: userId,
   };
 
+  //TODO change this to 1 h after solution with refresh token is functional
   const signOptions = {
     expiresIn: "1 day",
   };
 
   const jwt = jsonwebtoken.sign(
     payload,
-    process.env.TOKEN_SECRET,
+    process.env.ACCESS_TOKEN_SECRET,
     signOptions
   );
   return jwt;
 };
 
-export { issueToken };
+const issueRefreshToken = (userId: string) => {
+  const payload = {
+    sub: userId,
+  };
+
+  const signOptions = {
+    expiresIn: "720 h",
+  };
+
+  const jwt = jsonwebtoken.sign(
+    payload,
+    process.env.REFRESH_TOKEN_SECRET,
+    signOptions
+  );
+  return jwt;
+};
+
+export { issueAccessToken, issueRefreshToken };
