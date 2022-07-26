@@ -19,9 +19,8 @@ function App() {
       <CssBaseline />
       <AuthContextProvider>
         <div className="App">
-          <header className="App-header">
-            {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          </header>
+          <header className="App-header"></header>
+          <Signup />
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

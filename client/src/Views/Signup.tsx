@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import { AuthContext } from "../Context/AuthContext";
 
 const Signup = () => {
-  const { newUser, setNewUser, setSelectedFile, submitImage } =
+  const { newUser, setNewUser, setSelectedFile, submitImage, signUp } =
     useContext(AuthContext);
 
   const handleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,8 +13,15 @@ const Signup = () => {
   };
 
   const attachFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
+    if (
+      e &&
+      e.target &&
+      e.target.files &&
+      e.target.files.length > 0 &&
+      e.target.files[0]
+    ) {
+      const blob = new Blob([e.target.files[0]]);
+      setSelectedFile(blob);
     }
   };
 
@@ -21,86 +29,100 @@ const Signup = () => {
     <div>
       <div>Signup</div>
       <div>
-        <TextField
-          //  error={}
-          variant="outlined"
-          label="First Name"
-          id="firstname"
-          name="firstName"
-          type="text"
-          value={newUser.firstName ? newUser.firstName : ""}
-          //   helperText={}
-          onChange={handleChangeHandler}
-          required
-          fullWidth
-        />
-        <TextField
-          //  error={}
-          variant="outlined"
-          label="Last Name"
-          id="lastname"
-          name="lastName"
-          type="text"
-          value={newUser.lastName ? newUser.lastName : ""}
-          // helperText={}
-          onChange={handleChangeHandler}
-          required
-          fullWidth
-        />
-        <TextField
-          //   error={}
-          variant="outlined"
-          label="User Name"
-          id="username"
-          name="username"
-          type="text"
-          value={newUser.username ? newUser.username : ""}
-          //    helperText={}
-          onChange={handleChangeHandler}
-          required
-          fullWidth
-        />
-        <TextField
-          // error={}
-          label="Email Address"
-          variant="outlined"
-          name="email"
-          id="email"
-          type="email"
-          value={newUser.email ? newUser.email : ""}
-          // helperText={}
-          onChange={handleChangeHandler}
-          required
-          fullWidth
-        />
-        <TextField
-          // error={}
-          variant="outlined"
-          name="password"
-          id="password"
-          label="Password"
-          type="password"
-          value={newUser.password ? newUser.password : ""}
-          //  helperText={}
-          onChange={handleChangeHandler}
-          required
-          fullWidth
-        />
-        <div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={attachFileHandler}
-          >
-            upload file
-          </Button>
-          <input
-            onChange={attachFileHandler}
-            type="file"
-            style={{ display: "none" }}
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1, width: "25ch" },
+            flexDirection: "column",
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <div>
+            <TextField
+              //  error={}
+              variant="outlined"
+              label="First Name"
+              id="firstname"
+              name="firstName"
+              type="text"
+              value={newUser.firstName ? newUser.firstName : ""}
+              //   helperText={}
+              onChange={handleChangeHandler}
+              required
+              fullWidth
+            />
+          </div>
+          <TextField
+            //  error={}
+            variant="outlined"
+            label="Last Name"
+            id="lastname"
+            name="lastName"
+            type="text"
+            value={newUser.lastName ? newUser.lastName : ""}
+            // helperText={}
+            onChange={handleChangeHandler}
+            required
+            fullWidth
           />
-        </div>
-        <Button>Sign up</Button>
+          <TextField
+            //   error={}
+            variant="outlined"
+            label="User Name"
+            id="username"
+            name="username"
+            type="text"
+            value={newUser.username ? newUser.username : ""}
+            //    helperText={}
+            onChange={handleChangeHandler}
+            required
+            fullWidth
+          />
+          <TextField
+            // error={}
+            label="Email Address"
+            variant="outlined"
+            name="email"
+            id="email"
+            type="email"
+            value={newUser.email ? newUser.email : ""}
+            // helperText={}
+            onChange={handleChangeHandler}
+            required
+            fullWidth
+          />
+          <TextField
+            // error={}
+            variant="outlined"
+            name="password"
+            id="password"
+            label="Password"
+            type="password"
+            value={newUser.password ? newUser.password : ""}
+            //  helperText={}
+            onChange={handleChangeHandler}
+            required
+            fullWidth
+          />
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => submitImage}
+            >
+              upload file
+            </Button>
+            <input
+              onChange={attachFileHandler}
+              type="file"
+              style={{ display: "none" }}
+            />
+          </div>
+          <Button variant="contained" color="primary" onClick={signUp}>
+            Sign up
+          </Button>
+        </Box>
       </div>
     </div>
   );

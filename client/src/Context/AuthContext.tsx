@@ -1,36 +1,15 @@
-import { AnySrvRecord } from "dns";
-import {
-  useEffect,
-  useState,
-  createContext,
-  ReactNode,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { useState, createContext, ReactNode } from "react";
 
 interface AuthContextType {
   newUser: SignUp;
   selectedFile: Blob | string;
-  submitImage: (e: React.FormEvent<HTMLFormElement>) => void;
+  submitImage: (e: React.MouseEvent<HTMLFormElement>) => void;
   signUp: () => void;
-  setSelectedFile: (selectedFile: string) => void;
+  setSelectedFile: (selectedFile: Blob | string) => void;
   setNewUser: (newUser: SignUp) => void;
 }
 
 // const authContextDefaultValues: AuthContextType = {
-//   newUser: {
-//     firstName: "",
-//     lastName: "",
-//     username: "",
-//     password: "",
-//     email: "",
-//     image: "",
-//     isAdmin: false,
-//   },
-//   selectedFile: "",
-//     submitImage: () => {
-//       console.log("Submit Image Initial state")
-//   },
 //   signUp: () => {},
 //   setSelectedFile: () => {},
 //   setNewUser: () => {},
@@ -54,7 +33,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     isAdmin: false,
   });
 
-  const submitImage = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submitImage = async (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", selectedFile);
