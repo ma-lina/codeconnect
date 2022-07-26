@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
-import { login, register, uploadPhoto } from "../controllers/usersController";
+import { login, register, logout, uploadPhoto } from "../controllers/usersController";
 import { multerUploads } from "../middleware/multer";
+import jwtAuth from "../utils/jwtAuth";
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.get("/test", (req: Request, res: Response) => {
 
 router.post("/register", register);
 router.post("/login", login);
-// router.post("/logout", logout);
+router.post("/logout", jwtAuth, logout);
 router.post("/profile/photoUpload", multerUploads.single("image"), uploadPhoto);
 
 export default router;
