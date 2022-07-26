@@ -5,10 +5,9 @@ import { encryptPassword, verifyPassword } from '../utils/bcrypt';
 import { issueAccessToken,issueRefreshToken } from "../utils/jwt"
 import { UserProfileEnum, UserRegistrationEnum } from '../utils/userEnums';
 
-
 //function allowing to create a new object with chosen keys from another object
-const getNewUserObject = (userObject: object, keys: Array<string>) => {
-  const newUserObject: object = {};
+const getNewUserObject = (userObject: object, keys: Array<string>): UserN.UserRegistrationData | UserN.UserProfileData => {
+  let newUserObject: UserN.UserRegistrationData | UserN.UserProfileData;
   keys.forEach(key => {
     if (userObject[key]) {
       newUserObject[key] = userObject[key];
@@ -163,12 +162,37 @@ const logout = async (req, res: Response<ResponseJson>) => {
         message: "Server error, we couldn't logout the user. Please try again.",
       })
     } else {
-      //TODO how to clear the refresh cookie
       res.clearCookie('refreshToken', {
         httpOnly: true,
       })
       res.status(200).json({
         message: "You have been logged out."
+      })
+    }
+  } catch (error) {
+      res.status(500).json({
+      message: "Server error, we couldn't logout the user. Please try again.",
+      error: error,
+    });
+  }
+
+};
+
+const updateProfile = async (req, res: Response<ResponseJson>) => {
+
+  try {
+    const userToUpdate = req.user;
+    const newUserData = { ...userToUpdate, ...req.body };
+    const updatedUser = await newUserData.save()
+    if (!updatedUser) {
+      res.status(500).json({
+        message: "Server error, we couldn't logout the user. Please try again.",
+      })
+    } else {
+      const updatedUserProfile = getNewUserObject(updatedUser, Object.values(UserProfileEnum));
+      res.status(200).json({
+        message: "Your profile has been updated.",
+        user: updatedUserProfile,
       })
     }
   } catch (error) {
@@ -206,4 +230,4 @@ const uploadPhoto = async (req: Request, res: Response<ResponseJson>) => {
 
 //TODO write get/update profile -> routes requiring autorisation
 
-export { getNewUserObject, register, login, logout, uploadPhoto }
+export { getNewUserObject, register, login, logout, updateProfile, uploadPhoto }
