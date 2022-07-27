@@ -185,22 +185,17 @@ const logout = async (req, res: Response<ResponseJson>) => {
 
 const updateProfile = async (req, res: Response<ResponseJson>) => {
   try {
-    const userToUpdate = req.user;
-    console.log('userToUpdate', userToUpdate)
-    console.log('req.body', req.body)
-    const updatedValues = req.body
-    console.log('updatedValues', updatedValues)
-    const newUserData = { ...userToUpdate._doc, ...updatedValues };
-    // const newUserData = {...req.body, _id = req.user._id}
-    // console.log('userToUpdate', userToUpdate)
-    console.log('newUserData', newUserData)
+    const updatedValues = req.body;
 
+    //retrieving the user profile from the database and replacing the values to be changed with new ones from the request
+    const userToUpdate = await userModel.findById(req.user._id); 
+    userToUpdate._doc = { ...userToUpdate._doc, ...updatedValues }; 
 
-    const updatedUser = await newUserData.save()
-    console.log('updatedUser', updatedUser)
+    //saving the new user profile
+    const updatedUser = await userToUpdate.save()
     if (!updatedUser) {
       res.status(500).json({
-        message: "Server error, we couldn't logout the user. Please try again.",
+        message: "Server error, we couldn't update the profile, saving new values in the database failed. Please try again.",
       })
     } else {
       const updatedUserProfile = getNewUserObject(updatedUser, Object.values(UserProfileEnum));
@@ -215,7 +210,6 @@ const updateProfile = async (req, res: Response<ResponseJson>) => {
       error: error,
     });
   }
-
 };
 
 // photo upload
