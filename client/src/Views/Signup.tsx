@@ -9,6 +9,7 @@ import { PhotoCamera } from "@mui/icons-material";
 import { AuthContext } from "../Context/AuthContext";
 
 //TODO Validation
+//TODO secure url bar
 
 const Signup = () => {
   const {
@@ -91,7 +92,6 @@ const Signup = () => {
               value={newUser.username ? newUser.username : ""}
               //    helperText={}
               onChange={handleChangeHandler}
-              required
               fullWidth
             />
           </div>

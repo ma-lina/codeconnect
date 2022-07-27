@@ -6,7 +6,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { AuthContext } from "../Context/AuthContext";
 
 const Login = () => {
-  const { loginUser, setLoginUser, logIn } = useContext(AuthContext);
+  const { loginUser, setLoginUser, user, logIn } = useContext(AuthContext);
 
   const handleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginUser({ ...loginUser, [e.target.name]: e.target.value });
@@ -39,6 +39,7 @@ const Login = () => {
         </div>
         <div>
           <TextField
+            required
             size="small"
             id="password"
             label="Password"
@@ -49,12 +50,7 @@ const Login = () => {
           />
         </div>
         <div>
-          <Button
-            type="submit"
-            endIcon={<SendIcon />}
-            variant="contained"
-            onClick={logIn}
-          >
+          <Button endIcon={<SendIcon />} variant="contained" onClick={logIn}>
             Login
           </Button>
         </div>

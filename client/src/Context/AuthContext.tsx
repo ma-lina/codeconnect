@@ -91,27 +91,30 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
 
   const logIn = async () => {
     let urlencoded = new URLSearchParams();
-    urlencoded.append("email", loginUser.email);
-    urlencoded.append("password", loginUser.password);
-    var requestOptions = {
-      method: "POST",
-      body: urlencoded,
-    };
-    try {
-      const response = await fetch(
-        "http://localhost:5000/users/login",
-        requestOptions
-      );
-      const result = await response.json();
-      const { token, user } = result;
-      if (token) {
-        localStorage.setItem("token", token);
-      } else {
-        console.log("error seting token");
+    if (loginUser !== null) {
+      urlencoded.append("email", loginUser.email);
+      urlencoded.append("password", loginUser.password);
+      console.log(loginUser);
+      var requestOptions = {
+        method: "POST",
+        body: urlencoded,
+      };
+      try {
+        const response = await fetch(
+          "http://localhost:5000/users/login",
+          requestOptions
+        );
+        const result = await response.json();
+        const { token, user } = result;
+        if (token) {
+          localStorage.setItem("token", token);
+        } else {
+          console.log("error seting token");
+        }
+        console.log("result", result);
+      } catch (error) {
+        console.log("login error", error);
       }
-      console.log("result", result);
-    } catch (error) {
-      console.log("login error", error);
     }
   };
 
