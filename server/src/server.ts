@@ -5,6 +5,9 @@ import mongoose from "mongoose";
 import { ApolloServer, gql } from "apollo-server-express";
 import { schema } from "./graphql/schema";
 import { cloudinaryConfig } from "./config/cloudinaryConfig";
+import usersRoute from "./routes/usersRoute";
+import passport from "passport";
+import passportConfig from "./config/passportConfig";
 
 const app = express();
 dotenv.config();
@@ -19,7 +22,7 @@ const startServer = () => {
 };
 
 const loadRoutes = () => {
-  //routes
+  app.use('/users', usersRoute);
 };
 
 const middlewareSetup = () => {
@@ -35,8 +38,8 @@ const middlewareSetup = () => {
   };
   app.use(cors(corsOptions));
   cloudinaryConfig();
-  //app.use(passport.initialize());
-  //passportConfig(passport);
+  app.use(passport.initialize());
+  passportConfig(passport);
 };
 
 const mongoDbConection = async () => {
