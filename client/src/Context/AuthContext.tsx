@@ -1,4 +1,5 @@
-import { useState, createContext, ReactNode } from "react";
+import { useState, createContext, useEffect, ReactNode } from "react";
+import { getToken } from "../utils/getToken";
 
 interface AuthContextType {
   newUser: SignUp;
@@ -15,6 +16,8 @@ interface AuthContextType {
 interface Props {
   children: ReactNode;
 }
+
+//TODO display error messages
 
 export const AuthContext = createContext<AuthContextType>(undefined!);
 
@@ -117,6 +120,22 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       }
     }
   };
+
+  const isUserLoggedIn = () => {
+    const token = getToken();
+    console.log(token);
+    if (token) {
+      setUser(true);
+      console.log("user is logged in");
+    } else {
+      setUser(false);
+      console.log("user is NOT logged in");
+    }
+  };
+
+  useEffect(() => {
+    isUserLoggedIn();
+  }, [user]);
 
   return (
     <AuthContext.Provider
