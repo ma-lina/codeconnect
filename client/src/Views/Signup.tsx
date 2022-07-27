@@ -127,7 +127,7 @@ const Signup = () => {
           <div>
             <FormControl>
               <Avatar
-                src={newUser?.image ? newUser.image : ""}
+                src={newUser.image ? newUser.image : ""}
                 sx={{ width: 56, height: 56, mr: "10px" }}
               />
               <label htmlFor="icon-button-file">
