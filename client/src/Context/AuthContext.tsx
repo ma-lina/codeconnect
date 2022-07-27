@@ -2,11 +2,11 @@ import { useState, createContext, ReactNode } from "react";
 
 interface AuthContextType {
   newUser: SignUp;
-  selectedFile: Blob | string;
-  submitImage: (e: React.MouseEvent<HTMLFormElement>) => void;
+  selectedFile: File | string;
+  submitImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
   signUp: () => void;
   logIn: () => void;
-  setSelectedFile: (selectedFile: Blob | string) => void;
+  setSelectedFile: (selectedFile: File | string) => void;
   setNewUser: (newUser: SignUp) => void;
   user: Boolean;
   loginUser: Login;
@@ -27,7 +27,7 @@ export const AuthContext = createContext<AuthContextType>(undefined!);
 
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<string | Blob>("");
+  const [selectedFile, setSelectedFile] = useState<string | File>("");
   const [newUser, setNewUser] = useState<SignUp>({
     firstName: "",
     lastName: "",
@@ -35,6 +35,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     password: "",
     email: "",
     image: "",
+    isLoggedin: false,
     isAdmin: false,
   });
   const [loginUser, setLoginUser] = useState<Login>({
@@ -43,10 +44,11 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     token: "",
   });
 
-  const submitImage = async (e: React.MouseEvent<HTMLFormElement>) => {
+  const submitImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", selectedFile);
+    console.log("selectedFile", selectedFile);
     console.log("formData", formData);
 
     const requestOptions = {
@@ -75,6 +77,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       urlencoded.append("email", newUser.email);
       urlencoded.append("password", newUser.password);
       urlencoded.append("image", newUser.image ? newUser.image : "");
+      //  urlencoded.append("isLoggedin", newUser.isLoggedin: false);
       var requestOptions = {
         method: "POST",
         body: urlencoded,

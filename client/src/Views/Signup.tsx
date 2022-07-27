@@ -31,8 +31,7 @@ const Signup = () => {
       e.target.files.length > 0 &&
       e.target.files[0]
     ) {
-      const blob = new Blob([e.target.files[0]]);
-      setSelectedFile(blob);
+      setSelectedFile(e.target.files[0]);
     }
   };
   console.log("newUser", newUser);
@@ -135,7 +134,7 @@ const Signup = () => {
                 <Input
                   id="icon-button-file"
                   type="file"
-                  onChange={() => attachFileHandler}
+                  onChange={attachFileHandler}
                   style={{ display: "none" }}
                 />
                 {/*     "Choose Image" */}
@@ -152,7 +151,7 @@ const Signup = () => {
                 size="small"
                 sx={{ my: "10px", padding: "0px" }}
                 disableElevation
-                onClick={() => submitImage}
+                onClick={(e) => submitImage(e)}
               >
                 UPLOAD
               </Button>
