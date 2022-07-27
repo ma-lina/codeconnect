@@ -184,11 +184,20 @@ const logout = async (req, res: Response<ResponseJson>) => {
 };
 
 const updateProfile = async (req, res: Response<ResponseJson>) => {
-
   try {
     const userToUpdate = req.user;
-    const newUserData = { ...userToUpdate, ...req.body };
+    console.log('userToUpdate', userToUpdate)
+    console.log('req.body', req.body)
+    const updatedValues = req.body
+    console.log('updatedValues', updatedValues)
+    const newUserData = { ...userToUpdate._doc, ...updatedValues };
+    // const newUserData = {...req.body, _id = req.user._id}
+    // console.log('userToUpdate', userToUpdate)
+    console.log('newUserData', newUserData)
+
+
     const updatedUser = await newUserData.save()
+    console.log('updatedUser', updatedUser)
     if (!updatedUser) {
       res.status(500).json({
         message: "Server error, we couldn't logout the user. Please try again.",
