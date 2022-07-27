@@ -12,13 +12,6 @@ interface AuthContextType {
   loginUser: Login;
   setLoginUser: (loginUser: Login) => void;
 }
-
-// const authContextDefaultValues: AuthContextType = {
-//   signUp: () => {},
-//   setSelectedFile: () => {},
-//   setNewUser: () => {},
-// };
-
 interface Props {
   children: ReactNode;
 }
@@ -35,7 +28,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     password: "",
     email: "",
     image: "",
-    isLoggedin: false,
+    //  isLoggedin: false,
     isAdmin: false,
   });
   const [loginUser, setLoginUser] = useState<Login>({
@@ -78,7 +71,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       urlencoded.append("email", newUser.email);
       urlencoded.append("password", newUser.password);
       urlencoded.append("image", newUser.image ? newUser.image : "");
-      //  urlencoded.append("isLoggedin", newUser.isLoggedin: false);
       var requestOptions = {
         method: "POST",
         body: urlencoded,

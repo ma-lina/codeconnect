@@ -6,7 +6,7 @@ interface SignUp {
   email: string;
   image?: string;
   isAdmin: boolean;
-  isLoggedin: boolean;
+  //isLoggedin: boolean;
 }
 
 type State = {

@@ -126,6 +126,7 @@ const Signup = () => {
           </div>
           <div>
             <FormControl>
+              {/* TODO center Avatar correct */}
               <Avatar
                 src={newUser.image ? newUser.image : ""}
                 sx={{ width: 56, height: 56, mr: "10px" }}
@@ -151,7 +152,7 @@ const Signup = () => {
                 size="small"
                 sx={{ my: "10px", padding: "0px" }}
                 disableElevation
-                onClick={(e) => submitImage(e)}
+                onClick={submitImage}
               >
                 UPLOAD
               </Button>
