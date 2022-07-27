@@ -184,7 +184,6 @@ const logout = async (req, res: Response<ResponseJson>) => {
 
 };
 
-// photo upload
 const uploadPhoto = async (req: Request, res: Response<ResponseJson>) => {
   try {
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
@@ -250,4 +249,25 @@ const getProfile = async (req, res: Response<ResponseJson>) => {
   }
 };
 
-export { getNewUserObject, register, login, logout, updateProfile, uploadPhoto, getProfile }
+const deleteProfile = async (req, res: Response<ResponseJson>) => {
+  try {
+    const deleteCount = await userModel.deleteOne({ _id: req.user._id }); 
+
+    if (deleteCount) {
+      res.status(200).json({
+        message: "Your profile has been deleted.",
+      })
+    } else {
+      res.status(500).json({
+        message: "Server error, we couldn't delete the profile, connection to the database failed. Please try again.",
+      })
+    }
+  } catch (error) {
+      res.status(500).json({
+      message: "Server error, we couldn't delete the profile. Please try again.",
+      error: error,
+    });
+  }
+};
+
+export { getNewUserObject, register, login, logout, updateProfile, uploadPhoto, getProfile, deleteProfile }
