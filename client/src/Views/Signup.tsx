@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
+import SendIcon from "@mui/icons-material/Send";
 import { Input, IconButton, Avatar } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import { AuthContext } from "../Context/AuthContext";
@@ -159,7 +160,12 @@ const Signup = () => {
             </FormControl>
           </div>
 
-          <Button variant="contained" color="primary" onClick={signUp}>
+          <Button
+            variant="contained"
+            endIcon={<SendIcon />}
+            color="primary"
+            onClick={signUp}
+          >
             Sign up
           </Button>
         </Box>
