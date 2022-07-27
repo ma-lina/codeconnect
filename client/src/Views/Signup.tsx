@@ -137,7 +137,7 @@ const Signup = () => {
                   onChange={attachFileHandler}
                   style={{ display: "none" }}
                 />
-                {/*     "Choose Image" */}
+                <div> {selectedFile ? "File ready" : "Choose Image"}</div>
                 <IconButton
                   color="primary"
                   aria-label="upload picture"
