@@ -184,6 +184,28 @@ const logout = async (req, res: Response<ResponseJson>) => {
 
 };
 
+// photo upload
+const uploadPhoto = async (req: Request, res: Response<ResponseJson>) => {
+  try {
+    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+      folder: "codeconnect_user_photos",
+    }); 
+
+    res
+    .status(200)
+    .json({
+        message: "The photo you chose was successfully uploaded.",
+        image: uploadResult.url,
+    })
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error, we couldn't upload the image. Please try again.",
+      error: error,
+    });
+  }
+};
+
 const updateProfile = async (req, res: Response<ResponseJson>) => {
   try {
     const updatedValues = req.body;
@@ -213,30 +235,19 @@ const updateProfile = async (req, res: Response<ResponseJson>) => {
   }
 };
 
-// photo upload
-const uploadPhoto = async (req: Request, res: Response<ResponseJson>) => {
+const getProfile = async (req, res: Response<ResponseJson>) => {
   try {
-    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-      folder: "codeconnect_user_photos",
-    }); 
-
-    //TODO decide on where the pic is being uploaded, if with authentication and write mongoose functions
-    res
-    .status(200)
-    .json({
-        message: "The photo you chose was successfully uploaded.",
-        image: uploadResult.url,
+    const userProfile = getNewUserObject(req.user, Object.values(UserProfileEnum));
+    res.status(200).json({
+    message: "User profile successfully fetched.",
+    user: userProfile,
     })
-
   } catch (error) {
-    res.status(500).json({
-      message: "Server error, we couldn't upload the image. Please try again.",
+      res.status(500).json({
+      message: "Server error, we couldn't update the profile. Please try again.",
       error: error,
     });
   }
 };
 
-
-//TODO write get/update profile -> routes requiring autorisation
-
-export { getNewUserObject, register, login, logout, updateProfile, uploadPhoto }
+export { getNewUserObject, register, login, logout, updateProfile, uploadPhoto, getProfile }
