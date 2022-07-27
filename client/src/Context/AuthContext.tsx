@@ -55,7 +55,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/profile/photoUpload",
+        "http://localhost:5000/users/profile/photoUpload",
         requestOptions
       );
       const result = await response.json();
@@ -71,7 +71,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     if (newUser !== null) {
       urlencoded.append("firstName", newUser.firstName);
       urlencoded.append("lastName", newUser.lastName);
-      urlencoded.append("username", newUser.username);
+      urlencoded.append("username", newUser.username ? newUser.username : "");
       urlencoded.append("email", newUser.email);
       urlencoded.append("password", newUser.password);
       urlencoded.append("image", newUser.image ? newUser.image : "");
@@ -81,7 +81,10 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       };
 
       try {
-        const response = await fetch("http://localhost:5000/", requestOptions);
+        const response = await fetch(
+          "http://localhost:5000/users/register",
+          requestOptions
+        );
         const result = await response.json();
         console.log("results", result);
       } catch (error) {
@@ -100,7 +103,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/login",
+        "http://localhost:5000/users/login",
         requestOptions
       );
       const result = await response.json();

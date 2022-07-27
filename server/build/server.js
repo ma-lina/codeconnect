@@ -33,6 +33,9 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const apollo_server_express_1 = require("apollo-server-express");
 const schema_1 = require("./graphql/schema");
 const cloudinaryConfig_1 = require("./config/cloudinaryConfig");
+const usersRoute_1 = __importDefault(require("./routes/usersRoute"));
+const passport_1 = __importDefault(require("passport"));
+const passportConfig_1 = __importDefault(require("./config/passportConfig"));
 const app = (0, express_1.default)();
 dotenv.config();
 const port = process.env.PORT || 5000;
@@ -43,7 +46,7 @@ const startServer = () => {
     });
 };
 const loadRoutes = () => {
-    //routes
+    app.use('/users', usersRoute_1.default);
 };
 const middlewareSetup = () => {
     app.use(express_1.default.json());
@@ -56,8 +59,8 @@ const middlewareSetup = () => {
     };
     app.use((0, cors_1.default)(corsOptions));
     (0, cloudinaryConfig_1.cloudinaryConfig)();
-    //app.use(passport.initialize());
-    //passportConfig(passport);
+    app.use(passport_1.default.initialize());
+    (0, passportConfig_1.default)(passport_1.default);
 };
 const mongoDbConection = async () => {
     try {

@@ -1,6 +1,6 @@
 interface userProfile {
   _id: ObjectId;
-  username: string;
+  username?: string;
   firstName: string;
   lastName: string;
   email: string;
