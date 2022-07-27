@@ -16,6 +16,10 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", jwtAuth, logout);
 router.post("/updateProfile", jwtAuth, updateProfile);
+// router.patch("/profile", jwtAuth, updateProfile);
+// router.get("/profile", jwtAuth, getProfile);
+// router.delete("/profile", jwtAuth, deleteProfile);
+
 router.post("/profile/photoUpload", multerUploads.single("image"), uploadPhoto);
 
 export default router;
