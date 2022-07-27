@@ -39,7 +39,8 @@ const register = async (req: Request, res: Response<ResponseJson>) => {
       //user with this email does not exist yet, creating a new user object with a hashed password
       const newUserData = getNewUserObject(req.body, Object.values(UserRegistrationEnum));
       const hashedPassword = await encryptPassword(req.body.password);
-      newUserData["password"] = hashedPassword; 
+      newUserData["password"] = hashedPassword;
+      newUserData["isLoggedin"] = true; 
       
       //creating a mongoose model, saving it in mongoDB with a mongoose save() method
       const newUser = new userModel(newUserData); 
