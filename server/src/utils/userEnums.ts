@@ -18,5 +18,4 @@ export enum UserRegistrationEnum {
         username= "username",
         email = "email",
         image = "image",
-        isLoggedin = "isLoggedin",
     }
