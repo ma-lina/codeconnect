@@ -1,4 +1,5 @@
 import { useState, createContext, useEffect, ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import { getToken } from "../utils/getToken";
 
 interface AuthContextType {
@@ -9,7 +10,8 @@ interface AuthContextType {
   logIn: () => void;
   setSelectedFile: (selectedFile: File | string) => void;
   setNewUser: (newUser: SignUp) => void;
-  user: Boolean;
+  user: boolean;
+  setUser: (user: boolean) => void;
   loginUser: Login;
   setLoginUser: (loginUser: Login) => void;
 }
@@ -22,7 +24,7 @@ interface Props {
 export const AuthContext = createContext<AuthContextType>(undefined!);
 
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<string | File>("");
   const [newUser, setNewUser] = useState<SignUp>({
     firstName: "",
@@ -31,7 +33,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     password: "",
     email: "",
     image: "",
-    //  isLoggedin: false,
     isAdmin: false,
   });
   const [loginUser, setLoginUser] = useState<Login>({
@@ -97,7 +98,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     if (loginUser !== null) {
       urlencoded.append("email", loginUser.email);
       urlencoded.append("password", loginUser.password);
-      console.log(loginUser);
       var requestOptions = {
         method: "POST",
         body: urlencoded,
@@ -108,20 +108,22 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           requestOptions
         );
         const result = await response.json();
-        const { token, user } = result;
+        const token = result.accessToken;
+        console.log(token);
         if (token) {
           localStorage.setItem("token", token);
         } else {
           console.log("error seting token");
         }
         console.log("result", result);
+        setUser(true);
       } catch (error) {
         console.log("login error", error);
       }
     }
   };
 
-  const isUserLoggedIn = () => {
+  const isUserLoggedIn = (): void => {
     const token = getToken();
     console.log(token);
     if (token) {
@@ -147,6 +149,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         signUp,
         submitImage,
         user,
+        setUser,
         loginUser,
         setLoginUser,
         logIn,

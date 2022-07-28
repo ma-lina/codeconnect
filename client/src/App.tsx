@@ -19,7 +19,7 @@ function App() {
       <AuthContextProvider>
         <div className="App">
           <Routes>
-            <Route path="*" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profile" element={<Profile />} />
