@@ -21,40 +21,27 @@ interface Props {
 }
 
 //TODO decide if array should include object id or something else, then change 'any';
-interface LoginResult {
-  accessToken: string;
-  isAuthenticated: boolean;
-  message: string;
-  user: {
-    email: string;
-    firstName: string;
-    image: string;
-    lastName: string;
-    starredCoworking: Array<any>;
-    starredMentorship: Array<any>;
-    starredShadowing: Array<any>;
-    username: string;
-    _id: number;
-  };
+interface User {
+  email: string;
+  firstName: string;
+  image?: string;
+  isLoggedin?: boolean;
+  isAdmin?: boolean;
+  lastName: string;
+  starredCoworking: Array<any>;
+  starredMentorship: Array<any>;
+  starredShadowing: Array<any>;
+  username: string;
+  _id: number;
 }
-
-//TODO add image in respone?
+interface LoginResult extends SignupResult {
+  isAuthenticated: boolean;
+}
 interface SignupResult {
   accessToken: string;
   message: string;
-  user: {
-    email: string;
-    firstName: string;
-    isLoggedin: boolean;
-    lastName: string;
-    starredCoworking: Array<any>;
-    starredMentorship: Array<any>;
-    starredShadowing: Array<any>;
-    username: string;
-    _id: number;
-  };
+  user: User;
 }
-
 interface ImageResult {
   image: string;
   message: string;
@@ -75,6 +62,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     email: "",
     image: "",
     isAdmin: false,
+    isLoggedin: false,
   });
   const [loginUser, setLoginUser] = useState<Login>({
     email: "",
@@ -88,9 +76,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", selectedFile);
-    console.log("selectedFile", selectedFile);
-    console.log("formData", formData);
-
     const requestOptions = {
       method: "POST",
       body: formData,
@@ -101,11 +86,10 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         requestOptions
       );
       const result: ImageResult = await response.json();
-      console.log(result);
       setNewUser({ ...newUser, image: result.image });
       console.log("image uploaded", newUser);
     } catch (error) {
-      console.log('"error submiting picture"', error);
+      console.log("error submiting picture", error);
     }
   };
 
