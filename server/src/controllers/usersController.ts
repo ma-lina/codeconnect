@@ -184,40 +184,12 @@ const logout = async (req, res: Response<ResponseJson>) => {
 
 };
 
-const updateProfile = async (req, res: Response<ResponseJson>) => {
-
-  try {
-    const userToUpdate = req.user;
-    const newUserData = { ...userToUpdate, ...req.body };
-    const updatedUser = await newUserData.save()
-    if (!updatedUser) {
-      res.status(500).json({
-        message: "Server error, we couldn't logout the user. Please try again.",
-      })
-    } else {
-      const updatedUserProfile = getNewUserObject(updatedUser, Object.values(UserProfileEnum));
-      res.status(200).json({
-        message: "Your profile has been updated.",
-        user: updatedUserProfile,
-      })
-    }
-  } catch (error) {
-      res.status(500).json({
-      message: "Server error, we couldn't update the profile. Please try again.",
-      error: error,
-    });
-  }
-
-};
-
-// photo upload
 const uploadPhoto = async (req: Request, res: Response<ResponseJson>) => {
   try {
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "codeconnect_user_photos",
     }); 
 
-    //TODO decide on where the pic is being uploaded, if with authentication and write mongoose functions
     res
     .status(200)
     .json({
@@ -233,7 +205,69 @@ const uploadPhoto = async (req: Request, res: Response<ResponseJson>) => {
   }
 };
 
+const updateProfile = async (req, res: Response<ResponseJson>) => {
+  try {
+    const updatedValues = req.body;
 
-//TODO write get/update profile -> routes requiring autorisation
+    //retrieving the user profile from the database and replacing the values to be changed with new ones from the request
+    const userToUpdate = await userModel.findById(req.user._id); 
+    userToUpdate._doc = { ...userToUpdate._doc, ...updatedValues }; 
 
-export { getNewUserObject, register, login, logout, updateProfile, uploadPhoto }
+    //saving the new user profile
+    const updatedUser = await userToUpdate.save()
+    if (!updatedUser) {
+      res.status(500).json({
+        message: "Server error, we couldn't update the profile, saving new values in the database failed. Please try again.",
+      })
+    } else {
+      const updatedUserProfile = getNewUserObject(updatedUser, Object.values(UserProfileEnum));
+      res.status(200).json({
+        message: "Your profile has been updated.",
+        user: updatedUserProfile,
+      })
+    }
+  } catch (error) {
+      res.status(500).json({
+      message: "Server error, we couldn't update the profile. Please try again.",
+      error: error,
+    });
+  }
+};
+
+const getProfile = async (req, res: Response<ResponseJson>) => {
+  try {
+    const userProfile = getNewUserObject(req.user, Object.values(UserProfileEnum));
+    res.status(200).json({
+    message: "User profile successfully fetched.",
+    user: userProfile,
+    })
+  } catch (error) {
+      res.status(500).json({
+      message: "Server error, we couldn't update the profile. Please try again.",
+      error: error,
+    });
+  }
+};
+
+const deleteProfile = async (req, res: Response<ResponseJson>) => {
+  try {
+    const deleteCount = await userModel.deleteOne({ _id: req.user._id }); 
+
+    if (deleteCount) {
+      res.status(200).json({
+        message: "Your profile has been deleted.",
+      })
+    } else {
+      res.status(500).json({
+        message: "Server error, we couldn't delete the profile, connection to the database failed. Please try again.",
+      })
+    }
+  } catch (error) {
+      res.status(500).json({
+      message: "Server error, we couldn't delete the profile. Please try again.",
+      error: error,
+    });
+  }
+};
+
+export { getNewUserObject, register, login, logout, updateProfile, uploadPhoto, getProfile, deleteProfile }
