@@ -1,9 +1,14 @@
-import React from "react";
+import { useContext } from "react";
+import Button from "@mui/material/Button";
+import { AuthContext } from "../Context/AuthContext";
 
-type Props = {};
-
-function Logout({}: Props) {
-  return <div>Logout</div>;
+function Logout() {
+  const { logOut } = useContext(AuthContext);
+  return (
+    <Button onClick={logOut} variant="contained" color="primary">
+      LOGOUT
+    </Button>
+  );
 }
 
 export default Logout;

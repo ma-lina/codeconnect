@@ -14,6 +14,7 @@ interface AuthContextType {
   setUser: (user: boolean) => void;
   loginUser: Login;
   setLoginUser: (loginUser: Login) => void;
+  logOut: () => void;
 }
 interface Props {
   children: ReactNode;
@@ -75,7 +76,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       urlencoded.append("email", newUser.email);
       urlencoded.append("password", newUser.password);
       urlencoded.append("image", newUser.image ? newUser.image : "");
-      var requestOptions = {
+      const requestOptions = {
         method: "POST",
         body: urlencoded,
       };
@@ -98,7 +99,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     if (loginUser !== null) {
       urlencoded.append("email", loginUser.email);
       urlencoded.append("password", loginUser.password);
-      var requestOptions = {
+      const requestOptions = {
         method: "POST",
         body: urlencoded,
       };
@@ -107,15 +108,13 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           "http://localhost:5000/users/login",
           requestOptions
         );
-        const result = await response.json();
-        const token = result.accessToken;
-        console.log(token);
+        const result: any = await response.json();
+        const token: string = result.accessToken;
         if (token) {
           localStorage.setItem("token", token);
         } else {
           console.log("error seting token");
         }
-        console.log("result", result);
         setUser(true);
       } catch (error) {
         console.log("login error", error);
@@ -139,6 +138,12 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     isUserLoggedIn();
   }, [user]);
 
+  const logOut = () => {
+    localStorage.removeItem("token");
+    setUser(false);
+    // redirectTo("../", { replace: true });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -153,6 +158,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         loginUser,
         setLoginUser,
         logIn,
+        logOut,
       }}
     >
       {children}
