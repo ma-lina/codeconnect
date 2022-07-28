@@ -20,7 +20,7 @@ interface Props {
   children: ReactNode;
 }
 
-//TODO decide if array should include object id or something else, then change 'any'
+//TODO decide if array should include object id or something else, then change 'any';
 interface LoginResult {
   accessToken: string;
   isAuthenticated: boolean;
@@ -29,6 +29,21 @@ interface LoginResult {
     email: string;
     firstName: string;
     image: string;
+    lastName: string;
+    starredCoworking: Array<any>;
+    starredMentorship: Array<any>;
+    starredShadowing: Array<any>;
+    username: string;
+    _id: number;
+  };
+}
+interface SignupResult {
+  accessToken: string;
+  message: string;
+  user: {
+    email: string;
+    firstName: string;
+    isLoggedin: boolean;
     lastName: string;
     starredCoworking: Array<any>;
     starredMentorship: Array<any>;
@@ -106,7 +121,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           "http://localhost:5000/users/register",
           requestOptions
         );
-        const result = await response.json();
+        const result: SignupResult = await response.json();
         console.log("results", result);
       } catch (error) {
         console.log("error fetching", error);
