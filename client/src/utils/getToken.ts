@@ -3,7 +3,7 @@ const getToken = () => {
   if (token) {
     return token;
   } else {
-    return false;
+    return null;
   }
 };
 export { getToken };

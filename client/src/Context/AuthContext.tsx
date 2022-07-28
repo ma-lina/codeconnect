@@ -20,6 +20,24 @@ interface Props {
   children: ReactNode;
 }
 
+//TODO decide if array should include object id or something else, then change 'any'
+interface LoginResult {
+  accessToken: string;
+  isAuthenticated: boolean;
+  message: string;
+  user: {
+    email: string;
+    firstName: string;
+    image: string;
+    lastName: string;
+    starredCoworking: Array<any>;
+    starredMentorship: Array<any>;
+    starredShadowing: Array<any>;
+    username: string;
+    _id: number;
+  };
+}
+
 //TODO display error messages
 
 export const AuthContext = createContext<AuthContextType>(undefined!);
@@ -110,8 +128,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           "http://localhost:5000/users/login",
           requestOptions
         );
-        const result: any = await response.json();
-        const token: string = result.accessToken;
+        const result: LoginResult = await response.json();
+        const token = result.accessToken;
         if (token) {
           localStorage.setItem("token", token);
         } else {
