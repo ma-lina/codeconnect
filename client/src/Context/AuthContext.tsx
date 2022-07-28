@@ -37,6 +37,8 @@ interface LoginResult {
     _id: number;
   };
 }
+
+//TODO add image in respone?
 interface SignupResult {
   accessToken: string;
   message: string;
