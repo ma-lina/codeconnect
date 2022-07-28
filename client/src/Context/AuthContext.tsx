@@ -20,6 +20,7 @@ interface Props {
   children: ReactNode;
 }
 
+//TODO sort interfaces in extra file?
 //TODO decide if array should include object id or something else, then change 'any';
 interface User {
   email: string;
@@ -28,11 +29,15 @@ interface User {
   isLoggedin?: boolean;
   isAdmin?: boolean;
   lastName: string;
-  starredCoworking: Array<any>;
-  starredMentorship: Array<any>;
-  starredShadowing: Array<any>;
+  starredCoworking?: Array<any>;
+  starredMentorship?: Array<any>;
+  starredShadowing?: Array<any>;
   username: string;
   _id: number;
+}
+
+interface SignUp extends User {
+  password: "";
 }
 interface LoginResult extends SignupResult {
   isAuthenticated: boolean;
@@ -63,6 +68,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     image: "",
     isAdmin: false,
     isLoggedin: false,
+    _id: 0,
   });
   const [loginUser, setLoginUser] = useState<Login>({
     email: "",
