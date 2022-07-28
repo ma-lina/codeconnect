@@ -55,6 +55,11 @@ interface SignupResult {
   };
 }
 
+interface ImageResult {
+  image: string;
+  message: string;
+}
+
 //TODO display error messages
 
 export const AuthContext = createContext<AuthContextType>(undefined!);
@@ -95,7 +100,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         "http://localhost:5000/users/profile/photoUpload",
         requestOptions
       );
-      const result = await response.json();
+      const result: ImageResult = await response.json();
       console.log(result);
       setNewUser({ ...newUser, image: result.image });
       console.log("image uploaded", newUser);
