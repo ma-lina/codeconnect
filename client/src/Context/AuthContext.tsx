@@ -37,7 +37,7 @@ interface User {
 }
 
 interface SignUp extends User {
-  password: "";
+  password: string;
 }
 interface LoginResult extends SignupResult {
   isAuthenticated: boolean;
