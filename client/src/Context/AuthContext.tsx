@@ -42,6 +42,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     token: "",
   });
 
+  let navigate = useNavigate();
+
   const submitImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const formData = new FormData();
@@ -141,7 +143,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const logOut = () => {
     localStorage.removeItem("token");
     setUser(false);
-    // redirectTo("../", { replace: true });
+    navigate("../", { replace: true });
   };
 
   return (
