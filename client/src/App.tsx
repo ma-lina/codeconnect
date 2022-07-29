@@ -9,6 +9,7 @@ import Home from "./Views/Home";
 import Login from "./Views/Login";
 import Signup from "./Views/Signup";
 import Profile from "./Views/Profile";
+import { Container } from "@mui/material";
 
 function App() {
   const themeLight : Theme = createTheme(themeLightOptions);
@@ -16,16 +17,18 @@ function App() {
   return (
     <ThemeProvider theme={themeLight}>
       <CssBaseline />
-      <AuthContextProvider>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-        </div>
-      </AuthContextProvider>
+      <Container maxWidth="md">
+        <AuthContextProvider>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </div>
+        </AuthContextProvider>
+      </Container>
     </ThemeProvider>
   );
 }
