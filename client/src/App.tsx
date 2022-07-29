@@ -12,6 +12,7 @@ import Profile from "./Views/Profile";
 import { Container } from "@mui/material";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Logout from "./Components/Logout";
+import Navbar from "./Components/Navbar";
 
 function App() {
   const themeLight : Theme = createTheme(themeLightOptions);
@@ -23,7 +24,7 @@ function App() {
         <AuthContextProvider>
           <div className="App">
             <header>
-              <Logout/>
+              <Navbar/>
 {/* TODO create a navbar / bottom navigation */}
             </header>
             <Routes>
