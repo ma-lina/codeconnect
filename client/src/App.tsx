@@ -20,6 +20,9 @@ function App() {
       <Container maxWidth="md">
         <AuthContextProvider>
           <div className="App">
+            <header>
+{/* TODO create a navbar / bottom navigation */}
+            </header>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
