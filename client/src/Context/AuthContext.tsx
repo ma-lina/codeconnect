@@ -1,6 +1,6 @@
 import { useState, createContext, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { getToken } from "../utils/getToken";
+import { getToken } from "../Utils/getToken";
 
 interface AuthContextType {
   newUser: SignUp;

@@ -1,7 +1,7 @@
 import "@fontsource/roboto";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme, Theme } from "@mui/material/styles";
-import { themeLightOptions } from "./utils/muiThemeOptions";
+import { themeLightOptions } from "./Utils/muiThemeOptions";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthContextProvider } from "./Context/AuthContext";
