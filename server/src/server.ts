@@ -22,7 +22,8 @@ const startServer = () => {
 };
 
 const loadRoutes = () => {
-  app.use('/users', usersRoute);
+  app.use("/users", usersRoute);
+  app.use("/mentoring");
 };
 
 const middlewareSetup = () => {
