@@ -15,6 +15,8 @@ interface AuthContextType {
   loginUser: Login;
   setLoginUser: (loginUser: Login) => void;
   logOut: () => void;
+  userProfile: User;
+  setUserProfile: (userProfile: User) => void;
 }
 interface Props {
   children: ReactNode;
@@ -59,6 +61,16 @@ export const AuthContext = createContext<AuthContextType>(undefined!);
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<string | File>("");
+  const [userProfile, setUserProfile] = useState<User>({
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    image: "",
+    isAdmin: false,
+    isLoggedin: false,
+    _id: 0,
+  })
   const [newUser, setNewUser] = useState<SignUp>({
     firstName: "",
     lastName: "",
@@ -120,6 +132,15 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         );
         const result: SignupResult = await response.json();
         console.log("results", result);
+        const token = result.accessToken;
+        if (token) {
+          localStorage.setItem("token", token);
+          setUserProfile(result.user);
+          setUser(true);
+//TODO error messages with timeout
+        } else {
+          console.log("error seting token");
+        }
       } catch (error) {
         console.log("error fetching", error);
       }
@@ -144,15 +165,18 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         const token = result.accessToken;
         if (token) {
           localStorage.setItem("token", token);
+          setUserProfile(result.user);
+          setUser(true);
+//TODO error messages with timeout
         } else {
           console.log("error seting token");
         }
-        setUser(true);
       } catch (error) {
         console.log("login error", error);
       }
     }
   };
+
 
   const isUserLoggedIn = (): void => {
     const token = getToken();
@@ -191,6 +215,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         setLoginUser,
         logIn,
         logOut,
+        userProfile,
+        setUserProfile,
       }}
     >
       {children}
