@@ -1,7 +1,7 @@
 import "@fontsource/roboto";
 import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { themeLightSettings } from "./utils/muiThemeSettings";
+import { ThemeProvider, createTheme, Theme } from "@mui/material/styles";
+import { themeLightOptions } from "./utils/muiThemeOptions";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthContextProvider } from "./Context/AuthContext";
@@ -11,7 +11,7 @@ import Signup from "./Views/Signup";
 import Profile from "./Views/Profile";
 
 function App() {
-  const themeLight = createTheme(themeLightSettings);
+  const themeLight : Theme = createTheme(themeLightOptions);
 
   return (
     <ThemeProvider theme={themeLight}>
