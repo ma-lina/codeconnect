@@ -4,15 +4,13 @@ import { AuthContext } from "../Context/AuthContext";
 import Logout from "./Logout";
 
 function Navbar() {
-  const { user, newUser } = useContext(AuthContext);
+  const { user, userProfile } = useContext(AuthContext);
 
   return (
         <Box sx={{ flexGrow: 1 }}>
       <AppBar 
         position="fixed" 
         color="secondary"
-        style={{ borderRadius: "0", 
-        }}
         >
         <Toolbar>
               <Typography textAlign={"left"} component="div" sx={{ flexGrow: 1 }} variant='body1'>
@@ -26,7 +24,7 @@ function Navbar() {
                 <Typography component="div" variant='body1'>
                   <Box
                   >
-                  {`Welcome, ${newUser.firstName} |`}
+                  {`Welcome, ${userProfile.firstName}`}
                   </Box>
                 </Typography>
               }
