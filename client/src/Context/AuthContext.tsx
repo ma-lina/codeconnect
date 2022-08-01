@@ -6,8 +6,8 @@ interface AuthContextType {
   newUser: SignUp;
   selectedFile: File | string;
   submitImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  signUp: () => void;
-  logIn: () => void;
+  signUp: (e: React.FormEvent) => void;
+  logIn: (e: React.FormEvent) => void;
   setSelectedFile: (selectedFile: File | string) => void;
   setNewUser: (newUser: SignUp) => void;
   user: boolean;
@@ -111,7 +111,9 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const signUp = async () => {
+  const signUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     let urlencoded = new URLSearchParams();
     if (newUser !== null) {
       urlencoded.append("firstName", newUser.firstName);
@@ -147,7 +149,9 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const logIn = async () => {
+  const logIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     let urlencoded = new URLSearchParams();
     if (loginUser !== null) {
       urlencoded.append("email", loginUser.email);
