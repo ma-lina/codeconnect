@@ -50,7 +50,7 @@ const Login = () => {
           />
         </div>
         <div>
-          <Button endIcon={<SendIcon />} variant="contained" onClick={logIn}>
+          <Button type="submit" endIcon={<SendIcon />} variant="contained" onClick={logIn}>
             Login
           </Button>
         </div>
