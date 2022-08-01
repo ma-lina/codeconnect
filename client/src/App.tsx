@@ -1,4 +1,5 @@
 import "@fontsource/roboto";
+import "@fontsource/fira-code"
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme, Theme } from "@mui/material/styles";
 import { themeLightOptions } from "./Utils/muiThemeOptions";
