@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+/* import { Schema } from "mongoose";
 import * as mongoose from "mongoose";
 
 const options = {
@@ -6,7 +6,9 @@ const options = {
   collection: "",
 };
 
-/* const menteeSchema: Schema = new mongoose.Schema(
+
+COMMENT OUT
+const menteeSchema: Schema = new mongoose.Schema(
   {
     field: {
       type: Array,
@@ -24,7 +26,7 @@ const options = {
     startDate: Date,
   },
   { timestamps: true }
-); */
+); 
 
 const baseSchema: Schema = new mongoose.Schema(
   {
@@ -38,6 +40,9 @@ const baseSchema: Schema = new mongoose.Schema(
   },
   options
 );
+
+
+
 
 let baseModel = mongoose.model("Base", baseSchema);
 
@@ -55,3 +60,4 @@ let menteeModel = mongoose.model("Mentee", menteeSchema);
 let mentorModel = mongoose.model("Mentor", mentorSchema);
 
 export { menteeModel, mentorModel };
+ */
