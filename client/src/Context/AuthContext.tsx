@@ -1,13 +1,13 @@
 import { useState, createContext, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { getToken } from "../utils/getToken";
+import { getToken } from "../Utils/getToken";
 
 interface AuthContextType {
   newUser: SignUp;
   selectedFile: File | string;
   submitImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  signUp: () => void;
-  logIn: () => void;
+  signUp: (e: React.FormEvent) => void;
+  logIn: (e: React.FormEvent) => void;
   setSelectedFile: (selectedFile: File | string) => void;
   setNewUser: (newUser: SignUp) => void;
   user: boolean;
@@ -15,6 +15,8 @@ interface AuthContextType {
   loginUser: Login;
   setLoginUser: (loginUser: Login) => void;
   logOut: () => void;
+  userProfile: User;
+  setUserProfile: (userProfile: User) => void;
 }
 interface Props {
   children: ReactNode;
@@ -59,6 +61,16 @@ export const AuthContext = createContext<AuthContextType>(undefined!);
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<string | File>("");
+  const [userProfile, setUserProfile] = useState<User>({
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    image: "",
+    isAdmin: false,
+    isLoggedin: false,
+    _id: 0,
+  })
   const [newUser, setNewUser] = useState<SignUp>({
     firstName: "",
     lastName: "",
@@ -99,7 +111,9 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const signUp = async () => {
+  const signUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     let urlencoded = new URLSearchParams();
     if (newUser !== null) {
       urlencoded.append("firstName", newUser.firstName);
@@ -120,13 +134,24 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         );
         const result: SignupResult = await response.json();
         console.log("results", result);
+        const token = result.accessToken;
+        if (token) {
+          localStorage.setItem("token", token);
+          setUserProfile(result.user);
+          setUser(true);
+//TODO error messages with timeout
+        } else {
+          console.log("error seting token");
+        }
       } catch (error) {
         console.log("error fetching", error);
       }
     }
   };
 
-  const logIn = async () => {
+  const logIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     let urlencoded = new URLSearchParams();
     if (loginUser !== null) {
       urlencoded.append("email", loginUser.email);
@@ -144,15 +169,18 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         const token = result.accessToken;
         if (token) {
           localStorage.setItem("token", token);
+          setUserProfile(result.user);
+          setUser(true);
+//TODO error messages with timeout
         } else {
           console.log("error seting token");
         }
-        setUser(true);
       } catch (error) {
         console.log("login error", error);
       }
     }
   };
+
 
   const isUserLoggedIn = (): void => {
     const token = getToken();
@@ -191,6 +219,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         setLoginUser,
         logIn,
         logOut,
+        userProfile,
+        setUserProfile,
       }}
     >
       {children}
