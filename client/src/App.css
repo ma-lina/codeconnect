@@ -1,5 +1,10 @@
 .App {
   text-align: center;
-  margin-top: 4rem;
+  margin-top: 6rem;
   margin-bottom: 6rem;
+  /* font-family: 'Roboto' */
+}
+
+.branding-text {
+  font-family: 'Fira Code', monospace;
 }
