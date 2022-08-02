@@ -11,7 +11,7 @@ function ButtonNavigateTo({ buttonText, destination }: ButtonProps) {
             variant='text'
             color="primary"
             onClick={() => navigateTo(destination)}
-            sx={{ mr: 2, p: 0 }}
+            sx={{ py: 1 }}
             >
                 {buttonText}
             </Button>
