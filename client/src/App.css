@@ -5,6 +5,23 @@
   /* font-family: 'Roboto' */
 }
 
+.background-image {
+  background-image: url("codeconnect_diamonds_blue_vertical.svg");
+}
+
+@media only screen and (min-width: 541px) {
+  .background-image {
+    background-image: url("codeconnect_diamonds_blue_horizontal.svg");
+  }
+}
+
+.background-settings {
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
 .fira-code {
   font-family: 'Fira Code';
 }
