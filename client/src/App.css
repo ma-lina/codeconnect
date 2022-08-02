@@ -5,6 +5,41 @@
   /* font-family: 'Roboto' */
 }
 
-.branding-text {
-  font-family: 'Fira Code', monospace;
+.fira-code {
+  font-family: 'Fira Code';
 }
+
+.title-text {
+  color: #626aa8;
+  text-align: center;
+  text-shadow: 2px grey;
+}
+
+.cursor {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cursor::after {
+  content: "";
+  width: 0.5em;
+  height: 1em;
+  display: inline-block;
+  animation: cursor-blink 1.5s steps(2) infinite;
+}
+
+.blue-cursor::after {
+  background: #626aa8;
+}
+
+.white-cursor::after {
+  background: #fff;
+}
+
+@keyframes cursor-blink {
+  0% {
+    opacity: 0;
+  }
+}
+
