@@ -67,9 +67,8 @@ interface Mentoring {
   timeslots: Types.Array<string>;
   offer: boolean;
 }
-interface MentoringDoc extends Mentoring, Document {}
 
-//interface MentoringModel extends Model<MentoringDoc> {}
+interface MentoringDoc extends Mentoring, Document {}
 
 const mentoringFields: Record<keyof Mentoring, any> = {
   techKnowHow: Array,
@@ -79,12 +78,14 @@ const mentoringFields: Record<keyof Mentoring, any> = {
   offer: Boolean,
 };
 
-const mentoringSchema = baseModel.discriminator<MentoringDoc>(
+const mentoringModel = baseModel.discriminator(
   "Mentoring",
   new Schema(mentoringFields, options)
 );
 
-const shadowingSchema = baseModel.discriminator(
+interface Shadowing {}
+
+const shadowingModel = baseModel.discriminator(
   "Shadowing",
   new Schema(
     {
@@ -99,7 +100,9 @@ const shadowingSchema = baseModel.discriminator(
   )
 );
 
-const coworkingSchema = baseModel.discriminator(
+interface Coworking {}
+
+const coworkingModel = baseModel.discriminator(
   "Coworking",
   new Schema(
     {
@@ -109,9 +112,5 @@ const coworkingSchema = baseModel.discriminator(
     options
   )
 );
-
-let mentoringModel = model("Mentoring", mentoringSchema);
-//let shadowingModel = model("Shadowing", shadowingSchema);
-//let coworkingModel = model("Coworking", coworkingSchema);
 
 export { mentoringModel, shadowingModel, coworkingModel };
