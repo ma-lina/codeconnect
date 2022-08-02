@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import { AuthContext } from "../Context/AuthContext";
 import TextHeaderLine from "../Components/TextHeaderLine";
+import { Typography } from "@mui/material";
+import ButtonNavigateTo from "../Components/ButtonNavigateTo";
 
 const Login = () => {
   const { loginUser, setLoginUser, user, logIn } = useContext(AuthContext);
@@ -55,6 +57,16 @@ const Login = () => {
             Login
           </Button>
         </div>
+      </Box>
+            <Box
+        sx={{
+          flexDirection: 'column',
+        }}
+      >
+        <Typography variant="body2" sx={{ pt: 2 }}>
+          You do not have an account yet? 
+        </Typography>
+        <ButtonNavigateTo buttonText="sign up" destination="/signup"/>
       </Box>
     </div>
   );
