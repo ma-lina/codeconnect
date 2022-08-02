@@ -1,0 +1,4 @@
+type TextProp = {
+    text: string;
+}
+
