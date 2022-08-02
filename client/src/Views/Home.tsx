@@ -1,14 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import TextHeaderLine from "../Components/TextHeaderLine";
 
 function Home() {
   return (
     <>
-      <Typography variant={"h3"} component={"div"}>
-        <Box className="title-text fira-code">
-          codeconnect
-        </Box>
-      </Typography>
+      <TextHeaderLine text="codeconnect"/>
     </>
   )
 }
