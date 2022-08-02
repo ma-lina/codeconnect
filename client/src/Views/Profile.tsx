@@ -1,5 +1,11 @@
+import TextHeaderLine from "../Components/TextHeaderLine";
+
 const Profile = () => {
-  return <div>Profile</div>;
+  return(
+    <>
+      <TextHeaderLine text="profile"/>
+    </>
+    )
 };
 
 export default Profile;

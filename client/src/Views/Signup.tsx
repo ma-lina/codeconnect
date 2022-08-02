@@ -7,6 +7,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { Input, IconButton, Avatar } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import { AuthContext } from "../Context/AuthContext";
+import TextHeaderLine from "../Components/TextHeaderLine";
 
 //TODO Validation
 //TODO secure url bar
@@ -39,7 +40,7 @@ const Signup = () => {
   console.log("newUser", newUser);
   return (
     <div>
-      <div>Signup</div>
+      <TextHeaderLine text="signup"/>
 
       <div>
         <Box

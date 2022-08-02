@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import { AuthContext } from "../Context/AuthContext";
+import TextHeaderLine from "../Components/TextHeaderLine";
 
 const Login = () => {
   const { loginUser, setLoginUser, user, logIn } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const Login = () => {
 
   return (
     <div>
-      <div>Login</div>
+      <TextHeaderLine text="login"/>
       <Box
         component="form"
         sx={{
