@@ -1,51 +1,99 @@
-import { Schema } from "mongoose";
-import * as mongoose from "mongoose";
+import {
+  model,
+  Schema,
+  Types,
+  Document,
+  Model,
+  InferSchemaType,
+} from "mongoose";
+
+interface UserData {
+  firstName: string;
+  lastName: string;
+  isLoggedin: boolean;
+  username?: string;
+  image?: string;
+  _id: string;
+  isAdmin?: boolean;
+  starredMentorship?: any;
+  starredCoworking?: any;
+  starredShadowing?: any;
+}
+interface Base {
+  author: string;
+  field: Types.Array<string>;
+  location: string;
+  description: string;
+  date: Date;
+  starred: Types.DocumentArray<UserData>;
+}
+
+interface BaseDoc extends Base, Document {}
 
 const options = {
   discriminatorKey: "kind",
+  collection: "pinboard",
   timestamps: true,
 };
 
-const baseSchema = new mongoose.Schema(
-  {
-    author: String,
-    field: Array,
-    location: String,
-    description: String,
-    date: Date,
-    starred: Array,
-  },
-  options
-);
+const baseSchemaFields: Record<keyof Base, any> = {
+  author: [{ firstName: String, lastName: String }],
+  field: Array,
+  location: String,
+  description: String,
+  date: Date,
+  starred: Array,
+};
 
-let baseModel = mongoose.model("Base", baseSchema);
+const baseSchema = new Schema(baseSchemaFields, options);
 
-//TODO better naming for schema and discriminators?
+//Other approach to define types, but no check if required in schema by mongoose
+/* const baseSchema = new Schema({
+  author: String,
+  field: Array,
+  location: String,
+  description: String,
+  date: Date,
+  starred: Array,
+});
+type Base = InferSchemaType<typeof baseSchema>; */
 
-const mentoringSchema = baseModel.discriminator(
+let baseModel = model<BaseDoc>("Base", baseSchema);
+
+interface Mentoring {
+  techKnowHow: Types.Array<string>;
+  level: string;
+  availability: Types.Array<string>;
+  timeslots: Types.Array<string>;
+  offer: boolean;
+}
+interface MentoringDoc extends Mentoring, Document {}
+
+//interface MentoringModel extends Model<MentoringDoc> {}
+
+const mentoringFields: Record<keyof Mentoring, any> = {
+  techKnowHow: Array,
+  level: String,
+  availability: Array,
+  timeslots: Array,
+  offer: Boolean,
+};
+
+const mentoringSchema = baseModel.discriminator<MentoringDoc>(
   "Mentoring",
-  new mongoose.Schema(
-    {
-      techKnowHow: Array,
-      level: String,
-      availability: Array,
-      timeslots: Array,
-      request: Boolean,
-    },
-    options
-  )
+  new Schema(mentoringFields, options)
 );
 
 const shadowingSchema = baseModel.discriminator(
   "Shadowing",
-  new mongoose.Schema(
+  new Schema(
     {
       techKnowHow: Array,
       level: String,
       availability: Array,
       timeslots: Array,
       length: Number,
-      request: Boolean,
+      offer: Boolean,
     },
     options
   )
@@ -53,7 +101,7 @@ const shadowingSchema = baseModel.discriminator(
 
 const coworkingSchema = baseModel.discriminator(
   "Coworking",
-  new mongoose.Schema(
+  new Schema(
     {
       time: Number,
       frequency: Array,
@@ -62,8 +110,8 @@ const coworkingSchema = baseModel.discriminator(
   )
 );
 
-let mentoringModel = mongoose.model("Mentee", mentoringSchema);
-let shadowingModel = mongoose.model("Shadowing", shadowingSchema);
-let coworkingModel = mongoose.model("Coworking", coworkingSchema);
+let mentoringModel = model("Mentoring", mentoringSchema);
+//let shadowingModel = model("Shadowing", shadowingSchema);
+//let coworkingModel = model("Coworking", coworkingSchema);
 
 export { mentoringModel, shadowingModel, coworkingModel };
