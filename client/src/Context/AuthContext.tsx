@@ -22,38 +22,7 @@ interface Props {
   children: ReactNode;
 }
 
-//TODO sort interfaces in extra file?
 //TODO decide if array should include object id or something else, then change 'any';
-interface User {
-  email: string;
-  firstName: string;
-  image?: string;
-  isLoggedin?: boolean;
-  isAdmin?: boolean;
-  lastName: string;
-  starredCoworking?: Array<any>;
-  starredMentorship?: Array<any>;
-  starredShadowing?: Array<any>;
-  username: string;
-  _id: number;
-}
-
-interface SignUp extends User {
-  password: string;
-}
-interface LoginResult extends SignupResult {
-  isAuthenticated: boolean;
-}
-interface SignupResult {
-  accessToken: string;
-  message: string;
-  user: User;
-}
-interface ImageResult {
-  image: string;
-  message: string;
-}
-
 //TODO display error messages
 
 export const AuthContext = createContext<AuthContextType>(undefined!);
