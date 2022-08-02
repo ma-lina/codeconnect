@@ -46,12 +46,12 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography display={"flex"} textAlign={"left"} component="div" sx={{ flexGrow: 1 }} variant='h6'>
+          <Typography className="cursor white-cursor" display={"flex"} textAlign={"left"} component="div" sx={{ flexGrow: 1 }} variant='h6'>
             <Box
-              className="branding-text" 
+              className="fira-code" 
               sx={{ fontWeight: 'bold'}}
               >
-              codeconnect
+              codeconnect~
             </Box>
           </Typography>
           {user ? 
