@@ -52,12 +52,12 @@ const Login = () => {
             onChange={handleChangeHandler}
           />
         </div>
-        <div>
-          <Button type="submit" endIcon={<SendIcon />} variant="contained" onClick={logIn}>
-            Login
-          </Button>
-        </div>
-      </Box>
+          <Box sx={{ p: 1 }}>
+            <Button type="submit" endIcon={<SendIcon />} variant="contained" onClick={logIn}>
+              Login
+            </Button>
+          </Box>
+        </Box>
             <Box
         sx={{
           flexDirection: 'column',
