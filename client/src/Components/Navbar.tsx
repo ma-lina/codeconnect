@@ -55,13 +55,15 @@ function Navbar() {
             </Box>
           </Typography>
           {user ? 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Logout">
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Logout">
                 <IconButton onClick={logOut} sx={{ p: 0 }}>
-                  <Avatar alt={`Avatar of ${userProfile.firstName}`} src={userProfile.image}/>
-                </IconButton>
-              </Tooltip>
-            </Box> : 
+                  {userProfile &&
+                    <Avatar alt={`Avatar of ${userProfile.firstName}`} src={userProfile.image} />
+                  }
+                  </IconButton>
+                </Tooltip>
+              </Box> : 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Login">
                 <IconButton
