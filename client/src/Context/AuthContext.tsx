@@ -108,6 +108,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           localStorage.setItem("token", token);
           setUserProfile(result.user);
           setUser(true);
+          navigate("/profile");
 //TODO error messages with timeout
         } else {
           console.log("error seting token");
@@ -140,6 +141,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           localStorage.setItem("token", token);
           setUserProfile(result.user);
           setUser(true);
+          navigate("/profile");
 //TODO error messages with timeout
         } else {
           console.log("error seting token");
