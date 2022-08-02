@@ -15,7 +15,7 @@ interface AuthContextType {
   loginUser: Login;
   setLoginUser: (loginUser: Login) => void;
   logOut: () => void;
-  userProfile: User;
+  userProfile: User | null;
   setUserProfile: (userProfile: User) => void;
 }
 interface Props {
@@ -30,16 +30,7 @@ export const AuthContext = createContext<AuthContextType>(undefined!);
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<string | File>("");
-  const [userProfile, setUserProfile] = useState<User>({
-    firstName: "",
-    lastName: "",
-    username: "",
-    email: "",
-    image: "",
-    isAdmin: false,
-    isLoggedin: false,
-    _id: 0,
-  })
+  const [userProfile, setUserProfile] = useState<User | null>(null);
   const [newUser, setNewUser] = useState<SignUp>({
     firstName: "",
     lastName: "",
