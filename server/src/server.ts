@@ -1,33 +1,62 @@
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import express from "express";
+import http from "http";
 import cors from "cors";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
-import { ApolloServer, gql } from "apollo-server-express";
+import passport from "passport";
+import { json } from "body-parser";
+//import { typeDefs, resolvers } from "./schema";
 import { schema } from "./graphql/schema";
 import { cloudinaryConfig } from "./config/cloudinaryConfig";
 import usersRoute from "./routes/usersRoute";
-import passport from "passport";
 import passportConfig from "./config/passportConfig";
 
-const app = express();
-dotenv.config();
-const port = process.env.PORT || 5000;
+interface ApolloContext {
+  token?: String;
+}
 
-const server = new ApolloServer({ schema });
-
-const startServer = () => {
-  app.listen(port, () => {
-    console.log("Server is running on " + port + "port");
+const startApolloServer = async () => {
+  const app = express();
+  dotenv.config();
+  const port = process.env.PORT || 5000;
+  const httpServer = http.createServer(app);
+  const server = new ApolloServer<ApolloContext>({
+    //typeDefs,
+    //resolvers,
+    schema,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
-};
-
-const loadRoutes = () => {
-  app.use('/users', usersRoute);
-};
-
-const middlewareSetup = () => {
-  app.use(express.json());
+  await server.start();
+  //For REST routes middleware setup:
+  middlewareSetup(app);
+  app.use("/users", usersRoute);
   app.use(
+    "/graphql",
+    cors<cors.CorsRequest>({
+      origin: "http://localhost:3000",
+      credentials: true,
+    }),
+    json(),
+    express.urlencoded({
+      extended: true,
+    }),
+    expressMiddleware(
+      server
+      /*   {
+      context: async ({ req }) => ({ token: req.headers.token }),
+      } */
+    )
+  );
+  await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
+  console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
+};
+
+const middlewareSetup = (server) => {
+  server.use(express.json());
+  server.use(
     express.urlencoded({
       extended: true,
     })
@@ -36,9 +65,9 @@ const middlewareSetup = () => {
     origin: "http://localhost:3000",
     credentials: true,
   };
-  app.use(cors(corsOptions));
+  server.use(cors(corsOptions));
   cloudinaryConfig();
-  app.use(passport.initialize());
+  server.use(passport.initialize());
   passportConfig(passport);
 };
 
@@ -53,7 +82,5 @@ const mongoDbConection = async () => {
 
 (async () => {
   mongoDbConection();
-  middlewareSetup();
-  loadRoutes();
-  startServer();
+  startApolloServer();
 })();
