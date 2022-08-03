@@ -1,11 +1,4 @@
-import {
-  model,
-  Schema,
-  Types,
-  Document,
-  Model,
-  InferSchemaType,
-} from "mongoose";
+import { model, Schema, Types, Document, InferSchemaType } from "mongoose";
 
 interface UserData {
   firstName: string;
@@ -68,8 +61,6 @@ interface Mentoring {
   offer: boolean;
 }
 
-interface MentoringDoc extends Mentoring, Document {}
-
 const mentoringFields: Record<keyof Mentoring, any> = {
   techKnowHow: Array,
   level: String,
@@ -83,34 +74,42 @@ const mentoringModel = baseModel.discriminator(
   new Schema(mentoringFields, options)
 );
 
-interface Shadowing {}
+interface Shadowing {
+  techKnowHow: Types.Array<string>;
+  level: string;
+  availability: Types.Array<string>;
+  timeslots: Types.Array<string>;
+  length: number;
+  offer: boolean;
+}
+
+const shadowingFields: Record<keyof Shadowing, any> = {
+  techKnowHow: Array,
+  level: String,
+  availability: Array,
+  timeslots: Array,
+  length: Number,
+  offer: Boolean,
+};
 
 const shadowingModel = baseModel.discriminator(
   "Shadowing",
-  new Schema(
-    {
-      techKnowHow: Array,
-      level: String,
-      availability: Array,
-      timeslots: Array,
-      length: Number,
-      offer: Boolean,
-    },
-    options
-  )
+  new Schema(shadowingFields, options)
 );
 
-interface Coworking {}
+interface Coworking {
+  time: number;
+  frequency: Types.Array<string>;
+}
+
+const coworkingFields: Record<keyof Coworking, any> = {
+  time: Number,
+  frequency: Array,
+};
 
 const coworkingModel = baseModel.discriminator(
   "Coworking",
-  new Schema(
-    {
-      time: Number,
-      frequency: Array,
-    },
-    options
-  )
+  new Schema(coworkingFields, options)
 );
 
 export { mentoringModel, shadowingModel, coworkingModel };
