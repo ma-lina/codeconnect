@@ -13,7 +13,7 @@ interface UserData {
   starredShadowing?: any;
 }
 interface Base {
-  author: string;
+  creator: number;
   field: Types.Array<string>;
   location: string;
   description: string;
@@ -30,7 +30,7 @@ const options = {
 };
 
 const baseSchemaFields: Record<keyof Base, any> = {
-  author: [{ firstName: String, lastName: String }],
+  creator: { type: Number, ref: "User" },
   field: Array,
   location: String,
   description: String,
