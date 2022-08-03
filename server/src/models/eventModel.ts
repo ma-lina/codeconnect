@@ -13,7 +13,7 @@ interface UserData {
   starredShadowing?: any;
 }
 interface Base {
-  creator: number;
+  creator: Types.ObjectId;
   field: Types.Array<string>;
   location: string;
   description: string;
