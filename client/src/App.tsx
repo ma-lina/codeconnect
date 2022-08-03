@@ -26,7 +26,6 @@ function App() {
           <div className="App">
             <header>
               <Navbar/>
-{/* TODO create a navbar / bottom navigation */}
             </header>
             <Routes>
               <Route path="/" element={<Home />} />
