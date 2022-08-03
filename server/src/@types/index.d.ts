@@ -8,7 +8,6 @@ interface ResponseJson {
   image?: string;
   error?: any;
 }
-
 /* interface UserData {
   firstName: string;
   lastName: string;
@@ -24,12 +23,12 @@ interface ResponseJson {
 interface Base {
   //Types: import("mongoose").Types;
   author: string;
-  field: Types.Array<string>;
+  field: Array<string>;
   location: string;
   description: string;
   date: Date;
-  starred: Types.DocumentArray<UserData>;
-}
+  starred: Array<UserData>;
+} 
 
 interface BaseDoc extends Base, Document {}
 

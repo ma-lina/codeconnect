@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Coworking, mentoring and shadowing in the coding world",
   "main": "./build/server.js",
-  "types": "src/@types/index.d.ts",
+  "types": "src/@types/",
   "scripts": {
     "start": "concurrently \"tsc\"  \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
     "dev": "concurrently \"tsc\" \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
