@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React, { useLayoutEffect } from "react";
-import TextHeaderLine from "../Components/TextHeaderLine";
+import ButtonHomeNavigateTo from "../Components/ButtonHomeNavigateTo";
 
 function Home() {
   useLayoutEffect(() => {
@@ -10,7 +10,15 @@ function Home() {
 
   return (
     <>
-      <TextHeaderLine text="codeconnect"/>
+      <Typography variant={"h1"} component={"div"} sx={{marginLeft:"0.8rem"}}>
+        <Box className="homepage-text fira-code cursor white-cursor">
+          codeconnect
+        </Box>
+      </Typography>
+        <Box sx={{display: 'flex', alignItems: 'center', justifyContent:"center", gap:4, p:2}}>
+          <ButtonHomeNavigateTo buttonText="Login" destination="/login"/>
+          <ButtonHomeNavigateTo buttonText="Sign up" destination="/signup"/>
+        </Box>
     </>
   )
 }
