@@ -3,7 +3,7 @@ import "@fontsource/fira-code"
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme, Theme } from "@mui/material/styles";
 import { themeLightOptions } from "./Utils/muiThemeOptions";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { AuthContextProvider } from "./Context/AuthContext";
 import Home from "./Views/Home";
@@ -16,7 +16,18 @@ import Logout from "./Components/Logout";
 import Navbar from "./Components/Navbar";
 
 function App() {
-  const themeLight : Theme = createTheme(themeLightOptions);
+  const themeLight: Theme = createTheme(themeLightOptions);
+
+//TODO should this code be moved to navbar? should there be a useEffect on change of location? 
+  const location = useLocation();
+  
+  const showNavbar = () : boolean => {
+    if (location.pathname === "/") {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   return (
     <ThemeProvider theme={themeLight}>
@@ -25,7 +36,7 @@ function App() {
         <AuthContextProvider>
           <div className="App">
             <header>
-              <Navbar/>
+              {showNavbar() && <Navbar/>}
             </header>
             <Routes>
               <Route path="/" element={<Home />} />
