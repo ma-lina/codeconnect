@@ -147,48 +147,57 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
 
   const getUserProfile = async (token: Token): Promise<void> => {
 
-    if (!token) {
-      navigate("/login")
-      //display a message for the user to log in
-    } else {
       const myHeaders: Headers = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
-      
+      console.log('built myHeaders:', myHeaders)
+    
       const requestOptions: RequestOptions = {
         method: "GET",
         headers: myHeaders,
       };
+    
+          console.log('built request Options:', requestOptions)
 
-      try {
+
+    try {
+        console.log('starting to try/catch get user profile')
         const response :Response = await fetch(
-          serverURL+"/profile",
+          serverURL+"/users/profile",
           requestOptions
         );
-        const result: GetProfileResult = await response.json();
+      const result: GetProfileResult = await response.json();
+      console.log('result of the fetch', result)
         setUserProfile(result.user);
-        setUser(true);
+      setUser(true);
+      
+        console.log("user is logged in", user, userProfile);
+//what happens when the token expires and the authentication fails?
+//implement isLoggedin on the backend side
       } catch (error) {
+//TODO display a notification for the user to log in
+        setUser(false);
+
         console.log("login error", error);
       }
-    }
   };
-
 
   const isUserLoggedIn = (): void => {
     const token = getToken();
-    console.log(token);
-    if (token) {
-      setUser(true);
-      console.log("user is logged in");
-    } else {
-      setUser(false);
+    if (token && user && userProfile) {
+      return
+    } else if (!token) {
+      setUser(false); 
+      //display a message for the user to log in
+      navigate("/login")
       console.log("user is NOT logged in");
+    } else {
+      getUserProfile(token);
     }
   };
 
   useEffect(() => {
     isUserLoggedIn();
-  }, [user]);
+  }, [userProfile]);
 
   const logOut = () => {
     localStorage.removeItem("token");
