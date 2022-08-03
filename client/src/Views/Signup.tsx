@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -14,6 +14,11 @@ import ButtonNavigateTo from "../Components/ButtonNavigateTo";
 //TODO secure url bar
 
 const Signup = () => {
+  //removing background
+  useLayoutEffect(() => {
+    document.body.className = "";
+  })
+
   const {
     newUser,
     setNewUser,

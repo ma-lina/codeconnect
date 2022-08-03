@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useLayoutEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -9,6 +9,11 @@ import { Typography } from "@mui/material";
 import ButtonNavigateTo from "../Components/ButtonNavigateTo";
 
 const Login = () => {
+  //removing background
+  useLayoutEffect(() => {
+    document.body.className = "";
+  })
+
   const { loginUser, setLoginUser, user, logIn } = useContext(AuthContext);
 
   const handleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
