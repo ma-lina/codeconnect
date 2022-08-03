@@ -26,8 +26,15 @@
   font-family: 'Fira Code';
 }
 
-.title-text {
+.blue-text {
   color: #626aa8;
+  /* text-align: center; */
+  /* text-shadow: 2px grey; */
+}
+
+.homepage-text{
+  margin-top: 10rem;
+  color: #fff;
   text-align: center;
   text-shadow: 2px grey;
 }
