@@ -1,5 +1,5 @@
 //TODO import mongoose Types without turning file into local
-
+//TODO split up in different files
 interface ResponseJson {
   message: string;
   user?: object;
