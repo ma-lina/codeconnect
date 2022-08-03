@@ -3,37 +3,19 @@ import { useNavigate } from "react-router-dom";
 import serverURL from "../config";
 import { getToken } from "../Utils/getToken";
 
-interface AuthContextType {
-  newUser: SignUp;
-  selectedFile: File | string;
-  submitImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  signUp: (e: React.FormEvent) => void;
-  logIn: (e: React.FormEvent) => void;
-  setSelectedFile: (selectedFile: File | string) => void;
-  setNewUser: (newUser: SignUp) => void;
-  user: boolean;
-  setUser: (user: boolean) => void;
-  loginUser: Login;
-  setLoginUser: (loginUser: Login) => void;
-  getUserProfile: (token:Token) => Promise<void>;
-  logOut: () => void;
-  userProfile: User | null;
-  setUserProfile: (userProfile: User) => void;
-}
+//TODO decide if array should include object id or something else, then change 'any';
+//TODO display error messages
 interface Props {
   children: ReactNode;
 }
-
-//TODO decide if array should include object id or something else, then change 'any';
-//TODO display error messages
 
 export const AuthContext = createContext<AuthContextType>(undefined!);
 
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<string | File>("");
-  const [userProfile, setUserProfile] = useState<User | null>(null);
-  const [newUser, setNewUser] = useState<SignUp>({
+  const [userProfile, setUserProfile] = useState<User.User | null>(null);
+  const [newUser, setNewUser] = useState<User.SignUp>({
     firstName: "",
     lastName: "",
     username: "",
@@ -65,7 +47,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         "http://localhost:5000/users/profile/photoUpload",
         requestOptions
       );
-      const result: ImageResult = await response.json();
+      const result: User.ImageResult = await response.json();
       setNewUser({ ...newUser, image: result.image });
       console.log("image uploaded", newUser);
     } catch (error) {
@@ -94,7 +76,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           "http://localhost:5000/users/register",
           requestOptions
         );
-        const result: SignupResult = await response.json();
+        const result: User.SignupResult = await response.json();
         console.log("results", result);
         const token = result.accessToken;
         if (token) {
@@ -128,7 +110,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           "http://localhost:5000/users/login",
           requestOptions
         );
-        const result: LoginResult = await response.json();
+        const result: User.LoginResult = await response.json();
         const token = result.accessToken;
         if (token) {
           localStorage.setItem("token", token);
@@ -149,34 +131,26 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
 
       const myHeaders: Headers = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
-      console.log('built myHeaders:', myHeaders)
     
       const requestOptions: RequestOptions = {
         method: "GET",
         headers: myHeaders,
       };
-    
-          console.log('built request Options:', requestOptions)
-
 
     try {
-        console.log('starting to try/catch get user profile')
         const response :Response = await fetch(
           serverURL+"/users/profile",
           requestOptions
         );
-      const result: GetProfileResult = await response.json();
-      console.log('result of the fetch', result)
-        setUserProfile(result.user);
+      const result: User.GetProfileResult = await response.json();
+      setUserProfile(result.user);
       setUser(true);
       
-        console.log("user is logged in", user, userProfile);
 //what happens when the token expires and the authentication fails?
 //implement isLoggedin on the backend side
       } catch (error) {
 //TODO display a notification for the user to log in
         setUser(false);
-
         console.log("login error", error);
       }
   };
