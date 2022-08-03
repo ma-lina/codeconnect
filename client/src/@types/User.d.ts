@@ -27,3 +27,16 @@ interface ImageResult {
   image: string;
   message: string;
 }
+
+interface GetProfileResult {
+  message: string;
+  user: User;
+}
+
+type Token = string | null; 
+
+interface RequestOptions {
+  method: "GET" | "POST" | "PATCH" | "DELETE";
+  body?: URLSearchParams;
+  headers?: Headers;
+}
