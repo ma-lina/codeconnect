@@ -1,5 +1,6 @@
 import { useState, createContext, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import serverURL from "../config";
 import { getToken } from "../Utils/getToken";
 
 interface AuthContextType {
@@ -14,6 +15,7 @@ interface AuthContextType {
   setUser: (user: boolean) => void;
   loginUser: Login;
   setLoginUser: (loginUser: Login) => void;
+  getUserProfile: (token:Token) => Promise<void>;
   logOut: () => void;
   userProfile: User | null;
   setUserProfile: (userProfile: User) => void;
@@ -143,6 +145,34 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
+  const getUserProfile = async (token: Token): Promise<void> => {
+
+    if (!token) {
+      navigate("/login")
+      //display a message for the user to log in
+    } else {
+      const myHeaders: Headers = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+      
+      const requestOptions: RequestOptions = {
+        method: "GET",
+        headers: myHeaders,
+      };
+
+      try {
+        const response :Response = await fetch(
+          serverURL+"/profile",
+          requestOptions
+        );
+        const result: GetProfileResult = await response.json();
+        setUserProfile(result.user);
+        setUser(true);
+      } catch (error) {
+        console.log("login error", error);
+      }
+    }
+  };
+
 
   const isUserLoggedIn = (): void => {
     const token = getToken();
@@ -180,6 +210,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         loginUser,
         setLoginUser,
         logIn,
+        getUserProfile, 
         logOut,
         userProfile,
         setUserProfile,
