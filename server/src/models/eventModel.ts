@@ -1,5 +1,4 @@
 import { model, Schema, Types, Document, InferSchemaType } from "mongoose";
-
 interface UserData {
   firstName: string;
   lastName: string;
@@ -12,14 +11,14 @@ interface UserData {
   starredCoworking?: any;
   starredShadowing?: any;
 }
-interface Base {
+/* interface Base {
   creator: Types.ObjectId;
   field: Types.Array<string>;
   location: string;
   description: string;
   date: Date;
   starred: Types.DocumentArray<UserData>;
-}
+} */
 
 interface BaseDoc extends Base, Document {}
 

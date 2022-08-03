@@ -1,5 +1,8 @@
-//TODO import mongoose Types without turning file into local
-//TODO split up in different files
+//TODO split up in different files?
+
+type mArray = import("mongoose").Types.Array<any>;
+type mDocumentArray = import("mongoose").Types.DocumentArray<any>;
+type mObjectId = import("mongoose").Types.ObjectId;
 interface ResponseJson {
   message: string;
   user?: object;
@@ -8,7 +11,7 @@ interface ResponseJson {
   image?: string;
   error?: any;
 }
-/* interface UserData {
+interface UserData {
   firstName: string;
   lastName: string;
   isLoggedin: boolean;
@@ -21,17 +24,16 @@ interface ResponseJson {
   starredShadowing?: any;
 }
 interface Base {
-  //Types: import("mongoose").Types;
-  author: string;
-  field: Array<string>;
+  creator: mObjectId;
+  field: mArray;
   location: string;
   description: string;
   date: Date;
-  starred: Array<UserData>;
-} 
+  starred: mDocumentArray<UserData>;
+}
 
-interface BaseDoc extends Base, Document {}
-
+//interface BaseDoc extends Base, Document {}
+/* 
 interface Mentoring {
   techKnowHow: Types.Array<string>;
   level: string;
@@ -44,4 +46,5 @@ interface MentoringDoc extends Mentoring, Document {}
 
 interface Shadowing {}
 
-interface Coworking {} */
+interface Coworking {}
+ */
