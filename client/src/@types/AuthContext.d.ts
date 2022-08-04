@@ -16,6 +16,8 @@ interface AuthContextType {
   logOut: () => void;
   userProfile: User.User | null;
   setUserProfile: (userProfile: User.User) => void;
+  deleteProfile: () => Promise<void>;
+
 }
 
 type Token = string | null; 

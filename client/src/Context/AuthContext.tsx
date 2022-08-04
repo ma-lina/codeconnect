@@ -151,7 +151,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       } catch (error) {
 //TODO display a notification for the user to log in
         setUser(false);
-        console.log("login error", error);
+        console.log("Client error, could not get user profile", error);
       }
   };
 
@@ -179,6 +179,32 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     navigate("../", { replace: true });
   };
 
+  const deleteProfile = async (): Promise<void> => {
+    //TODO create a modal with confirmation, that the account will be irreversibly deleted
+    const token: Token = getToken();
+
+    const myHeaders: Headers = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    
+    const requestOptions: RequestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+    };
+
+    try {
+        const response :Response = await fetch(
+          serverURL+"/users/profile",
+          requestOptions
+        );
+      const result: User.DeleteProfileResult = await response.json();
+      //TODO display info to the user about the account being deleted
+        logOut()
+      
+      } catch (error) {
+        console.log("Client error while deleting the profile", error);
+      }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -197,6 +223,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         logOut,
         userProfile,
         setUserProfile,
+        deleteProfile,
       }}
     >
       {children}
