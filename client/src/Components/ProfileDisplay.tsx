@@ -1,11 +1,11 @@
-import { Avatar, Badge, Box, Typography } from "@mui/material";
+import { Avatar, Badge, Box, Button, Typography } from "@mui/material";
 import React, { useContext } from 'react'
 import { AuthContext } from '../Context/AuthContext'
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import { PhotoCamera } from "@mui/icons-material";
 
 function ProfileDisplay() {
-    const { userProfile } = useContext(AuthContext);
+    const { userProfile, deleteProfile } = useContext(AuthContext);
 
   return (
       <>
@@ -25,7 +25,10 @@ function ProfileDisplay() {
                         <Typography variant="body2">
                             {userProfile.username}
                         </Typography>}
-                </Box>
+                  </Box>
+                  <Button onClick={() => deleteProfile()}>
+                      Delete user profile
+                  </Button>
             </Box>}
       </>
   )
