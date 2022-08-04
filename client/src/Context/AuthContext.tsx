@@ -176,6 +176,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const logOut = () => {
     localStorage.removeItem("token");
     setUser(false);
+    setUserProfile(null);
     navigate("../", { replace: true });
   };
 
