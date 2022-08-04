@@ -44,14 +44,16 @@ declare namespace User {
   interface SignUp extends User {
     password: string;
   }
-  interface LoginResult extends SignupResult {
-    isAuthenticated: boolean;
-  }
+
   interface SignupResult {
     accessToken: string;
     message: string;
     user: User;
   }
+  interface LoginResult extends SignupResult {
+    isAuthenticated: boolean;
+  }
+
   interface ImageResult {
     image: string;
     message: string;
@@ -60,5 +62,9 @@ declare namespace User {
   interface GetProfileResult {
     message: string;
     user: User;
+  }
+
+  interface DeleteProfileResult {
+    message: string;
   }
 }
