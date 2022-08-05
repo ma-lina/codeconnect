@@ -1,4 +1,4 @@
-const getToken = () : Token => {
+const getToken = () => {
   const token = localStorage.getItem("token");
   if (token) {
     return token;

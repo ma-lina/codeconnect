@@ -12,7 +12,7 @@ interface AuthContextType {
   setUser: (user: boolean) => void;
   loginUser: Login;
   setLoginUser: (loginUser: Login) => void;
-  getUserProfile: (token:Token) => Promise<void>;
+  getUserProfile: (token:string) => Promise<void>;
   logOut: () => void;
   userProfile: User.User | null;
   setUserProfile: (userProfile: User.User) => void;
