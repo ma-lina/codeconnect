@@ -127,7 +127,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const getUserProfile = async (token: Token): Promise<void> => {
+  const getUserProfile = async (token: string): Promise<void> => {
 
       const myHeaders: Headers = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
@@ -182,7 +182,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
 
   const deleteProfile = async (): Promise<void> => {
     //TODO create a modal with confirmation, that the account will be irreversibly deleted
-    const token: Token = getToken();
+    const token = getToken();
 
     const myHeaders: Headers = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
