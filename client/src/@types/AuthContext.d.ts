@@ -19,9 +19,6 @@ interface AuthContextType {
   deleteProfile: () => Promise<void>;
 
 }
-
-type Token = string | null; 
-
 interface RequestOptions {
   method: "GET" | "POST" | "PATCH" | "DELETE";
   body?: URLSearchParams;
