@@ -4,7 +4,7 @@ import { AuthContext } from '../Context/AuthContext'
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import { PhotoCamera } from "@mui/icons-material";
 
-function ProfileDisplay() {
+const ProfileDisplay:React.FC = () => {
     const { userProfile, deleteProfile } = useContext(AuthContext);
 
   return (

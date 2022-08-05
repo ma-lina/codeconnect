@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React, { useLayoutEffect } from "react";
 import ButtonHomeNavigateTo from "../Components/ButtonHomeNavigateTo";
 
-function Home() {
+const Home :React.FC = () => {
   useLayoutEffect(() => {
     document.body.classList.add("background-settings")
     document.body.classList.add("background-image")

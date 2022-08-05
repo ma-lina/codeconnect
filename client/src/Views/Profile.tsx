@@ -1,8 +1,8 @@
-import { useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import ProfileDisplay from "../Components/ProfileDisplay";
 import TextHeaderLine from "../Components/TextHeaderLine";
 
-const Profile = () => {
+const Profile :React.FC = () => {
   //removing background
   useLayoutEffect(() => {
     document.body.className = "";
