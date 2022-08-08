@@ -6,7 +6,7 @@ export default gql`
 scalar Date
 
 type User {
-  firstName: string;
+  firstName: tring;
   lastName: string;
   isLoggedin: boolean;
   username?: string;
@@ -21,46 +21,41 @@ type User {
 timestamps?
 
 type Mentoring {
-  creator: ID!, //TODO
-  field: [string!]!,
-  location: string!,
-  description: string!,
+  creator: ID!,
+  field: [String!]!,
+  location: String!,
+  description: String!,
   date: Date!,
   starred: [User],
-  techKnowHow: [string!]!,
-  level: string!,
-  availability: [string!]!,
-  timeslots: [string!]!,
-  offer: boolean!,
+  techKnowHow: [String!]!,
+  level: String!,
+  availability: [String!]!,
+  timeslots: [String!]!,
+  offer: Boolean!,
 };
 
 type Shadowing {
-creator: ID!, //TODO
-  field: [string!]!,
-  location: string!,
-  description: string!,
+creator: ID!, 
+  field: [String!]!,
+  location: String!,
+  description: String!,
   date: Date!,
   starred: [User],
-  techKnowHow: [string!]!,
-  level: string!,
-  availability: [string!]!,
-  timeslots: [string!]!,
-  offer: boolean!,
-  length: number!,
+  techKnowHow: [String!]!,
+  level: String!,
+  availability: [String!]!,
+  timeslots: [String!]!,
+  offer: Boolean!,
+  length: Int!,
 };
 
 type Coworking {
-  creator: ID!, //TODO
-  field: [string!]!,
-  location: string!,
-  description: string!,
+  creator: ID!,
+  field: [String!]!,
+  location: String!,
+  description: String!,
   date: Date!,
   starred: [User],
-  time: number!,
-  frequency: [string!]!,
-};
-
-
-
-
-
+  time: Int!,
+  frequency: [String!]!,
+}
