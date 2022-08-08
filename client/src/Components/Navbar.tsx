@@ -46,22 +46,24 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography display={"flex"} textAlign={"left"} component="div" sx={{ flexGrow: 1 }} variant='h6'>
+          <Typography className="cursor white-cursor" display={"flex"} textAlign={"left"} component="div" sx={{ flexGrow: 1 }} variant='h6'>
             <Box
-              className="branding-text" 
+              className="fira-code" 
               sx={{ fontWeight: 'bold'}}
               >
-              codeconnect
+              codeconnect~
             </Box>
           </Typography>
           {user ? 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Logout">
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Logout">
                 <IconButton onClick={logOut} sx={{ p: 0 }}>
-                  <Avatar alt={`Avatar of ${userProfile.firstName}`} src={userProfile.image}/>
-                </IconButton>
-              </Tooltip>
-            </Box> : 
+                  {userProfile &&
+                    <Avatar alt={`Avatar of ${userProfile.firstName}`} src={userProfile.image} />
+                  }
+                  </IconButton>
+                </Tooltip>
+              </Box> : 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Login">
                 <IconButton
