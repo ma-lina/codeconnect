@@ -1,5 +1,8 @@
 import { gql } from "apollo-server";
 import { makeExecutableSchema } from "graphql-tools";
+import Mentoring from "../graphql/pinboard/typeDefs";
+import Shadowing from "../graphql/pinboard/typeDefs";
+import Coworking from "../graphql/pinboard/typeDefs";
 
 const Query = gql`
   type Query {
@@ -13,5 +16,5 @@ const Query = gql`
   }
 `;
 
-const typeDefs = [Query];
+const typeDefs = [Mentoring, Shadowing, Coworking, Query];
 export const schema = makeExecutableSchema({ typeDefs });
