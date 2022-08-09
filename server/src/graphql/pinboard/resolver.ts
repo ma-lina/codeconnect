@@ -11,8 +11,11 @@ import {
   coworkingModel,
 } from "../../models/pinboardModel";
 
+//parent args context 
+
 const resolver = {
-  Query: {
+    Query: {
+        hello: () => { return "TEST" }
     mentoring: async () => {
       try {
         return await mentoringModel.find();
