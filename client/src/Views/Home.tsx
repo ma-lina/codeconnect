@@ -4,7 +4,7 @@ import ButtonHomeNavigateTo from "../Components/ButtonHomeNavigateTo";
 
 const Home :React.FC = () => {
   useLayoutEffect(() => {
-    document.body.classList.add("background-settings")
+    document.body.classList.add("home-transition-settings")
     document.body.classList.add("background-image")
   })
 
@@ -15,7 +15,7 @@ const Home :React.FC = () => {
           codeconnect
         </Box>
       </Typography>
-        <Box sx={{display: 'flex', alignItems: 'center', justifyContent:"center", gap:4, p:2}}>
+        <Box className="fade-2-5-s" sx={{display: 'flex', alignItems: 'center', justifyContent:"flex-end", gap:4, p:2, mr:19}}>
           <ButtonHomeNavigateTo buttonText="Login" destination="/login"/>
           <ButtonHomeNavigateTo buttonText="Sign up" destination="/signup"/>
         </Box>

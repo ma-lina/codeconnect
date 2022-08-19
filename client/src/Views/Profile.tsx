@@ -9,10 +9,10 @@ const Profile :React.FC = () => {
   })
 
   return(
-    <>
+    <div className="page-transition-settings">
       <TextHeaderLine text="profile" />
       <ProfileDisplay/>
-    </>
+    </div>
     )
 };
 

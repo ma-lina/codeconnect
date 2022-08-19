@@ -5,13 +5,30 @@
   /* font-family: 'Roboto' */
 }
 
+/* NOT WORKING ON TITLE LINE */
+/* .body {
+  animation-name: fade;
+  animation-duration: 1s;
+} */
+
 .background-image {
   background-image: url("codeconnect_diamonds_blue_vertical.svg");
+  /* opacity: 100%; */
+  /* transition-property: all; */
+  /* opacity: 80%; */
+  /* transition-delay: 0.5s;
+  transition-duration: 0.5s; */
+  /* transition: 1s ease-out; */
+  /* animation-name: fade;
+  animation-duration: 1s; */
+  /* transition: background-image 0.5s ease-in-out;  */
 }
 
 @media only screen and (min-width: 541px) {
   .background-image {
     background-image: url("codeconnect_diamonds_blue_horizontal.svg");
+    /* animation-name: fade;
+    animation-duration: 1s; */
   }
 }
 
@@ -20,6 +37,22 @@
   background-position: bottom;
   background-size: cover;
   background-attachment: fixed;
+  /* transition: opacity .5s ease-out;
+  -moz-transition: opacity .5s ease-out;
+  -webkit-transition: opacity .5s ease-out;
+  -o-transition: opacity .5s ease-out; */
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+.home-transition-settings {
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+.page-transition-settings {
+  animation-name: fade;
+  animation-duration: 0.5s;
 }
 
 .fira-code {
@@ -34,9 +67,11 @@
 
 .homepage-text{
   margin-top: 10rem;
+  margin-bottom: 1rem;
+  margin-left: 4rem;
   color: #fff;
   text-align: center;
-  text-shadow: 2px grey;
+  text-shadow: 2px 2px 4px rgb(80, 78, 78);
 }
 
 .cursor {
@@ -64,6 +99,21 @@
 @keyframes cursor-blink {
   0% {
     opacity: 0;
+  }
+}
+
+.fade-2-5-s {
+  animation-name: fade;
+  animation-duration: 2.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 

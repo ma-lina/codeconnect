@@ -45,7 +45,7 @@ const Signup = () => {
   };
   console.log("newUser", newUser);
   return (
-    <div>
+    <div className="page-transition-settings">
       <TextHeaderLine text="signup"/>
 
       <div>
