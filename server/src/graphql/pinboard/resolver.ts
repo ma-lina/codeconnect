@@ -11,11 +11,11 @@ import {
   coworkingModel,
 } from "../../models/pinboardModel";
 
-//parent args context 
-
-const resolver = {
-    Query: {
-        hello: () => { return "TEST" }
+export const resolver = {
+  Query: {
+    hello: () => {
+      return "TEST";
+    },
     mentoring: async () => {
       try {
         return await mentoringModel.find();
@@ -49,8 +49,10 @@ const resolver = {
         );
       }
     },
-    Mutation: {
-      /*      addDatingText: async (
+  },
+};
+/*    Mutation: {
+         addDatingText: async (
                   parent,
                   args: { text: datingTextNs.newText },
                   { auth }
@@ -98,7 +100,5 @@ const resolver = {
                   } catch (err) {
                     return new AuthenticationError('UNAUTHORIZED');
                   }
-                }, */
-    },
-  },
-};
+                }, 
+    },*/

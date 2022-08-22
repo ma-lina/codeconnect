@@ -3,6 +3,8 @@ import { makeExecutableSchema } from "graphql-tools";
 import Mentoring from "../graphql/pinboard/typeDefs";
 import Shadowing from "../graphql/pinboard/typeDefs";
 import Coworking from "../graphql/pinboard/typeDefs";
+//import Query from "../graphql/pinboard/typeDefs"; //TO FIX ERROR
+import { resolver as pinboardResolvers } from "./pinboard/resolver";
 
 const Query = gql`
   type Query {
@@ -16,5 +18,6 @@ const Query = gql`
   }
 `;
 
+const resolvers = pinboardResolvers;
 const typeDefs = [Mentoring, Shadowing, Coworking, Query];
-export const schema = makeExecutableSchema({ typeDefs });
+export const schema = makeExecutableSchema({ typeDefs, resolvers });

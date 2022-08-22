@@ -5,9 +5,6 @@ import { gql } from "apollo-server-express";
 
 export default gql`
   scalar Date
-  type Query {
-    Hello: String!
-  }
 
   type User {
     firstName: String!
@@ -60,5 +57,12 @@ export default gql`
     starred: [User]
     time: Int!
     frequency: [String!]!
+  }
+
+  extend type Query {
+    hello: String!
+    mentoring: [Mentoring]
+    shadowing: [Shadowing]
+    coworking: [Coworking]
   }
 `;
