@@ -60,7 +60,7 @@ export default gql`
   }
 
   extend type Query {
-    hello: String!
+    user: [User]
     mentoring: [Mentoring]
     shadowing: [Shadowing]
     coworking: [Coworking]

@@ -10,11 +10,17 @@ import {
   shadowingModel,
   coworkingModel,
 } from "../../models/pinboardModel";
+import { userModel } from "../../models/userModel";
 
 export const resolver = {
   Query: {
-    hello: () => {
-      return "TEST";
+    user: async () => {
+      try {
+        return await userModel.find();
+      } catch (err) {
+        console.error("user error", err);
+        throw new ApolloError("Error retrieving all user data", "400");
+      }
     },
     mentoring: async () => {
       try {
