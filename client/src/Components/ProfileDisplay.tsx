@@ -47,7 +47,6 @@ const ProfileDisplay:React.FC = () => {
                         close={() => toggle (openEditModal, setOpenEditModal)}
                         />
                     <Button 
-//  TODO: make notification before deleting account
                     startIcon={<DeleteIcon/>}
                     onClick={() => toggle (openDeleteModal, setOpenDeleteModal)}>
                         Delete profile

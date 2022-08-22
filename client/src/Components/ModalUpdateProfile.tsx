@@ -1,58 +1,174 @@
-import { Box, Modal, Button, Paper, Typography } from "@mui/material";
+import { Box, Modal, Button, Typography, Grid, TextField, Avatar} from "@mui/material";
 import React, { useContext, useState } from "react";
 import { AuthContext } from '../Context/AuthContext'
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
+import TextHeaderLine from "./TextHeaderLine";
 
 const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
-  const { deleteProfile } = useContext(AuthContext);
+  const { deleteProfile, userProfile  } = useContext(AuthContext);
+
+
 
   return (
     <div>
       <Modal 
         open={open} 
         onClose={close}>
-        <Paper
-        elevation={2}
-        >
-            <Box className="modal-style modal-style-paper" sx={{ p: 1 }}>
-                <Box>
-                <Box sx={{ p: 1 }}>
-                    <Typography variant="body2">
-                        Enter your changes
-                    </Typography>
-                </Box>
+
+            {userProfile ? 
+            <Box className="modal-style modal-style-paper" sx={{ p: 2 }}>
                 <Box
                     sx={{
                     dispay: "flex",
-                    gap: 2,
+                    // gap: 2,
                     alignItems: "center",
                     justifyContent: "center",
                     }}
                 >
-                    <Box sx={{ display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-around", py: 1, gap:2 }}>
-                        <Button
-                            startIcon={<CancelIcon />}
-                            variant="contained"
-                            color="secondary"
-                            onClick={close}
-                        >
-                            Discard
-                        </Button>
-                        <Button
-                            endIcon={<SaveIcon />}
-                            variant="contained"
-                            color="primary"
-                            onClick={deleteProfile}
-                        >
-                            Save
-                        </Button>
+                    <Box component="form" >
+                        <Box sx={{py:2}}>
+                            <TextHeaderLine text={userProfile.username} />
+                        </Box>
+{/* 
+                        <Typography sx={{py:2}} variant="h5" textAlign={"center"} color="primary" className="fira-code">
+                            <Box className="fira-code text-shadow">
+                                user profile
+                            </Box>
+                        </Typography> */}
+
+                        <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
+                            <Grid item xs={4} md={3} >
+                            <Avatar
+                                alt={`${userProfile.firstName} ${userProfile.lastName}`}
+                                src={userProfile.image}
+                                sx={{ width: 50, height: 50 }}
+                            />
+                            </Grid>
+
+                            <Grid item xs>
+                                {/* TODO place buttons to change avatar image */}
+                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Change avatar image (PLACEHOLDER)</Typography>
+                            </Grid>
+                        </Grid>
+
+                        <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
+                            <Grid item xs={4} md={3} >
+                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>First name:</Typography>
+                            </Grid>
+
+                            <Grid item xs>
+                                <TextField
+                                    // required
+                                    size='small'
+                                    // id="email-input"
+                                    // label={props.label}
+                                    // type={props.type}
+                                    fullWidth
+                                    inputProps={{ maxLength: 120 }}
+                                    name={userProfile.firstName}
+                                    placeholder={userProfile.firstName}
+                                    // defaultValue={props.default}
+        //TODO white the onchange handler here
+                                    // onChange={props.handler}
+                                />
+                            </Grid>
+                        </Grid>
+
+                        <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
+                            <Grid item xs={4} md={3} >
+                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Last name:</Typography>
+                            </Grid>
+
+                            <Grid item xs>
+                                <TextField
+                                    // required
+                                    size='small'
+                                    // id="email-input"
+                                    // label={props.label}
+                                    // type={props.type}
+                                    fullWidth
+                                    inputProps={{ maxLength: 120 }}
+                                    name={userProfile.lastName}
+                                    placeholder={userProfile.lastName}
+                                    // defaultValue={props.default}
+        //TODO white the onchange handler here
+                                    // onChange={props.handler}
+                                />
+                            </Grid>
+                        </Grid>
+
+                        <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
+                            <Grid item xs={4} md={3} >
+                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Username:</Typography>
+                            </Grid>
+
+                            <Grid item xs>
+                                <TextField
+                                    // required
+                                    size='small'
+                                    // id="email-input"
+                                    // label={props.label}
+                                    // type={props.type}
+                                    fullWidth
+                                    inputProps={{ maxLength: 120 }}
+                                    name={userProfile.firstName}
+                                    placeholder={userProfile.username}
+                                    // defaultValue={props.default}
+        //TODO white the onchange handler here
+                                    // onChange={props.handler}
+                                />
+                            </Grid>
+                        </Grid>
+
+                        <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
+                            <Grid item xs={4} md={3} >
+                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Email:</Typography>
+                            </Grid>
+
+                            <Grid item xs>
+                                <TextField
+                                    // required
+                                    size='small'
+                                    // id="email-input"
+                                    // label={props.label}
+                                    // type={props.type}
+                                    fullWidth
+                                    inputProps={{ maxLength: 120 }}
+                                    name={userProfile.email}
+                                    placeholder={userProfile.email}
+                                    // defaultValue={props.default}
+        //TODO white the onchange handler here
+                                    // onChange={props.handler}
+                                />
+                            </Grid>
+                        </Grid>
+
+                        <Box sx={{ display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-around", pt: 4, pb: 1, gap:2 }}>
+                            <Button
+                                startIcon={<CancelIcon />}
+                                variant="contained"
+                                color="secondary"
+                                onClick={close}
+                            >
+                                Discard
+                            </Button>
+                            <Button
+                                endIcon={<SaveIcon />}
+                                variant="contained"
+                                color="primary"
+                                onClick={deleteProfile}
+                            >
+                                Save
+                            </Button>
+                        </Box>
                     </Box>
 
                 </Box>
-                </Box>
-            </Box>
-        </Paper>
+
+            </Box> :
+            <p>Loading</p>}
+
       </Modal>
     </div>
   );
