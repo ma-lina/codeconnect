@@ -98,3 +98,15 @@
   }
 }
 
+.modal-style {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 6em;
+}
+
+.modal-style-paper {
+  background-color: #e8eaf2;  
+  border-radius: 0.2em;
+}
