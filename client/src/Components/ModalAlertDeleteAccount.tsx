@@ -7,20 +7,13 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 const ModalAlertDeleteAccount:React.FC<ModalProps> = ({ open, close }) => {
   const { deleteProfile } = useContext(AuthContext);
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
-
   return (
     <div>
       <Modal 
         open={open} 
         onClose={close} 
         aria-labelledby="warning">
-        <Box sx={style}>
+        <Box className="modal-style">
           <Alert severity="warning">
             <Box>
               <Box sx={{ pb: 1 }}>
