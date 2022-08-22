@@ -27,15 +27,15 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                     }}
                 >
                     <Box component="form" >
-                        <Box sx={{py:2}}>
+                        {/* <Box sx={{py:2}}>
                             <TextHeaderLine text={userProfile.username} />
-                        </Box>
-{/* 
-                        <Typography sx={{py:2}} variant="h5" textAlign={"center"} color="primary" className="fira-code">
-                            <Box className="fira-code text-shadow">
-                                user profile
+                        </Box> */}
+
+                        <Typography variant={"h4"} textAlign={"center"} component={"div"} color="primary" align="left" sx={{ pt: 2, pb:1 }}>
+                            <Box className="fira-code">
+                            {`${userProfile.username} user profile`}
                             </Box>
-                        </Typography> */}
+                        </Typography>
 
                         <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
                             <Grid item xs={4} md={3} >
