@@ -1,14 +1,22 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AuthContext } from '../Context/AuthContext'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
-import { PhotoCamera } from "@mui/icons-material";
+import ModalAlertDeleteAccount from "./ModalAlertDeleteAccount";
 
 const ProfileDisplay:React.FC = () => {
     const { userProfile, deleteProfile } = useContext(AuthContext); 
+    const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
+    const toggle = (value:boolean, setValue:React.Dispatch<React.SetStateAction<boolean>>) => {
+      if (!value) {
+        setValue(true);
+      } else {
+        setValue(false);
+      };
+    }; 
 
   return (
       <>
@@ -30,17 +38,20 @@ const ProfileDisplay:React.FC = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap:1, pt:4, pb:2 }}>          
                     <Button 
                     startIcon={<EditIcon/>}
-                    onClick={() => deleteProfile()}>
+                    onClick={() => toggle (openEditModal, setOpenEditModal)}>
                         Edit profile
                     </Button>
                     <Button 
 //  TODO: make notification before deleting account
                     startIcon={<DeleteIcon/>}
-                    onClick={() => deleteProfile()}>
+                    onClick={() => toggle (openDeleteModal, setOpenDeleteModal)}>
                         Delete profile
                     </Button>
                 </Box>
-
+                <ModalAlertDeleteAccount
+                open={openDeleteModal}
+                close={() => toggle (openDeleteModal, setOpenDeleteModal)}
+                />
             </Box>}
       </>
   )
