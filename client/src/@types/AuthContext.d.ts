@@ -17,7 +17,7 @@ interface AuthContextType {
   userProfile: User.User | null;
   setUserProfile: (userProfile: User.User) => void;
   deleteProfile: () => Promise<void>;
-
+  updateProfile: () => Promise<void>;
 }
 interface RequestOptions {
   method: "GET" | "POST" | "PATCH" | "DELETE";

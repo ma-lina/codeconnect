@@ -14,7 +14,6 @@ export const AuthContext = createContext<AuthContextType>(undefined!);
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<string | File>("");
-  const [userProfile, setUserProfile] = useState<User.User | null>(null);
   const [newUser, setNewUser] = useState<User.SignUp>({
     firstName: "",
     lastName: "",
@@ -31,6 +30,9 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     password: "",
     token: "",
   });
+  const [userProfile, setUserProfile] = useState<User.User | null>(null);
+  const [updatedUserProfile, setUpdatedUserProfile] = useState<User.User | null>(null);
+
 
   let navigate = useNavigate();
 
@@ -181,7 +183,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   };
 
   const deleteProfile = async (): Promise<void> => {
-    //TODO create a modal with confirmation, that the account will be irreversibly deleted
     const token = getToken();
 
     const myHeaders: Headers = new Headers();
@@ -198,11 +199,46 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           requestOptions
         );
       const result: User.DeleteProfileResult = await response.json();
-      //TODO display info to the user about the account being deleted
         logOut()
       
       } catch (error) {
         console.log("Client error while deleting the profile", error);
+      }
+  };
+
+  // handleUserProfileChange, updateProfile 
+
+  const updateProfile = async (): Promise<void> => {
+    const token = getToken();
+
+    const myHeaders: Headers = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    
+    let urlencoded = new URLSearchParams();
+    if (updatedUserProfile !== null) {
+      urlencoded.append("firstName", updatedUserProfile.firstName);
+      urlencoded.append("lastName", updatedUserProfile.lastName);
+      urlencoded.append("username", updatedUserProfile.username ? updatedUserProfile.username : "");
+      urlencoded.append("email", updatedUserProfile.email);
+      urlencoded.append("image", updatedUserProfile.image ? updatedUserProfile.image : "");
+    };
+
+    const requestOptions: RequestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: urlencoded,
+    };
+
+    try {
+        const response :Response = await fetch(
+          serverURL+"/users/profile",
+          requestOptions
+        );
+      const result: User.GetProfileResult = await response.json();
+      setUserProfile(result.user);
+      
+      } catch (error) {
+        console.log("Client error while updating the profile", error);
       }
   };
 
@@ -225,6 +261,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         userProfile,
         setUserProfile,
         deleteProfile,
+        updateProfile,
       }}
     >
       {children}
