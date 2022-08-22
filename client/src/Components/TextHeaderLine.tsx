@@ -3,8 +3,8 @@ import React from 'react';
 
 const TextHeaderLine :React.FC<TextProps> = ({ text }) => {
   return (
-      <Typography variant={"h3"} component={"div"}>
-        <Box className="blue-text fira-code">
+      <Typography variant={"h3"} component={"div"} color="primary">
+        <Box className="fira-code text-shadow">
           {text}
         </Box>
       </Typography>
