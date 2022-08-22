@@ -4,6 +4,7 @@ import { AuthContext } from '../Context/AuthContext'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ModalAlertDeleteAccount from "./ModalAlertDeleteAccount";
+import ModalUpdateProfile from "./ModalUpdateProfile";
 
 const ProfileDisplay:React.FC = () => {
     const { userProfile, deleteProfile } = useContext(AuthContext); 
@@ -41,6 +42,10 @@ const ProfileDisplay:React.FC = () => {
                     onClick={() => toggle (openEditModal, setOpenEditModal)}>
                         Edit profile
                     </Button>
+                    <ModalUpdateProfile
+                        open={openEditModal}
+                        close={() => toggle (openEditModal, setOpenEditModal)}
+                        />
                     <Button 
 //  TODO: make notification before deleting account
                     startIcon={<DeleteIcon/>}
