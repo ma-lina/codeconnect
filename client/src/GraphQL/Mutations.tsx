@@ -16,11 +16,3 @@ export const ADD_AD = gql`
     }
   }
 `;
-
-/* export const UPDATE_AD = gql`
-  mutation UpdateAdMutation() {
-    updateUserProfile() {
-   
-    }
-  }
-`; */
