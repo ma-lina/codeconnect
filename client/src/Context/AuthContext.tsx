@@ -14,7 +14,6 @@ export const AuthContext = createContext<AuthContextType>(undefined!);
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<string | File>("");
-  const [userProfile, setUserProfile] = useState<User.User | null>(null);
   const [newUser, setNewUser] = useState<User.SignUp>({
     firstName: "",
     lastName: "",
@@ -31,8 +30,17 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     password: "",
     token: "",
   });
+  const [userProfile, setUserProfile] = useState<User.User | null>(null);
+  const [updatedUserProfile, setUpdatedUserProfile] = useState<User.UpdatedUser | null>(null);
 
   let navigate = useNavigate();
+
+  const generateUrlEncoded = (dataObject: object) => {
+    let urlencoded = new URLSearchParams();
+    const dataArray = Object.entries(dataObject);
+    dataArray.forEach(([key, value]) => urlencoded.append(key, value));
+    return urlencoded;
+  };
 
   const submitImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -50,6 +58,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       const result: User.ImageResult = await response.json();
       setNewUser({ ...newUser, image: result.image });
       console.log("image uploaded", newUser);
+      return result.image;
     } catch (error) {
       console.log("error submiting picture", error);
     }
@@ -127,7 +136,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const getUserProfile = async (token: Token): Promise<void> => {
+  const getUserProfile = async (token: string): Promise<void> => {
 
       const myHeaders: Headers = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
@@ -155,17 +164,19 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       }
   };
 
-  const isUserLoggedIn = (): void => {
+  const isUserLoggedIn = (): boolean => {
     const token = getToken();
     if (token && user && userProfile) {
-      return
+      return true
     } else if (!token) {
       setUser(false); 
       //display a message for the user to log in
       navigate("/login")
       console.log("user is NOT logged in");
+      return false
     } else {
-      getUserProfile(token);
+      getUserProfile(token); 
+      return true
     }
   };
 
@@ -181,8 +192,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   };
 
   const deleteProfile = async (): Promise<void> => {
-    //TODO create a modal with confirmation, that the account will be irreversibly deleted
-    const token: Token = getToken();
+    const token = getToken();
 
     const myHeaders: Headers = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -198,12 +208,41 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           requestOptions
         );
       const result: User.DeleteProfileResult = await response.json();
-      //TODO display info to the user about the account being deleted
         logOut()
       
       } catch (error) {
         console.log("Client error while deleting the profile", error);
       }
+  };
+
+  const updateProfile = async (): Promise<void> => {
+    if (updatedUserProfile !== null) {
+
+      const token = getToken();
+      const myHeaders: Headers = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+      const urlencoded = generateUrlEncoded(updatedUserProfile);
+
+      const requestOptions: RequestOptions = {
+        method: "PATCH",
+        headers: myHeaders,
+        body: urlencoded,
+      };
+
+      try {
+         const response :Response = await fetch(
+            serverURL+"/users/profile",
+            requestOptions
+          );
+        const result: User.GetProfileResult = await response.json();
+        setUserProfile(result.user);
+        
+        } catch (error) {
+          console.log("Client error while updating the profile", error);
+        }
+    } else {
+      console.log("Updated User data has not beed stored in the state variable.")
+    }
   };
 
   return (
@@ -224,7 +263,11 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         logOut,
         userProfile,
         setUserProfile,
+        isUserLoggedIn,
         deleteProfile,
+        updatedUserProfile,
+        setUpdatedUserProfile,
+        updateProfile,
       }}
     >
       {children}

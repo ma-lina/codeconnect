@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function ButtonHomeNavigateTo({ buttonText, destination }: ButtonProps) {
+const ButtonHomeNavigateTo :React.FC<ButtonProps> = ({ buttonText, destination }) => {
     const navigateTo = useNavigate()
 
     return (

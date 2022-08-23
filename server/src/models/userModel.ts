@@ -1,4 +1,7 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
+interface UserDocument extends Document {
+  _doc?: UserN.MongooseUserData
+}
 
 const userSchema = new Schema(
   {
@@ -47,4 +50,4 @@ const userSchema = new Schema(
 
 let userModel = model("User", userSchema);
 
-export { userModel };
+export { userModel, UserDocument };

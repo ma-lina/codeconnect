@@ -11,7 +11,8 @@ import ButtonNavigateTo from "../Components/ButtonNavigateTo";
 const Login = () => {
   //removing background
   useLayoutEffect(() => {
-    document.body.className = "";
+    document.body.classList.remove("background-image");
+    document.body.classList.remove("home-transition-settings");
   })
 
   const { loginUser, setLoginUser, user, logIn } = useContext(AuthContext);
@@ -21,7 +22,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="page-transition-settings">
       <TextHeaderLine text="login"/>
       <Box
         component="form"

@@ -16,12 +16,12 @@ interface AuthContextType {
   logOut: () => void;
   userProfile: User.User | null;
   setUserProfile: (userProfile: User.User) => void;
+  isUserLoggedIn: () => boolean;
   deleteProfile: () => Promise<void>;
-
+  updatedUserProfile: User.UpdatedUser | null;
+  setUpdatedUserProfile: (updatedUserProfile: User.UpdatedUser) => void;
+  updateProfile: () => Promise<void>;
 }
-
-type Token = string | null; 
-
 interface RequestOptions {
   method: "GET" | "POST" | "PATCH" | "DELETE";
   body?: URLSearchParams;
@@ -41,6 +41,14 @@ declare namespace User {
     starredShadowing?: Array<any>;
     username: string;
     _id: number;
+  }
+
+  interface UpdatedUser {
+    email?: string;
+    firstName?: string;
+    image?: string;
+    lastName?: string;
+    username?: string;
   }
 
   interface SignUp extends User {

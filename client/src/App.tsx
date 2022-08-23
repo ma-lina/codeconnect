@@ -34,7 +34,7 @@ function App() {
       <CssBaseline />
       <Container maxWidth="md">
         <AuthContextProvider>
-          <div className="App">
+          <div className="App page-transition-settings">
             <header>{showNavbar() && <Navbar />}</header>
             <Routes>
               <Route path="/" element={<Home />} />
