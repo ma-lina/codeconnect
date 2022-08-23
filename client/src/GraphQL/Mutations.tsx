@@ -2,10 +2,17 @@ import { gql } from "@apollo/client";
 
 export const ADD_AD = gql`
   mutation Mutation($addDatingTextText: newDTI!) {
-    addDatingText(text: $addDatingTextText) {
-      text
-      postDate
-      private
+    addMentoring(text: $addDatingTextText) {
+      creator
+      field
+      location
+      description
+      date
+      techKnowHow
+      level
+      availability
+      timeslots
+      offer
     }
   }
 `;

@@ -142,7 +142,7 @@ export const resolver = {
             frequency,
           },
         } = args;
-        const newCoworking = new shadowingModel({
+        const newCoworking = new coworkingModel({
           creator,
           field,
           location,

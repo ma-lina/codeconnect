@@ -105,7 +105,7 @@ export default gql`
 
   extend type Mutation {
     addMentoring(input: MentoringInput): Mentoring
-    # edditMentoring(): Mentoring
+    # updateAd():
     addShadowing(input: ShadowingInput): Shadowing
     addCoworking(input: CoworkingInput): Coworking
   }
