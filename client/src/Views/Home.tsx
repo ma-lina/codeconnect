@@ -1,7 +1,12 @@
 import React from "react";
+import Pinboard from "./Pinboard";
 
 function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <Pinboard />
+    </div>
+  );
 }
 
 export default Home;
