@@ -16,6 +16,7 @@ interface AuthContextType {
   logOut: () => void;
   userProfile: User.User | null;
   setUserProfile: (userProfile: User.User) => void;
+  isUserLoggedIn: () => boolean;
   deleteProfile: () => Promise<void>;
   updatedUserProfile: User.UpdatedUser | null;
   setUpdatedUserProfile: (updatedUserProfile: User.UpdatedUser) => void;

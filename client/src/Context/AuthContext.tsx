@@ -163,17 +163,19 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       }
   };
 
-  const isUserLoggedIn = (): void => {
+  const isUserLoggedIn = (): boolean => {
     const token = getToken();
     if (token && user && userProfile) {
-      return
+      return true
     } else if (!token) {
       setUser(false); 
       //display a message for the user to log in
       navigate("/login")
       console.log("user is NOT logged in");
+      return false
     } else {
-      getUserProfile(token);
+      getUserProfile(token); 
+      return true
     }
   };
 
@@ -260,6 +262,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         logOut,
         userProfile,
         setUserProfile,
+        isUserLoggedIn,
         deleteProfile,
         updatedUserProfile,
         setUpdatedUserProfile,
