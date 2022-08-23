@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const ADD_AD = gql`
-  mutation Mutation($addDatingTextText: newDTI!) {
-    addMentoring(text: $addDatingTextText) {
+  mutation Mutation() {
+    addMentoring() {
       creator
       field
       location
@@ -18,8 +18,8 @@ export const ADD_AD = gql`
 `;
 
 /* export const UPDATE_AD = gql`
-  mutation UpdateAdMutation($updateUserProfileUser: updateUserInput!) {
-    updateUserProfile(user: $updateUserProfileUser) {
+  mutation UpdateAdMutation() {
+    updateUserProfile() {
    
     }
   }
