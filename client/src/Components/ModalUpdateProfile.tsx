@@ -6,8 +6,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import TextHeaderLine from "./TextHeaderLine";
 
 const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
-  const { deleteProfile, userProfile  } = useContext(AuthContext);
+  const { userProfile, handleUserProfileChange, updateProfile } = useContext(AuthContext);
 
+  const handleSubmitProfileChange = (event) => {
+    event.preventDefault();
+    updateProfile();
+    close();
+  }
 
 
   return (
