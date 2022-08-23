@@ -8,7 +8,7 @@ const AddAd = () => {
   if (loading) return "Submitting...";
   if (error) return `Submission error! ${error.message}`; */
 
-  return "";
+  return <div></div>;
   /*     <div>
       <form
         onSubmit={(e) => {
