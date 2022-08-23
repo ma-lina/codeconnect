@@ -58,6 +58,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       const result: User.ImageResult = await response.json();
       setNewUser({ ...newUser, image: result.image });
       console.log("image uploaded", newUser);
+      return result.image;
     } catch (error) {
       console.log("error submiting picture", error);
     }
