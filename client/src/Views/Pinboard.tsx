@@ -1,5 +1,5 @@
-import { useQuery, gql } from "@apollo/client";
-import { GET_EVERYTHING } from "../GraphQL/Queries";
+import { useQuery } from "@apollo/client";
+import { GET_REQS_OFFERS } from "../GraphQL/Queries";
 //to define and move to types
 interface Query {
   _id: any;
@@ -21,7 +21,7 @@ interface QueryData {
 }
 
 const Pinboard = () => {
-  const { loading, error, data } = useQuery<QueryData>(GET_EVERYTHING);
+  const { loading, error, data } = useQuery<QueryData>(GET_REQS_OFFERS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
