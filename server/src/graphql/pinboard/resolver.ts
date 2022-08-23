@@ -1,25 +1,29 @@
 import { ApolloError, AuthenticationError } from "apollo-server-express";
-import { ObjectID } from "mongodb";
 import {
   mentoringModel,
   shadowingModel,
   coworkingModel,
 } from "../../models/pinboardModel";
-//import { userModel } from "../../models/userModel";
+import { userModel } from "../../models/userModel";
 
 export const resolver = {
   Query: {
-    /*     users: async () => {
+    users: async () => {
       try {
         return await userModel.find();
       } catch (err) {
         console.error("user error", err);
         throw new ApolloError("Error retrieving all user data", "400");
       }
-    }, */
+    },
     mentoring: async () => {
       try {
-        return await mentoringModel.find();
+        const data = await mentoringModel
+          .find()
+          .populate({ path: "creator" })
+          .exec();
+        console.log(data);
+        return data;
       } catch (err) {
         console.error("mentoring error", err);
         throw new ApolloError(
@@ -53,7 +57,7 @@ export const resolver = {
   },
   //add typescript to mutation!
   Mutation: {
-    addMentoring: async (parent, args) => {
+    addMentoring: async (args) => {
       try {
         const {
           input: {
@@ -88,7 +92,7 @@ export const resolver = {
         return new ApolloError("Couldn't save entry in DB", "500");
       }
     },
-    addShadowing: async (parent, args) => {
+    addShadowing: async (args) => {
       try {
         const {
           input: {
@@ -121,6 +125,35 @@ export const resolver = {
         await newShadowing.save();
         console.log("newShadowing", newShadowing.id);
         return newShadowing;
+      } catch (err) {
+        return new ApolloError("Couldn't save entry in DB", "500");
+      }
+    },
+    addCoworking: async (args) => {
+      try {
+        const {
+          input: {
+            creator,
+            field,
+            location,
+            description,
+            date,
+            time,
+            frequency,
+          },
+        } = args;
+        const newCoworking = new coworkingModel({
+          creator,
+          field,
+          location,
+          description,
+          date,
+          time,
+          frequency,
+        });
+        await newCoworking.save();
+        console.log("newShadowing", newCoworking.id);
+        return newCoworking;
       } catch (err) {
         return new ApolloError("Couldn't save entry in DB", "500");
       }

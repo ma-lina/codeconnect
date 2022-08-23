@@ -1,5 +1,25 @@
+interface Query {
+  _id: any;
+  creator: any;
+  field: any;
+  location: string;
+  description: string;
+  date: Date;
+  starred: any;
+  techKnowHow: any;
+  level: string;
+  availability: any;
+  timeslots: any;
+  offer: boolean;
+}
+
+interface QueryData {
+  mentoring: Query[];
+}
+
 namespace Mentoring {
-  type Level = "junior" | "intermediate" | "senior";
+  type Level = "Junior" | "Intermediate" | "Senior";
+
   interface Offer {
     field: (keyof typeof Field)[];
     techKnowHow: (keyof typeof TechKnowHow)[];

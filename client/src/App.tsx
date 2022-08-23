@@ -1,5 +1,5 @@
 import "@fontsource/roboto";
-import "@fontsource/fira-code"
+import "@fontsource/fira-code";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme, Theme } from "@mui/material/styles";
 import { themeLightOptions } from "./Utils/muiThemeOptions";
@@ -12,22 +12,22 @@ import Signup from "./Views/Signup";
 import Profile from "./Views/Profile";
 import { Container } from "@mui/material";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import Logout from "./Components/Logout";
 import Navbar from "./Components/Navbar";
+import AddAd from "./Components/AddAd";
 
 function App() {
   const themeLight: Theme = createTheme(themeLightOptions);
 
-//TODO should this code be moved to navbar? should there be a useEffect on change of location? 
+  //TODO should this code be moved to navbar? should there be a useEffect on change of location?
   const location = useLocation();
-  
-  const showNavbar = () : boolean => {
+
+  const showNavbar = (): boolean => {
     if (location.pathname === "/") {
       return false;
     } else {
       return true;
     }
-  }
+  };
 
   return (
     <ThemeProvider theme={themeLight}>
@@ -35,14 +35,20 @@ function App() {
       <Container maxWidth="md">
         <AuthContextProvider>
           <div className="App page-transition-settings">
-            <header>
-              {showNavbar() && <Navbar/>}
-            </header>
+            <header>{showNavbar() && <Navbar />}</header>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/profile" element={ <ProtectedRoute><Profile /></ProtectedRoute> } />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/addad" element={<AddAd />} />
             </Routes>
           </div>
         </AuthContextProvider>

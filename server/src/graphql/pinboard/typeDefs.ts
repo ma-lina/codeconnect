@@ -1,7 +1,4 @@
 import { gql } from "apollo-server-express";
-//import { ObjectID } from "mongodb";
-//import { DateTypeDefinition } from "graphql-scalars";
-//import {  } from '../../@types';
 
 export default gql`
   scalar Date
@@ -12,7 +9,7 @@ export default gql`
     isLoggedin: Boolean!
     username: String!
     image: String!
-    _id: String!
+    _id: ID!
     isAdmin: Boolean!
     starredMentorship: [ID!]
     starredCoworking: [ID!]
@@ -21,7 +18,7 @@ export default gql`
 
   type Mentoring {
     _id: ID!
-    creator: ID!
+    creator: User!
     field: [String!]!
     location: String!
     description: String!
@@ -36,7 +33,7 @@ export default gql`
 
   type Shadowing {
     _id: ID!
-    creator: ID!
+    creator: User!
     field: [String!]!
     location: String!
     description: String!
@@ -52,7 +49,7 @@ export default gql`
 
   type Coworking {
     _id: ID!
-    creator: ID!
+    creator: User!
     field: [String!]!
     location: String!
     description: String!
@@ -108,7 +105,7 @@ export default gql`
 
   extend type Mutation {
     addMentoring(input: MentoringInput): Mentoring
-    # edditMentoring(): Mentoring
+    # updateAd():
     addShadowing(input: ShadowingInput): Shadowing
     addCoworking(input: CoworkingInput): Coworking
   }
