@@ -1,77 +1,21 @@
 import { useState, createContext, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import serverURL from "../config";
 import { getToken } from "../Utils/getToken";
 
-interface AuthContextType {
-  newUser: SignUp;
-  selectedFile: File | string;
-  submitImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  signUp: (e: React.FormEvent) => void;
-  logIn: (e: React.FormEvent) => void;
-  setSelectedFile: (selectedFile: File | string) => void;
-  setNewUser: (newUser: SignUp) => void;
-  user: boolean;
-  setUser: (user: boolean) => void;
-  loginUser: Login;
-  setLoginUser: (loginUser: Login) => void;
-  logOut: () => void;
-  userProfile: User;
-  setUserProfile: (userProfile: User) => void;
-}
+//TODO decide if array should include object id or something else, then change 'any';
+//TODO display error messages
 interface Props {
   children: ReactNode;
 }
-
-//TODO sort interfaces in extra file?
-//TODO decide if array should include object id or something else, then change 'any';
-interface User {
-  email: string;
-  firstName: string;
-  image?: string;
-  isLoggedin?: boolean;
-  isAdmin?: boolean;
-  lastName: string;
-  starredCoworking?: Array<any>;
-  starredMentorship?: Array<any>;
-  starredShadowing?: Array<any>;
-  username: string;
-  _id: number;
-}
-
-interface SignUp extends User {
-  password: string;
-}
-interface LoginResult extends SignupResult {
-  isAuthenticated: boolean;
-}
-interface SignupResult {
-  accessToken: string;
-  message: string;
-  user: User;
-}
-interface ImageResult {
-  image: string;
-  message: string;
-}
-
-//TODO display error messages
 
 export const AuthContext = createContext<AuthContextType>(undefined!);
 
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<string | File>("");
-  const [userProfile, setUserProfile] = useState<User>({
-    firstName: "",
-    lastName: "",
-    username: "",
-    email: "",
-    image: "",
-    isAdmin: false,
-    isLoggedin: false,
-    _id: 0,
-  })
-  const [newUser, setNewUser] = useState<SignUp>({
+  const [userProfile, setUserProfile] = useState<User.User | null>(null);
+  const [newUser, setNewUser] = useState<User.SignUp>({
     firstName: "",
     lastName: "",
     username: "",
@@ -103,7 +47,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         "http://localhost:5000/users/profile/photoUpload",
         requestOptions
       );
-      const result: ImageResult = await response.json();
+      const result: User.ImageResult = await response.json();
       setNewUser({ ...newUser, image: result.image });
       console.log("image uploaded", newUser);
     } catch (error) {
@@ -132,13 +76,14 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           "http://localhost:5000/users/register",
           requestOptions
         );
-        const result: SignupResult = await response.json();
+        const result: User.SignupResult = await response.json();
         console.log("results", result);
         const token = result.accessToken;
         if (token) {
           localStorage.setItem("token", token);
           setUserProfile(result.user);
           setUser(true);
+          navigate("/profile");
 //TODO error messages with timeout
         } else {
           console.log("error seting token");
@@ -165,12 +110,13 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           "http://localhost:5000/users/login",
           requestOptions
         );
-        const result: LoginResult = await response.json();
+        const result: User.LoginResult = await response.json();
         const token = result.accessToken;
         if (token) {
           localStorage.setItem("token", token);
           setUserProfile(result.user);
           setUser(true);
+          navigate("/profile");
 //TODO error messages with timeout
         } else {
           console.log("error seting token");
@@ -181,27 +127,83 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
+  const getUserProfile = async (token: Token): Promise<void> => {
+
+      const myHeaders: Headers = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+    
+      const requestOptions: RequestOptions = {
+        method: "GET",
+        headers: myHeaders,
+      };
+
+    try {
+        const response :Response = await fetch(
+          serverURL+"/users/profile",
+          requestOptions
+        );
+      const result: User.GetProfileResult = await response.json();
+      setUserProfile(result.user);
+      setUser(true);
+      
+//what happens when the token expires and the authentication fails?
+//implement isLoggedin on the backend side
+      } catch (error) {
+//TODO display a notification for the user to log in
+        setUser(false);
+        console.log("Client error, could not get user profile", error);
+      }
+  };
 
   const isUserLoggedIn = (): void => {
     const token = getToken();
-    console.log(token);
-    if (token) {
-      setUser(true);
-      console.log("user is logged in");
-    } else {
-      setUser(false);
+    if (token && user && userProfile) {
+      return
+    } else if (!token) {
+      setUser(false); 
+      //display a message for the user to log in
+      navigate("/login")
       console.log("user is NOT logged in");
+    } else {
+      getUserProfile(token);
     }
   };
 
   useEffect(() => {
     isUserLoggedIn();
-  }, [user]);
+  }, [userProfile]);
 
   const logOut = () => {
     localStorage.removeItem("token");
     setUser(false);
+    setUserProfile(null);
     navigate("../", { replace: true });
+  };
+
+  const deleteProfile = async (): Promise<void> => {
+    //TODO create a modal with confirmation, that the account will be irreversibly deleted
+    const token: Token = getToken();
+
+    const myHeaders: Headers = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    
+    const requestOptions: RequestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+    };
+
+    try {
+        const response :Response = await fetch(
+          serverURL+"/users/profile",
+          requestOptions
+        );
+      const result: User.DeleteProfileResult = await response.json();
+      //TODO display info to the user about the account being deleted
+        logOut()
+      
+      } catch (error) {
+        console.log("Client error while deleting the profile", error);
+      }
   };
 
   return (
@@ -218,9 +220,11 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         loginUser,
         setLoginUser,
         logIn,
+        getUserProfile, 
         logOut,
         userProfile,
         setUserProfile,
+        deleteProfile,
       }}
     >
       {children}

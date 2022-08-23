@@ -1,17 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import SendIcon from "@mui/icons-material/Send";
-import { Input, IconButton, Avatar } from "@mui/material";
+import { Input, IconButton, Avatar, Typography } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import { AuthContext } from "../Context/AuthContext";
+import TextHeaderLine from "../Components/TextHeaderLine";
+import ButtonNavigateTo from "../Components/ButtonNavigateTo";
 
 //TODO Validation
 //TODO secure url bar
 
 const Signup = () => {
+  //removing background
+  useLayoutEffect(() => {
+    document.body.className = "";
+  })
+
   const {
     newUser,
     setNewUser,
@@ -39,7 +46,7 @@ const Signup = () => {
   console.log("newUser", newUser);
   return (
     <div>
-      <div>Signup</div>
+      <TextHeaderLine text="signup"/>
 
       <div>
         <Box
@@ -170,6 +177,10 @@ const Signup = () => {
           </Button>
         </Box>
       </div>
+        <Typography variant="body2" sx={{ pt: 2 }}>
+          You already have an account? 
+        </Typography>
+        <ButtonNavigateTo buttonText="login" destination="/login"/>
     </div>
   );
 };

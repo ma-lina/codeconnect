@@ -5,6 +5,65 @@
   /* font-family: 'Roboto' */
 }
 
-.branding-text {
-  font-family: 'Fira Code', monospace;
+.background-image {
+  background-image: url("codeconnect_diamonds_blue_vertical.svg");
 }
+
+@media only screen and (min-width: 541px) {
+  .background-image {
+    background-image: url("codeconnect_diamonds_blue_horizontal.svg");
+  }
+}
+
+.background-settings {
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.fira-code {
+  font-family: 'Fira Code';
+}
+
+.blue-text {
+  color: #626aa8;
+  /* text-align: center; */
+  /* text-shadow: 2px grey; */
+}
+
+.homepage-text{
+  margin-top: 10rem;
+  color: #fff;
+  text-align: center;
+  text-shadow: 2px grey;
+}
+
+.cursor {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cursor::after {
+  content: "";
+  width: 0.5em;
+  height: 1em;
+  display: inline-block;
+  animation: cursor-blink 1.5s steps(2) infinite;
+}
+
+.blue-cursor::after {
+  background: #626aa8;
+}
+
+.white-cursor::after {
+  background: #fff;
+}
+
+@keyframes cursor-blink {
+  0% {
+    opacity: 0;
+  }
+}
+
