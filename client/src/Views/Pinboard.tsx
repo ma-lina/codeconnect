@@ -1,8 +1,8 @@
 import { useQuery } from "@apollo/client";
-import { GET_REQS_OFFERS } from "../GraphQL/Queries";
+import { GET_ADS } from "../GraphQL/Queries";
 
 const Pinboard = () => {
-  const { loading, error, data } = useQuery<QueryData>(GET_REQS_OFFERS);
+  const { loading, error, data } = useQuery<QueryData>(GET_ADS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 

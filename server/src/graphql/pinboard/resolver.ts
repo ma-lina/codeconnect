@@ -1,5 +1,4 @@
 import { ApolloError, AuthenticationError } from "apollo-server-express";
-import { ObjectID } from "mongodb";
 import {
   mentoringModel,
   shadowingModel,
@@ -58,7 +57,7 @@ export const resolver = {
   },
   //add typescript to mutation!
   Mutation: {
-    addMentoring: async (parent, args) => {
+    addMentoring: async (args) => {
       try {
         const {
           input: {
@@ -93,7 +92,7 @@ export const resolver = {
         return new ApolloError("Couldn't save entry in DB", "500");
       }
     },
-    addShadowing: async (parent, args) => {
+    addShadowing: async (args) => {
       try {
         const {
           input: {
@@ -126,6 +125,35 @@ export const resolver = {
         await newShadowing.save();
         console.log("newShadowing", newShadowing.id);
         return newShadowing;
+      } catch (err) {
+        return new ApolloError("Couldn't save entry in DB", "500");
+      }
+    },
+    addCoworking: async (args) => {
+      try {
+        const {
+          input: {
+            creator,
+            field,
+            location,
+            description,
+            date,
+            time,
+            frequency,
+          },
+        } = args;
+        const newCoworking = new shadowingModel({
+          creator,
+          field,
+          location,
+          description,
+          date,
+          time,
+          frequency,
+        });
+        await newCoworking.save();
+        console.log("newShadowing", newCoworking.id);
+        return newCoworking;
       } catch (err) {
         return new ApolloError("Couldn't save entry in DB", "500");
       }
