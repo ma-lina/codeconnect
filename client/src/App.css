@@ -2,9 +2,120 @@
   text-align: center;
   margin-top: 6rem;
   margin-bottom: 6rem;
-  /* font-family: 'Roboto' */
 }
 
-.branding-text {
-  font-family: 'Fira Code', monospace;
+.background-image {
+  background-image: url("codeconnect_diamonds_blue_vertical.svg");
+}
+
+@media only screen and (min-width: 541px) {
+  .background-image {
+    background-image: url("codeconnect_diamonds_blue_horizontal.svg");
+  }
+}
+
+.background-settings {
+  background-repeat: no-repeat;
+  background-position: bottom;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+.home-transition-settings {
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+.page-transition-settings {
+  animation-name: fade;
+  animation-duration: 0.5s;
+}
+
+.fira-code {
+  font-family: 'Fira Code';
+}
+
+.text-shadow {
+  text-shadow: 1px 2px 1px rgb(80, 78, 78);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.homepage-text{
+  margin-top: 10rem;
+  margin-bottom: 1rem;
+  margin-left: 4rem;
+  color: #fff;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgb(80, 78, 78);
+}
+
+.cursor {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cursor::after {
+  content: "";
+  width: 0.5em;
+  height: 1em;
+  display: inline-block;
+  animation: cursor-blink 1.5s steps(2) infinite;
+}
+
+.blue-cursor::after {
+  background: #626aa8;
+}
+
+.white-cursor::after {
+  background: #fff;
+}
+
+@keyframes cursor-blink {
+  0% {
+    opacity: 0;
+  }
+}
+
+.fade-2-5-s {
+  animation-name: fade;
+  animation-duration: 2.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-style {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 6em;
+}
+
+.modal-style-paper {
+  width: 90%;
+  background-color: #e8eaf2;  
+  border-radius: 0.2em;
+}
+
+@media only screen and (min-width: 541px) {
+  .modal-style-paper {
+    width: 60%;
+  }
 }

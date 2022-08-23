@@ -15,15 +15,42 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+client
+  .query({
+    query: gql`
+      query Query {
+        mentoring {
+          _id
+          creator
+          field
+          location
+          description
+          date
+          starred {
+            _id
+          }
+          techKnowHow
+          level
+          availability
+          timeslots
+          offer
+        }
+      }
+    `,
+  })
+  .then((result: any) => console.log(result));
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ApolloProvider>
     </ApolloProvider>
   </React.StrictMode>
 );
