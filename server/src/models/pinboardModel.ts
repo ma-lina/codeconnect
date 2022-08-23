@@ -1,4 +1,4 @@
-import { model, Schema, Types, Document, InferSchemaType } from "mongoose";
+import { model, Schema, Types, Document } from "mongoose";
 interface UserData {
   firstName: string;
   lastName: string;
@@ -29,7 +29,7 @@ const options = {
 };
 
 const baseSchemaFields: Record<keyof Base, any> = {
-  creator: { type: Schema.Types.ObjectId, ref: "user" },
+  creator: { type: Schema.Types.ObjectId, ref: "User" },
   field: Array,
   location: String,
   description: String,
