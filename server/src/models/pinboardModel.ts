@@ -1,5 +1,4 @@
 import { model, Schema, Types, Document, InferSchemaType } from "mongoose";
-
 interface UserData {
   firstName: string;
   lastName: string;
