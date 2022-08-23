@@ -31,10 +31,16 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     token: "",
   });
   const [userProfile, setUserProfile] = useState<User.User | null>(null);
-  const [updatedUserProfile, setUpdatedUserProfile] = useState<User.User | null>(null);
-
+  const [updatedUserProfile, setUpdatedUserProfile] = useState<User.UpdatedUser | null>(null);
 
   let navigate = useNavigate();
+
+  const generateUrlEncoded = (dataObject: object) => {
+    let urlencoded = new URLSearchParams();
+    const dataArray = Object.entries(dataObject);
+    dataArray.forEach(([key, value]) => urlencoded.append(key, value));
+    return urlencoded;
+  };
 
   const submitImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -206,40 +212,34 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       }
   };
 
-  // handleUserProfileChange, updateProfile 
-
   const updateProfile = async (): Promise<void> => {
-    const token = getToken();
-
-    const myHeaders: Headers = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-    
-    let urlencoded = new URLSearchParams();
     if (updatedUserProfile !== null) {
-      urlencoded.append("firstName", updatedUserProfile.firstName);
-      urlencoded.append("lastName", updatedUserProfile.lastName);
-      urlencoded.append("username", updatedUserProfile.username ? updatedUserProfile.username : "");
-      urlencoded.append("email", updatedUserProfile.email);
-      urlencoded.append("image", updatedUserProfile.image ? updatedUserProfile.image : "");
-    };
 
-    const requestOptions: RequestOptions = {
-      method: "PATCH",
-      headers: myHeaders,
-      body: urlencoded,
-    };
+      const token = getToken();
+      const myHeaders: Headers = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
+      const urlencoded = generateUrlEncoded(updatedUserProfile);
 
-    try {
-        const response :Response = await fetch(
-          serverURL+"/users/profile",
-          requestOptions
-        );
-      const result: User.GetProfileResult = await response.json();
-      setUserProfile(result.user);
-      
-      } catch (error) {
-        console.log("Client error while updating the profile", error);
-      }
+      const requestOptions: RequestOptions = {
+        method: "PATCH",
+        headers: myHeaders,
+        body: urlencoded,
+      };
+
+      try {
+         const response :Response = await fetch(
+            serverURL+"/users/profile",
+            requestOptions
+          );
+        const result: User.GetProfileResult = await response.json();
+        setUserProfile(result.user);
+        
+        } catch (error) {
+          console.log("Client error while updating the profile", error);
+        }
+    } else {
+      console.log("Updated User data has not beed stored in the state variable.")
+    }
   };
 
   return (
@@ -261,6 +261,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         userProfile,
         setUserProfile,
         deleteProfile,
+        updatedUserProfile,
+        setUpdatedUserProfile,
         updateProfile,
       }}
     >

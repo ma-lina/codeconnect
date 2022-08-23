@@ -6,9 +6,14 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import TextHeaderLine from "./TextHeaderLine";
 
 const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
-  const { userProfile, handleUserProfileChange, updateProfile } = useContext(AuthContext);
+  const { userProfile, updatedUserProfile, setUpdatedUserProfile, updateProfile } = useContext(AuthContext);
 
-  const handleSubmitProfileChange = (event) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdatedUserProfile({ ...updatedUserProfile, [e.target.name]: e.target.value });
+    console.log(updatedUserProfile)
+  };
+
+  const handleSubmitProfileChange = (event: React.FormEvent) => {
     event.preventDefault();
     updateProfile();
     close();
@@ -71,11 +76,11 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                                     // type={props.type}
                                     fullWidth
                                     inputProps={{ maxLength: 120 }}
-                                    name={userProfile.firstName}
+                                    name="firstName"
                                     placeholder={userProfile.firstName}
                                     // defaultValue={props.default}
         //TODO white the onchange handler here
-                                    // onChange={props.handler}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                         </Grid>
@@ -94,11 +99,11 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                                     // type={props.type}
                                     fullWidth
                                     inputProps={{ maxLength: 120 }}
-                                    name={userProfile.lastName}
+                                    name="lastName"
                                     placeholder={userProfile.lastName}
                                     // defaultValue={props.default}
         //TODO white the onchange handler here
-                                    // onChange={props.handler}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                         </Grid>
@@ -117,11 +122,11 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                                     // type={props.type}
                                     fullWidth
                                     inputProps={{ maxLength: 120 }}
-                                    name={userProfile.firstName}
+                                    name="username"
                                     placeholder={userProfile.username}
                                     // defaultValue={props.default}
         //TODO white the onchange handler here
-                                    // onChange={props.handler}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                         </Grid>
@@ -140,11 +145,11 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                                     // type={props.type}
                                     fullWidth
                                     inputProps={{ maxLength: 120 }}
-                                    name={userProfile.email}
+                                    name="email"
                                     placeholder={userProfile.email}
                                     // defaultValue={props.default}
         //TODO white the onchange handler here
-                                    // onChange={props.handler}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                         </Grid>
@@ -162,7 +167,7 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                                 endIcon={<SaveIcon />}
                                 variant="contained"
                                 color="primary"
-                                onClick={deleteProfile}
+                                onClick={handleSubmitProfileChange}
                             >
                                 Save
                             </Button>
