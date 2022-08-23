@@ -5,21 +5,26 @@ import {
   shadowingModel,
   coworkingModel,
 } from "../../models/pinboardModel";
-//import { userModel } from "../../models/userModel";
+import { userModel } from "../../models/userModel";
 
 export const resolver = {
   Query: {
-    /*     users: async () => {
+    users: async () => {
       try {
         return await userModel.find();
       } catch (err) {
         console.error("user error", err);
         throw new ApolloError("Error retrieving all user data", "400");
       }
-    }, */
+    },
     mentoring: async () => {
       try {
-        return await mentoringModel.find();
+        const data = await mentoringModel
+          .find()
+          .populate({ path: "creator" })
+          .exec();
+        console.log(data);
+        return data;
       } catch (err) {
         console.error("mentoring error", err);
         throw new ApolloError(

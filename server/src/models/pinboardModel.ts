@@ -29,7 +29,7 @@ const options = {
 };
 
 const baseSchemaFields: Record<keyof Base, any> = {
-  creator: { type: Schema.Types.ObjectId, ref: "User" },
+  creator: { type: Schema.Types.ObjectId, ref: "user" },
   field: Array,
   location: String,
   description: String,

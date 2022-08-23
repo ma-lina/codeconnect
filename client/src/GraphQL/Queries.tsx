@@ -4,11 +4,18 @@ export const GET_REQS_OFFERS = gql`
   query Query {
     mentoring {
       _id
-      creator
+      creator {
+        _id
+        firstName
+        lastName
+        image
+        username
+      }
       field
       location
       description
       date
+      #not populated yet!!!:
       starred {
         _id
       }
@@ -20,7 +27,13 @@ export const GET_REQS_OFFERS = gql`
     }
     shadowing {
       _id
-      creator
+      creator {
+        _id
+        firstName
+        lastName
+        image
+        username
+      }
       field
       location
       description
@@ -37,7 +50,13 @@ export const GET_REQS_OFFERS = gql`
     }
     coworking {
       _id
-      creator
+      creator {
+        _id
+        firstName
+        lastName
+        image
+        username
+      }
       field
       location
       description

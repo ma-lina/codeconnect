@@ -45,6 +45,6 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-let userModel = model("User", userSchema);
+let userModel = model("user", userSchema);
 
 export { userModel };
