@@ -2,7 +2,6 @@
   text-align: center;
   margin-top: 6rem;
   margin-bottom: 6rem;
-  /* font-family: 'Roboto' */
 }
 
 .background-image {
@@ -18,25 +17,44 @@
 .background-settings {
   background-repeat: no-repeat;
   background-position: bottom;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
   background-attachment: fixed;
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+.home-transition-settings {
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+.page-transition-settings {
+  animation-name: fade;
+  animation-duration: 0.5s;
 }
 
 .fira-code {
   font-family: 'Fira Code';
 }
 
-.blue-text {
-  color: #626aa8;
-  /* text-align: center; */
-  /* text-shadow: 2px grey; */
+.text-shadow {
+  text-shadow: 1px 2px 1px rgb(80, 78, 78);
+}
+
+.text-center {
+  text-align: center;
 }
 
 .homepage-text{
   margin-top: 10rem;
+  margin-bottom: 1rem;
+  margin-left: 4rem;
   color: #fff;
   text-align: center;
-  text-shadow: 2px grey;
+  text-shadow: 2px 2px 4px rgb(80, 78, 78);
 }
 
 .cursor {
@@ -67,3 +85,37 @@
   }
 }
 
+.fade-2-5-s {
+  animation-name: fade;
+  animation-duration: 2.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-style {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 6em;
+}
+
+.modal-style-paper {
+  width: 90%;
+  background-color: #e8eaf2;  
+  border-radius: 0.2em;
+}
+
+@media only screen and (min-width: 541px) {
+  .modal-style-paper {
+    width: 60%;
+  }
+}

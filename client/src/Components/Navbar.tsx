@@ -14,7 +14,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Logout from "./Logout";
 
-function Navbar() {
+const Navbar :React.FC = () => {
   const { user, userProfile, logOut } = useContext(AuthContext);
   const navigateTo = useNavigate()
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
