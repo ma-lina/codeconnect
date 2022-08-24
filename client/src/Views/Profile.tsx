@@ -6,7 +6,8 @@ import TextHeaderLine from "../Components/TextHeaderLine";
 const Profile :React.FC = () => {
   //removing background
   useLayoutEffect(() => {
-    document.body.className = "";
+    document.body.classList.remove("background-image");
+    document.body.classList.remove("home-transition-settings");
   })
 
   return(

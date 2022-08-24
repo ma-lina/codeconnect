@@ -25,47 +25,5 @@ export const GET_ADS = gql`
       timeslots
       offer
     }
-    shadowing {
-      _id
-      creator {
-        _id
-        firstName
-        lastName
-        image
-        username
-      }
-      field
-      location
-      description
-      date
-      starred {
-        _id
-      }
-      techKnowHow
-      level
-      availability
-      timeslots
-      length
-      offer
-    }
-    coworking {
-      _id
-      creator {
-        _id
-        firstName
-        lastName
-        image
-        username
-      }
-      field
-      location
-      description
-      date
-      starred {
-        _id
-      }
-      time
-      frequency
-    }
   }
 `;

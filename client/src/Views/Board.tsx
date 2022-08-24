@@ -1,17 +1,28 @@
 import { useQuery } from "@apollo/client";
+import { useLayoutEffect } from "react";
+import BoardTabs from "../Components/BoardTabs";
+import FilterDrawer from "../Components/FilterDrawer";
 import { GET_ADS } from "../GraphQL/Queries";
 
-const Pinboard = () => {
+const Board = () => {
+  //removing background
+  useLayoutEffect(() => {
+    document.body.classList.remove("background-image");
+    document.body.classList.remove("home-transition-settings");
+  })
+
   const { loading, error, data } = useQuery<QueryData>(GET_ADS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
     <>
+    <FilterDrawer/>
+    <BoardTabs/>
       {data?.mentoring.map(
         ({
           _id,
-          creator,
+          // creator,
           field,
           location,
           description,
@@ -23,7 +34,7 @@ const Pinboard = () => {
           offer,
         }) => (
           <div key={_id}>
-            <p>{creator}</p>
+            {/* <p>{creator}</p> */}
             <p>{location}</p>
             <p>{field}</p>
             <p>{description}</p>
@@ -35,4 +46,4 @@ const Pinboard = () => {
   );
 };
 
-export default Pinboard;
+export default Board;
