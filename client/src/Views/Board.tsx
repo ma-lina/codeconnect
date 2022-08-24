@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { GET_ADS } from "../GraphQL/Queries";
 
-const Pinboard = () => {
+const Board = () => {
   const { loading, error, data } = useQuery<QueryData>(GET_ADS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -35,4 +35,4 @@ const Pinboard = () => {
   );
 };
 
-export default Pinboard;
+export default Board;
