@@ -14,7 +14,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Logout from "./Logout";
 
-function Navbar() {
+const Navbar :React.FC = () => {
   const { user, userProfile, logOut } = useContext(AuthContext);
   const navigateTo = useNavigate()
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
@@ -46,22 +46,24 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography display={"flex"} textAlign={"left"} component="div" sx={{ flexGrow: 1 }} variant='h6'>
+          <Typography className="cursor white-cursor" display={"flex"} textAlign={"left"} component="div" sx={{ flexGrow: 1 }} variant='h6'>
             <Box
-              className="branding-text" 
+              className="fira-code" 
               sx={{ fontWeight: 'bold'}}
               >
-              codeconnect
+              codeconnect~
             </Box>
           </Typography>
           {user ? 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Logout">
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Logout">
                 <IconButton onClick={logOut} sx={{ p: 0 }}>
-                  <Avatar alt={`Avatar of ${userProfile.firstName}`} src={userProfile.image}/>
-                </IconButton>
-              </Tooltip>
-            </Box> : 
+                  {userProfile &&
+                    <Avatar alt={`Avatar of ${userProfile.firstName}`} src={userProfile.image} />
+                  }
+                  </IconButton>
+                </Tooltip>
+              </Box> : 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Login">
                 <IconButton

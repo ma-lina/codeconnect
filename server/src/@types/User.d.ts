@@ -1,7 +1,6 @@
 //TODO do we need _id, timestamps passed in user data to FE?
 //TODO rewrite this and simplify, only need 1 or 2? 
-//TODO import { Document, Model } from "mongoose" -> extend the mongoose types with interfaces matching the user object
-
+// import { Document, Model } from "mongoose"
 //notes about the user document from mongoose
 // ] req.user {
 // [1]   _id: new ObjectId("62e00170692c2ecbe966ce17"),
@@ -43,18 +42,30 @@ declare namespace UserN {
     } 
 
     interface UserProfileData {
+        _id: string;
         firstName: string;
         lastName: string;
         isLoggedin: boolean;
         username?: string;
         image?: string;
-        _id: string;
         isAdmin?: boolean; 
         starredMentorship?: any;
         starredCoworking?: any;
         starredShadowing?: any;
     }
+
+    interface MongooseUserData extends UserProfileData, UserLoginData {
+        createdAt: Date;
+        updatedAt: Date;
+        __v: number;
+
+    }
+    interface UpdatedUser {
+        email?: string;
+        firstName?: string;
+        image?: string;
+        lastName?: string;
+        username?: string;
+      }
+
 }
-
-
-

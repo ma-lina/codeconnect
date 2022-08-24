@@ -3,10 +3,11 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext';
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
-    const { user } = useContext(AuthContext);
+    const { isUserLoggedIn } = useContext(AuthContext);
+
     let location = useLocation();
    
-    if (!user) {
+    if (!isUserLoggedIn()) {
         return (<Navigate to="/login" state={{ from: location }} replace />)
     } else {
         return children;

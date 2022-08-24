@@ -1,11 +1,20 @@
-import { useContext } from "react";
+import { useContext, useLayoutEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import { AuthContext } from "../Context/AuthContext";
+import TextHeaderLine from "../Components/TextHeaderLine";
+import { Typography } from "@mui/material";
+import ButtonNavigateTo from "../Components/ButtonNavigateTo";
 
 const Login = () => {
+  //removing background
+  useLayoutEffect(() => {
+    document.body.classList.remove("background-image");
+    document.body.classList.remove("home-transition-settings");
+  })
+
   const { loginUser, setLoginUser, user, logIn } = useContext(AuthContext);
 
   const handleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,8 +22,8 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div>Login</div>
+    <div className="page-transition-settings">
+      <TextHeaderLine text="login"/>
       <Box
         component="form"
         sx={{
@@ -49,11 +58,21 @@ const Login = () => {
             onChange={handleChangeHandler}
           />
         </div>
-        <div>
-          <Button type="submit" endIcon={<SendIcon />} variant="contained" onClick={logIn}>
-            Login
-          </Button>
-        </div>
+          <Box sx={{ p: 1 }}>
+            <Button type="submit" endIcon={<SendIcon />} variant="contained" onClick={logIn}>
+              Login
+            </Button>
+          </Box>
+        </Box>
+            <Box
+        sx={{
+          flexDirection: 'column',
+        }}
+      >
+        <Typography variant="body2" sx={{ pt: 2 }}>
+          You do not have an account yet? 
+        </Typography>
+        <ButtonNavigateTo buttonText="sign up" destination="/signup"/>
       </Box>
     </div>
   );

@@ -4,6 +4,8 @@ import { userModel } from '../models/userModel';
 import { encryptPassword, verifyPassword } from '../utils/bcrypt';
 import { issueAccessToken,issueRefreshToken } from "../utils/jwt"
 import { UserProfileEnum, UserRegistrationEnum } from '../utils/userEnums';
+// import { UserN } from "../@types/User";
+import { UserDocument } from '../models/userModel';
 
 //function allowing to create a new object with chosen keys from another object
 // const getNewUserObject = (userObject: object, keys: Array<string>): UserN.UserRegistrationData | UserN.UserProfileData => {
@@ -207,14 +209,10 @@ const uploadPhoto = async (req: Request, res: Response<ResponseJson>) => {
 
 const updateProfile = async (req, res: Response<ResponseJson>) => {
   try {
-    const updatedValues = req.body;
+    const updatedValues: UserN.UpdatedUser = req.body;
+    
+    const updatedUser = await userModel.findByIdAndUpdate(req.user._id, updatedValues, {new: true});
 
-    //retrieving the user profile from the database and replacing the values to be changed with new ones from the request
-    const userToUpdate = await userModel.findById(req.user._id); 
-    userToUpdate._doc = { ...userToUpdate._doc, ...updatedValues }; 
-
-    //saving the new user profile
-    const updatedUser = await userToUpdate.save()
     if (!updatedUser) {
       res.status(500).json({
         message: "Server error, we couldn't update the profile, saving new values in the database failed. Please try again.",

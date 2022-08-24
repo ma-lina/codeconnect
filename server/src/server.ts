@@ -8,7 +8,6 @@ import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import passport from "passport";
 import { json } from "body-parser";
-//import { typeDefs, resolvers } from "./schema";
 import { schema } from "./graphql/schema";
 import { cloudinaryConfig } from "./config/cloudinaryConfig";
 import usersRoute from "./routes/usersRoute";
@@ -24,8 +23,8 @@ const startApolloServer = async () => {
   const port = process.env.PORT || 5000;
   const httpServer = http.createServer(app);
   const server = new ApolloServer<ApolloContext>({
-    //typeDefs,
-    //resolvers,
+    // typeDefs,
+    // resolvers,
     schema,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
