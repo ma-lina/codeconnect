@@ -13,7 +13,6 @@ import Profile from "./Views/Profile";
 import { Container } from "@mui/material";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Navbar from "./Components/Navbar";
-import AddAd from "./Components/AddAd";
 
 function App() {
   const themeLight: Theme = createTheme(themeLightOptions);
@@ -48,7 +47,6 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/addad" element={<AddAd />} />
             </Routes>
           </div>
         </AuthContextProvider>
