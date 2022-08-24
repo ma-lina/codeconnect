@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_ADS = gql`
-  query Query {
-    mentoring {
+  query Query($input: MentoringInputFilter) {
+    mentoring(input: $input) {
       _id
       creator {
         _id

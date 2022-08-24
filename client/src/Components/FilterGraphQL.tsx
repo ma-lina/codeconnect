@@ -1,10 +1,37 @@
-import { useState } from "react";
 import { useQuery, gql } from "@apollo/client";
-import { GET_ADS } from "../GraphQL/Queries";
-//import { pinboardFilters } from "../Utils/filter";
+//import { GET_ADS } from "../GraphQL/Queries";
+import { usePinboardFilters } from "../Utils/filter";
 
-const FilterGraphQL = () => {
-  /*   const { operations, models } = pinboardFilters();
+const GET_ADS = gql`
+  query Query($input: MentoringInputFilter) {
+    mentoring(input: $input) {
+      _id
+      creator {
+        _id
+        firstName
+        lastName
+        image
+        username
+      }
+      field
+      location
+      description
+      date
+      #not populated yet!!!:
+      starred {
+        _id
+      }
+      techKnowHow
+      level
+      availability
+      timeslots
+      offer
+    }
+  }
+`;
+
+function FilterGraphQL() {
+  const { operations, models } = usePinboardFilters();
   const { data, loading, error, refetch } = useQuery(GET_ADS);
 
   if (loading) return <div>Loading</div>;
@@ -29,18 +56,34 @@ const FilterGraphQL = () => {
         </a>
         Albums
       </h1>
-      ...
+
+      <div>
+        <label>Search</label>
+        <input
+          onChange={(e) => operations.updateFilter("name", e.target.value)}
+          type="string"
+        />
+      </div>
+
+      <br />
+
+      {data.mentoring.map((ad: any) => (
+        <div>{JSON.stringify(ad)}</div>
+      ))}
+
+      <br />
+
       <button
         onClick={() =>
           refetch({
-            albumsInput: { name: models.filters.name },
+            input: { location: models.filters.location },
           })
         }
       >
         Submit!
       </button>
     </div>
-  ); */
-};
+  );
+}
 
 export default FilterGraphQL;

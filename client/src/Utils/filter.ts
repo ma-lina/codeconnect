@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-function pinboardFilters() {
-  /* 
+const usePinboardFilters = () => {
   const [filters, _updateFilter] = useState<any>({
     field: undefined,
     location: undefined,
@@ -23,7 +22,7 @@ function pinboardFilters() {
   return {
     models: { filters },
     operations: { updateFilter },
-  }; */
-}
+  };
+};
 
-export { pinboardFilters };
+export { usePinboardFilters };
