@@ -20,35 +20,38 @@ export const resolver = {
       const filter = args.input;
       console.log("args", args);
       console.log("args", args.input);
-      console.log("filter", filter);
-      console.log("filter", filter.location);
+      //console.log("filter", filter.location);
       const shouldApplyFilters = filter !== (null || undefined);
       try {
         let data = await mentoringModel
           .find()
           .populate({ path: "creator" })
           .exec();
-        console.log(data);
         if (!shouldApplyFilters) {
           return data;
+        } else {
+          if (filter.location) {
+            data = data.filter((a) => a.location === filter.location);
+          }
+          if (filter.offer === true || filter.offer === false) {
+            data = data.filter((a) => a.offer === filter.offer);
+          }
+          if (filter.level) {
+            data = data.filter((a) => a.level === filter.level);
+          }
+          const shouldApplyFieldFilter = filter.field !== null;
+          if (filter.field) {
+            data = data.filter((b) => {
+              console.log("b", b);
+              const x = filter.field.filter((a) => {
+                console.log("a", b.field.includes(a));
+                return b.field.includes(a);
+              });
+              console.log("x", x); //if x == x.lenght == 0, return false else true
+            });
+          }
+          return data;
         }
-        const shouldApplyLocationFilter = filter.location !== null;
-        if (shouldApplyLocationFilter) {
-          data = data.filter((a) => a.location === filter.location);
-        }
-        const shouldApplyOfferFilter = filter.offer !== null;
-        if (shouldApplyOfferFilter) {
-          data = data.filter((a) => a.offer === filter.offer);
-        } /*
-           const shouldApplyLevelFilter = filter.level !== null;
-        if (shouldApplyLevelFilter) {
-          data = data.filter((a) => a.level === filter.level);
-        }
-        /*         const shouldApplyFieldFilter = filter.field !== null;
-        if (shouldApplyFieldFilter) {
-          data = data.filter((a) => a.field === filter.field);
-        } */
-        return data;
       } catch (err) {
         console.error("mentoring error", err);
         throw new ApolloError(
