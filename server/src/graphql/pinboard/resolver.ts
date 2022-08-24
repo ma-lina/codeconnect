@@ -16,14 +16,38 @@ export const resolver = {
         throw new ApolloError("Error retrieving all user data", "400");
       }
     },
-    mentoring: async (args) => {
-      console.log(args);
+    mentoring: async (parent, args, context, info) => {
+      const filter = args.input;
+      console.log("args", args);
+      console.log("args", args.input);
+      console.log("filter", filter);
+      console.log("location", filter.location);
+      const shouldApplyFilters = filter !== (null || undefined);
       try {
-        const data = await mentoringModel
+        let data = await mentoringModel
           .find()
           .populate({ path: "creator" })
           .exec();
         console.log(data);
+        if (!shouldApplyFilters) {
+          return data;
+        }
+        const shouldApplyLocationFilter = filter.location !== null;
+        if (shouldApplyLocationFilter) {
+          data = data.filter((a) => a.location === filter.location);
+        }
+        const shouldApplyOfferFilter = filter.offer !== null;
+        if (shouldApplyOfferFilter) {
+          data = data.filter((a) => a.offer === filter.offer);
+        } /*
+           const shouldApplyLevelFilter = filter.level !== null;
+        if (shouldApplyLevelFilter) {
+          data = data.filter((a) => a.level === filter.level);
+        }
+        /*         const shouldApplyFieldFilter = filter.field !== null;
+        if (shouldApplyFieldFilter) {
+          data = data.filter((a) => a.field === filter.field);
+        } */
         return data;
       } catch (err) {
         console.error("mentoring error", err);

@@ -5,22 +5,11 @@ import { usePinboardFilters } from "../Utils/filter";
 const GET_ADS = gql`
   query Query($input: MentoringInputFilter) {
     mentoring(input: $input) {
-      _id
-      creator {
-        _id
-        firstName
-        lastName
-        image
-        username
-      }
       field
       location
+      _id
       description
       date
-      #not populated yet!!!:
-      starred {
-        _id
-      }
       techKnowHow
       level
       availability
@@ -32,7 +21,9 @@ const GET_ADS = gql`
 
 function FilterGraphQL() {
   const { operations, models } = usePinboardFilters();
-  const { data, loading, error, refetch } = useQuery(GET_ADS);
+  const { data, loading, error, refetch } = useQuery(GET_ADS, {
+    variables: {},
+  });
 
   if (loading) return <div>Loading</div>;
   if (error) return <div>error</div>;
@@ -60,7 +51,7 @@ function FilterGraphQL() {
       <div>
         <label>Search</label>
         <input
-          onChange={(e) => operations.updateFilter("name", e.target.value)}
+          onChange={(e) => operations.updateFilter("location", e.target.value)}
           type="string"
         />
       </div>

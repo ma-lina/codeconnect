@@ -34,7 +34,6 @@ export default gql`
   input MentoringInputFilter {
     field: [String]
     location: String
-    description: String
     date: Date
     techKnowHow: [String]
     level: String
@@ -110,7 +109,7 @@ export default gql`
 
   extend type Query {
     users: [User]
-    mentoring: [Mentoring]
+    mentoring(input: MentoringInputFilter): [Mentoring]
     shadowing: [Shadowing]
     coworking: [Coworking]
   }
