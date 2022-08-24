@@ -11,7 +11,6 @@ const Pinboard = () => {
       {data?.mentoring.map(
         ({
           _id,
-          creator,
           field,
           location,
           description,
@@ -23,7 +22,6 @@ const Pinboard = () => {
           offer,
         }) => (
           <div key={_id}>
-            <p>{creator}</p>
             <p>{location}</p>
             <p>{field}</p>
             <p>{description}</p>
