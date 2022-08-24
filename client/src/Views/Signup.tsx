@@ -16,7 +16,8 @@ import ButtonNavigateTo from "../Components/ButtonNavigateTo";
 const Signup = () => {
   //removing background
   useLayoutEffect(() => {
-    document.body.className = "";
+    document.body.classList.remove("background-image");
+    document.body.classList.remove("home-transition-settings");
   })
 
   const {
