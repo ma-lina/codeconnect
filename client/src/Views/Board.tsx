@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useLayoutEffect } from "react";
+import FilterDrawer from "../Components/FilterDrawer";
 import { GET_ADS } from "../GraphQL/Queries";
 
 const Board = () => {
@@ -15,10 +16,11 @@ const Board = () => {
 
   return (
     <>
+    <FilterDrawer/>
       {data?.mentoring.map(
         ({
           _id,
-          creator,
+          // creator,
           field,
           location,
           description,
@@ -30,7 +32,7 @@ const Board = () => {
           offer,
         }) => (
           <div key={_id}>
-            <p>{creator}</p>
+            {/* <p>{creator}</p> */}
             <p>{location}</p>
             <p>{field}</p>
             <p>{description}</p>
