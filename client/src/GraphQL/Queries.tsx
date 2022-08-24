@@ -16,9 +16,9 @@ export const GET_ADS = gql`
       description
       date
       #not populated yet!!!:
-      starred {
-        _id
-      }
+      #starred {
+      #  _id
+      # }
       techKnowHow
       level
       availability
@@ -38,9 +38,9 @@ export const GET_ADS = gql`
       location
       description
       date
-      starred {
-        _id
-      }
+      #    starred {
+      #      _id
+      #   }
       techKnowHow
       level
       availability
@@ -61,9 +61,9 @@ export const GET_ADS = gql`
       location
       description
       date
-      starred {
-        _id
-      }
+      #   starred {
+      #      _id
+      #   }
       time
       frequency
     }

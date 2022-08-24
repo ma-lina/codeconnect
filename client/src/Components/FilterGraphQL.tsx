@@ -52,8 +52,8 @@ function FilterGraphQL() {
           label="Level"
           onChange={(e) => operations.updateFilter("request", e.target.value)}
         >
-          <MenuItem value={false}>Request</MenuItem>
-          <MenuItem value={true}>Offer</MenuItem>
+          {/*          <MenuItem value={false}>Request</MenuItem>
+          <MenuItem value={true}>Offer</MenuItem> */}
         </Select>
       </FormControl>
 

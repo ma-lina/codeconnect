@@ -22,7 +22,7 @@ const Board = () => {
       {data?.mentoring.map(
         ({
           _id,
-          // creator,
+          //        creator,
           field,
           location,
           description,
