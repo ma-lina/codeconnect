@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useLayoutEffect } from "react";
+import BoardTabs from "../Components/BoardTabs";
 import FilterDrawer from "../Components/FilterDrawer";
 import { GET_ADS } from "../GraphQL/Queries";
 
@@ -17,6 +18,7 @@ const Board = () => {
   return (
     <>
     <FilterDrawer/>
+    <BoardTabs/>
       {data?.mentoring.map(
         ({
           _id,

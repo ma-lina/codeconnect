@@ -28,9 +28,9 @@ const Puller = styled(Box)(({ theme }) => ({
   height: 6,
   backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
   borderRadius: 3,
-  position: 'absolute',
-  top: 8,
-  left: 'calc(50% - 15px)',
+//   position: 'absolute',
+//   top: 8,
+//   left: 'calc(50% - 15px)',
 }));
 
 export default function FilterDrawer() {
@@ -64,7 +64,7 @@ export default function FilterDrawer() {
         ModalProps={{
           keepMounted: true,
         }}
-        onClick={toggleDrawer(!open)}
+        // onClick={toggleDrawer(!open)}
       >
         <StyledBox
           sx={{
@@ -77,11 +77,11 @@ export default function FilterDrawer() {
             left: 0,
           }}
         >
-          <Puller />
-          <Box color="text.secondary" sx={{display:"flex", alignItems: 'center', justifyContent:"flex-start", alignContent:"center", px:2 }}>
+            <Button sx={{  position: 'absolute', top: 8, left: 'calc(50% - 15px)', p:0.5}} onClick={toggleDrawer(!open)}><Puller /></Button>
+            <Box color="text.secondary" sx={{display:"flex", alignItems: 'center', justifyContent:"flex-start", alignContent:"center", px:2 }}>
             <FilterAltIcon color='inherit'/>
             <Typography sx={{ p: 2, color: 'inherit' }}>51 results</Typography> 
-          </Box>
+            </Box>
         </StyledBox>
         <StyledBox
           sx={{
