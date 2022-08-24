@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_ADS = gql`
-  query Query($input: MentoringInputFilter) {
+  query Query($input: InputFilter) {
     mentoring(input: $input) {
       _id
       creator {
@@ -24,6 +24,48 @@ export const GET_ADS = gql`
       availability
       timeslots
       offer
+    }
+    shadowing(input: $input) {
+      _id
+      creator {
+        _id
+        firstName
+        lastName
+        image
+        username
+      }
+      field
+      location
+      description
+      date
+      starred {
+        _id
+      }
+      techKnowHow
+      level
+      availability
+      timeslots
+      length
+      offer
+    }
+    coworking(input: $input) {
+      _id
+      creator {
+        _id
+        firstName
+        lastName
+        image
+        username
+      }
+      field
+      location
+      description
+      date
+      starred {
+        _id
+      }
+      time
+      frequency
     }
   }
 `;

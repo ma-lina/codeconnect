@@ -31,7 +31,7 @@ export default gql`
     offer: Boolean!
   }
 
-  input MentoringInputFilter {
+  input InputFilter {
     field: [String]
     location: String
     date: Date
@@ -109,9 +109,9 @@ export default gql`
 
   extend type Query {
     users: [User]
-    mentoring(input: MentoringInputFilter): [Mentoring]
-    shadowing: [Shadowing]
-    coworking: [Coworking]
+    mentoring(input: InputFilter): [Mentoring]
+    shadowing(input: InputFilter): [Shadowing]
+    coworking(input: InputFilter): [Coworking]
   }
 
   extend type Mutation {
