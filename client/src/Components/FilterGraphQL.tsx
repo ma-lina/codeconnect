@@ -41,11 +41,9 @@ function FilterGraphQL() {
           onChange={(e) => operations.updateFilter("level", e.target.value)}
         >
           <MenuItem value={"Junior"}>Junior</MenuItem>
-          <MenuItem value={"Medium"}>Twenty</MenuItem>
+          <MenuItem value={"Intermediate"}>Intermediate</MenuItem>
           <MenuItem value={"Senior"}>Senior</MenuItem>
         </Select>
-      </FormControl>
-      <FormControl fullWidth>
         <InputLabel id="offer">Kind of Pin</InputLabel>
         <Select
           labelId="offer"

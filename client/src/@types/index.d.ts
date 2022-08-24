@@ -16,7 +16,7 @@ interface Query {
 interface QueryData {
   mentoring: Query[];
 }
-
+/* 
 namespace Mentoring {
   type Level = "Junior" | "Intermediate" | "Senior";
 
@@ -45,3 +45,4 @@ namespace Mentoring {
 
 namespace Coworking {}
 namespace Shadowing {}
+ */
