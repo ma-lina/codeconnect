@@ -21,7 +21,10 @@ client
       query Query {
         mentoring {
           _id
-          creator
+          creator {
+            firstName
+            lastName
+          }
           field
           location
           description
@@ -46,11 +49,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ApolloProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>
 );

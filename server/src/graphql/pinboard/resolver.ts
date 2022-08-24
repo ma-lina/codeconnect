@@ -54,6 +54,28 @@ export const resolver = {
         );
       }
     },
+    /* ad(parent, args, context, info) {
+      const { filter } = args;
+      const shouldApplyFilters = filter !== null;
+
+      let ads = context.db.pinboard;
+
+      if (!shouldApplyFilters) {
+        return ads;
+      }
+
+      const shouldApplyLocationFilter = filter.location !== null;
+      //  const shouldApplyIdsFilter = filter.ids;
+
+      if (shouldApplyLocationFilter) {
+        ads = ads.filter((a) => a.loation === filter.loation);
+      }
+
+      //   if (shouldApplyIdsFilter) {
+      //	ads = ads.filter((a) => ids.includes(a._id))
+      //     }
+
+      return ads; */
   },
   //add typescript to mutation!
   Mutation: {
