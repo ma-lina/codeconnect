@@ -8,6 +8,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterForm from './FilterForm';
 
 const drawerBleeding = 56;
 
@@ -90,7 +91,8 @@ export default function FilterDrawer() {
             overflow: 'auto',
           }}
         >
-          <Skeleton variant="rectangular" height="100%" />
+            <FilterForm/>
+          {/* <Skeleton variant="rectangular" height="100%" /> */}
         </StyledBox>
       </SwipeableDrawer>
     </Root>
