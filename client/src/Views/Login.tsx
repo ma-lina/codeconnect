@@ -13,7 +13,7 @@ const Login = () => {
   useLayoutEffect(() => {
     document.body.classList.remove("background-image");
     document.body.classList.remove("home-transition-settings");
-  })
+  });
 
   const { loginUser, setLoginUser, user, logIn } = useContext(AuthContext);
 
@@ -23,7 +23,7 @@ const Login = () => {
 
   return (
     <div className="page-transition-settings">
-      <TextHeaderLine text="login"/>
+      <TextHeaderLine text="login" />
       <Box
         component="form"
         sx={{
@@ -58,21 +58,26 @@ const Login = () => {
             onChange={handleChangeHandler}
           />
         </div>
-          <Box sx={{ p: 1 }}>
-            <Button type="submit" endIcon={<SendIcon />} variant="contained" onClick={logIn}>
-              Login
-            </Button>
-          </Box>
+        <Box sx={{ p: 1 }}>
+          <Button
+            type="submit"
+            endIcon={<SendIcon />}
+            variant="contained"
+            onClick={logIn}
+          >
+            Login
+          </Button>
         </Box>
-            <Box
+      </Box>
+      <Box
         sx={{
-          flexDirection: 'column',
+          flexDirection: "column",
         }}
       >
         <Typography variant="body2" sx={{ pt: 2 }}>
-          You do not have an account yet? 
+          You do not have an account yet?
         </Typography>
-        <ButtonNavigateTo buttonText="sign up" destination="/signup"/>
+        <ButtonNavigateTo buttonText="sign up" destination="/signup" />
       </Box>
     </div>
   );

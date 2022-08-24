@@ -9,7 +9,7 @@ const Board = () => {
   useLayoutEffect(() => {
     document.body.classList.remove("background-image");
     document.body.classList.remove("home-transition-settings");
-  })
+  });
 
   const { loading, error, data } = useQuery<QueryData>(GET_ADS);
   if (loading) return <p>Loading...</p>;
@@ -17,12 +17,12 @@ const Board = () => {
 
   return (
     <>
-    <FilterDrawer/>
-    <BoardTabs/>
+      <FilterDrawer />
+      <BoardTabs />
       {data?.mentoring.map(
         ({
           _id,
-          // creator,
+          //        creator,
           field,
           location,
           description,
