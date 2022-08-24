@@ -39,8 +39,7 @@ export const resolver = {
           if (filter.level) {
             data = data.filter((a) => a.level === filter.level);
           }
-          const shouldApplyFieldFilter = filter.field !== null;
-          if (filter.field) {
+          /*           if (filter.field) {
             data = data.filter((b) => {
               console.log("b", b);
               const x = filter.field.filter((a) => {
@@ -49,7 +48,7 @@ export const resolver = {
               });
               console.log("x", x); //if x == x.lenght == 0, return false else true
             });
-          }
+          } */
           return data;
         }
       } catch (err) {
@@ -60,9 +59,31 @@ export const resolver = {
         );
       }
     },
-    shadowing: async () => {
+    shadowing: async (parent, args, context, info) => {
+      const filter = args.input;
+      console.log("args", args);
+      console.log("args", args.input);
+      //console.log("filter", filter.location);
+      const shouldApplyFilters = filter !== (null || undefined);
       try {
-        return await shadowingModel.find().populate({ path: "creator" }).exec();
+        let data = await shadowingModel
+          .find()
+          .populate({ path: "creator" })
+          .exec();
+        if (!shouldApplyFilters) {
+          return data;
+        } else {
+          if (filter.location) {
+            data = data.filter((a) => a.location === filter.location);
+          }
+          if (filter.offer === true || filter.offer === false) {
+            data = data.filter((a) => a.offer === filter.offer);
+          }
+          if (filter.level) {
+            data = data.filter((a) => a.level === filter.level);
+          }
+          return data;
+        }
       } catch (err) {
         console.error("shadowing error", err);
         throw new ApolloError(
@@ -71,9 +92,32 @@ export const resolver = {
         );
       }
     },
-    coworking: async () => {
+    coworking: async (parent, args, context, info) => {
+      const filter = args.input;
+      console.log("args", args);
+      console.log("args", args.input);
+      //console.log("filter", filter.location);
+      const shouldApplyFilters = filter !== (null || undefined);
       try {
-        return await coworkingModel.find().populate({ path: "creator" }).exec();
+        let data = await coworkingModel
+          .find()
+          .populate({ path: "creator" })
+          .exec();
+        if (!shouldApplyFilters) {
+          return data;
+        } else {
+          if (filter.location) {
+            data = data.filter((a) => a.location === filter.location);
+          }
+          if (filter.offer === true || filter.offer === false) {
+            data = data.filter((a) => a.offer === filter.offer);
+          }
+          if (filter.level) {
+            data = data.filter((a) => a.level === filter.level);
+          }
+
+          return data;
+        }
       } catch (err) {
         console.error("coworking error", err);
         throw new ApolloError(
