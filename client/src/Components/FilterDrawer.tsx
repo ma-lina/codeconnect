@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -40,9 +39,6 @@ export default function FilterDrawer() {
     setOpen(newOpen);
   };
 
-  // This is used only for the example
-//   const container = window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Root>
       <Global
@@ -57,7 +53,6 @@ export default function FilterDrawer() {
         <Button onClick={toggleDrawer(true)}>Open</Button>
       </Box> */}
       <SwipeableDrawer
-        // container={container}
         anchor="bottom"
         // anchor="top"
         open={open}
