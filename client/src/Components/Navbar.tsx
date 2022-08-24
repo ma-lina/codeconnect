@@ -13,6 +13,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Logout from "./Logout";
+import PushPinIcon from '@mui/icons-material/PushPin';
 
 const Navbar :React.FC = () => {
   const { user, userProfile, logOut } = useContext(AuthContext);
@@ -100,9 +101,17 @@ const Navbar :React.FC = () => {
             <Divider />
             <List>
               <ListItem disablePadding>
+                  <ListItemButton onClick={() => handleNavigateToInDrawer("/board")}>
+                    <ListItemIcon>
+                      <PushPinIcon color="primary" /> 
+                    </ListItemIcon>
+                    <ListItemText primary="Board" />
+                  </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
                   <ListItemButton onClick={() => handleNavigateToInDrawer("/")}>
                     <ListItemIcon>
-                      <HomeIcon /> 
+                      <HomeIcon color="primary" /> 
                     </ListItemIcon>
                     <ListItemText primary="Home" />
                   </ListItemButton>
@@ -110,7 +119,7 @@ const Navbar :React.FC = () => {
               <ListItem disablePadding>
                   <ListItemButton onClick={() => handleNavigateToInDrawer("/profile")}>
                     <ListItemIcon>
-                      <PersonIcon /> 
+                      <PersonIcon color="primary" /> 
                     </ListItemIcon>
                     <ListItemText primary="Profile" />
                   </ListItemButton>
