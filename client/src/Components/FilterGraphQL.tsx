@@ -27,7 +27,7 @@ function FilterGraphQL() {
 
   if (loading) return <div>Loading</div>;
   if (error) return <div>error</div>;
-
+  console.log(data.mentoring.length);
   return (
     <div>
       <h1>

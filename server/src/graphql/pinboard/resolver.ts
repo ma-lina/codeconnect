@@ -21,7 +21,7 @@ export const resolver = {
       console.log("args", args);
       console.log("args", args.input);
       console.log("filter", filter);
-      console.log("location", filter.location);
+      console.log("filter", filter.location);
       const shouldApplyFilters = filter !== (null || undefined);
       try {
         let data = await mentoringModel
