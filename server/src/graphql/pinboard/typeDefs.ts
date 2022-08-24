@@ -31,6 +31,18 @@ export default gql`
     offer: Boolean!
   }
 
+  input MentoringInputFilter {
+    field: [String]
+    location: String
+    description: String
+    date: Date
+    techKnowHow: [String]
+    level: String
+    availability: [String]
+    timeslots: [String]
+    offer: Boolean
+  }
+
   type Shadowing {
     _id: ID!
     creator: User!
