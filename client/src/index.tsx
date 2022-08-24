@@ -22,8 +22,11 @@ client
         mentoring {
           _id
           creator {
+            _id
             firstName
             lastName
+            username
+            image
           }
           field
           location
