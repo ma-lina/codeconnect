@@ -28,9 +28,6 @@ const Puller = styled(Box)(({ theme }) => ({
   height: 6,
   backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
   borderRadius: 3,
-//   position: 'absolute',
-//   top: 8,
-//   left: 'calc(50% - 15px)',
 }));
 
 export default function FilterDrawer() {
@@ -50,12 +47,8 @@ export default function FilterDrawer() {
           },
         }}
       />
-      {/* <Box sx={{ textAlign: 'center', pt: 1 }}>
-        <Button onClick={toggleDrawer(true)}>Open</Button>
-      </Box> */}
       <SwipeableDrawer
         anchor="bottom"
-        // anchor="top"
         open={open}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
@@ -64,7 +57,6 @@ export default function FilterDrawer() {
         ModalProps={{
           keepMounted: true,
         }}
-        // onClick={toggleDrawer(!open)}
       >
         <StyledBox
           sx={{
