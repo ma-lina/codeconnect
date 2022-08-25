@@ -1,6 +1,12 @@
 interface Query {
   _id: any;
-  creator: any;
+  creator: {
+    _id: ObjectId;
+    username: string;
+    firstName: string;
+    lastName: string;
+    image: string;
+  };
   field: Array<String>;
   location: string;
   description: string;
@@ -16,7 +22,7 @@ interface Query {
 interface QueryData {
   mentoring: Query[];
 }
-
+/* 
 namespace Mentoring {
   type Level = "Junior" | "Intermediate" | "Senior";
 
@@ -45,3 +51,4 @@ namespace Mentoring {
 
 namespace Coworking {}
 namespace Shadowing {}
+ */

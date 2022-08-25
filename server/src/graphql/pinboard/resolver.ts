@@ -5,6 +5,7 @@ import {
   coworkingModel,
 } from "../../models/pinboardModel";
 import { userModel } from "../../models/userModel";
+import { filterMe } from "../../utils/filterMe";
 
 export const resolver = {
   Query: {
@@ -16,14 +17,27 @@ export const resolver = {
         throw new ApolloError("Error retrieving all user data", "400");
       }
     },
-    mentoring: async () => {
+    mentoring: async (parent, args, context, info) => {
+      const filter = args.input;
+      console.log("args", args.input);
+      const shouldApplyFilters = filter !== (null || undefined);
       try {
-        const data = await mentoringModel
+        let data = await mentoringModel
           .find()
           .populate({ path: "creator" })
           .exec();
-        console.log(data);
-        return data;
+        if (!shouldApplyFilters) {
+          return data;
+        } else {
+          const result = filterMe(data, filter);
+          return result;
+
+          if (filter.timeslots) {
+            data = data.filter((a) =>
+              filter.timeslots.some((b) => a.timeslots.includes(b))
+            );
+          }
+        }
       } catch (err) {
         console.error("mentoring error", err);
         throw new ApolloError(
@@ -32,9 +46,31 @@ export const resolver = {
         );
       }
     },
-    shadowing: async () => {
+    shadowing: async (parent, args, context, info) => {
+      const filter = args.input;
+      console.log("args", args);
+      console.log("args", args.input);
+      //console.log("filter", filter.location);
+      const shouldApplyFilters = filter !== (null || undefined);
       try {
-        return await shadowingModel.find();
+        let data = await shadowingModel
+          .find()
+          .populate({ path: "creator" })
+          .exec();
+        if (!shouldApplyFilters) {
+          return data;
+        } else {
+          if (filter.location) {
+            data = data.filter((a) => a.location === filter.location);
+          }
+          if (filter.offer === true || filter.offer === false) {
+            data = data.filter((a) => a.offer === filter.offer);
+          }
+          if (filter.level) {
+            data = data.filter((a) => a.level === filter.level);
+          }
+          return data;
+        }
       } catch (err) {
         console.error("shadowing error", err);
         throw new ApolloError(
@@ -43,9 +79,32 @@ export const resolver = {
         );
       }
     },
-    coworking: async () => {
+    coworking: async (parent, args, context, info) => {
+      const filter = args.input;
+      console.log("args", args);
+      console.log("args", args.input);
+      //console.log("filter", filter.location);
+      const shouldApplyFilters = filter !== (null || undefined);
       try {
-        return await coworkingModel.find();
+        let data = await coworkingModel
+          .find()
+          .populate({ path: "creator" })
+          .exec();
+        if (!shouldApplyFilters) {
+          return data;
+        } else {
+          if (filter.location) {
+            data = data.filter((a) => a.location === filter.location);
+          }
+          if (filter.offer === true || filter.offer === false) {
+            data = data.filter((a) => a.offer === filter.offer);
+          }
+          if (filter.level) {
+            data = data.filter((a) => a.level === filter.level);
+          }
+
+          return data;
+        }
       } catch (err) {
         console.error("coworking error", err);
         throw new ApolloError(
@@ -54,28 +113,6 @@ export const resolver = {
         );
       }
     },
-    /* ad(parent, args, context, info) {
-      const { filter } = args;
-      const shouldApplyFilters = filter !== null;
-
-      let ads = context.db.pinboard;
-
-      if (!shouldApplyFilters) {
-        return ads;
-      }
-
-      const shouldApplyLocationFilter = filter.location !== null;
-      //  const shouldApplyIdsFilter = filter.ids;
-
-      if (shouldApplyLocationFilter) {
-        ads = ads.filter((a) => a.loation === filter.loation);
-      }
-
-      //   if (shouldApplyIdsFilter) {
-      //	ads = ads.filter((a) => ids.includes(a._id))
-      //     }
-
-      return ads; */
   },
   //add typescript to mutation!
   Mutation: {

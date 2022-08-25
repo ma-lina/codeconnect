@@ -9,20 +9,19 @@ const Board = () => {
   useLayoutEffect(() => {
     document.body.classList.remove("background-image");
     document.body.classList.remove("home-transition-settings");
-  })
+  });
 
   const { loading, error, data } = useQuery<QueryData>(GET_ADS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-
   return (
     <>
-    <FilterDrawer/>
-    <BoardTabs/>
+      <FilterDrawer />
+      <BoardTabs />
       {data?.mentoring.map(
         ({
           _id,
-          // creator,
+          creator,
           field,
           location,
           description,
@@ -34,7 +33,7 @@ const Board = () => {
           offer,
         }) => (
           <div key={_id}>
-            {/* <p>{creator}</p> */}
+            <p>{creator.firstName}</p>
             <p>{location}</p>
             <p>{field}</p>
             <p>{description}</p>

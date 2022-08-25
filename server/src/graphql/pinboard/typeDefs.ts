@@ -18,6 +18,7 @@ export default gql`
 
   type Mentoring {
     _id: ID!
+    title: String!
     creator: User!
     field: [String!]!
     location: String!
@@ -31,13 +32,12 @@ export default gql`
     offer: Boolean!
   }
 
-  input MentoringInputFilter {
+  input InputFilter {
     field: [String]
     location: String
-    description: String
     date: Date
     techKnowHow: [String]
-    level: String
+    level: [String]
     availability: [String]
     timeslots: [String]
     offer: Boolean
@@ -46,6 +46,7 @@ export default gql`
   type Shadowing {
     _id: ID!
     creator: User!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -62,6 +63,7 @@ export default gql`
   type Coworking {
     _id: ID!
     creator: User!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -73,6 +75,7 @@ export default gql`
 
   input MentoringInput {
     creator: ID!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -86,6 +89,7 @@ export default gql`
 
   input ShadowingInput {
     creator: ID!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -100,6 +104,7 @@ export default gql`
 
   input CoworkingInput {
     creator: ID!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -110,14 +115,14 @@ export default gql`
 
   extend type Query {
     users: [User]
-    mentoring: [Mentoring]
-    shadowing: [Shadowing]
-    coworking: [Coworking]
+    mentoring(input: InputFilter): [Mentoring]
+    shadowing(input: InputFilter): [Shadowing]
+    coworking(input: InputFilter): [Coworking]
   }
 
   extend type Mutation {
     addMentoring(input: MentoringInput): Mentoring
-    # updateAd():
+    ##TODO updatePin():
     addShadowing(input: ShadowingInput): Shadowing
     addCoworking(input: CoworkingInput): Coworking
   }
