@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { usePinboardFilters } from "../Utils/usePinboardFilters";
 import {
@@ -294,15 +295,13 @@ function FilterGraphQL() {
           </Select>
         </FormControl>
       </div>
-      <div></div>
-
       <div>
-        <label>Location</label>
-        <input
+        <TextField
+          id="outlined-name"
+          label="Location"
+          value={models.filters.location}
           onChange={(e) => operations.updateFilter("location", e.target.value)}
-          type="string"
         />
-
         <br />
         {data.mentoring.map((ad: any) => (
           <div>{JSON.stringify(ad)}</div>
