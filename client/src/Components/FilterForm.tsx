@@ -1,4 +1,3 @@
-import { useQuery, gql } from "@apollo/client";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -19,22 +18,15 @@ import {
   Field,
   Level,
 } from "../Utils/enums";
-import { GET_ADS } from "../GraphQL/Queries";
 
 export default function FilterForm(props: any) {
   const { operations, models } = usePinboardFilters();
-  // const { data, loading, error, refetch } = useQuery(GET_ADS, {
-  //   variables: {},
-  // });
   const [techKnowHow, setTechKnowHow] = useState([]);
   const [availability, setAvailability] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const [field, setField] = useState([]);
   const [level, setLevel] = useState([]);
   const theme = useTheme();
-
-  // if (loading) return <div>Loading</div>;
-  // if (error) return <div>error</div>;
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;

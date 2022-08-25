@@ -1,7 +1,5 @@
 import * as React from "react";
 import { AuthContext } from "../Context/AuthContext";
-import { useQuery } from "@apollo/client";
-import { GET_ADS } from "../GraphQL/Queries";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
