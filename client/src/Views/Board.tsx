@@ -14,7 +14,6 @@ const Board = () => {
   const { loading, error, data } = useQuery<QueryData>(GET_ADS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-  console.log("Name", data?.mentoring[1].creator.firstName);
   return (
     <>
       <FilterDrawer />

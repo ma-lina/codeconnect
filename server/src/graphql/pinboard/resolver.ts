@@ -5,6 +5,7 @@ import {
   coworkingModel,
 } from "../../models/pinboardModel";
 import { userModel } from "../../models/userModel";
+import { filterMe } from "../../utils/filterMe";
 
 export const resolver = {
   Query: {
@@ -18,9 +19,7 @@ export const resolver = {
     },
     mentoring: async (parent, args, context, info) => {
       const filter = args.input;
-      console.log("args", args);
       console.log("args", args.input);
-      //console.log("filter", filter.location);
       const shouldApplyFilters = filter !== (null || undefined);
       try {
         let data = await mentoringModel
@@ -30,57 +29,14 @@ export const resolver = {
         if (!shouldApplyFilters) {
           return data;
         } else {
-          if (filter.location) {
-            data = data.filter((a) => a.location === filter.location);
-          }
-          if (filter.offer === true || filter.offer === false) {
-            data = data.filter((a) => a.offer === filter.offer);
-          }
-          //if type of input level is a string
-          //if (filter.level) {
-          //  data = data.filter((a) => a.level === filter.level);
-          //}
-          if (filter.level) {
-            data = data.filter((a) =>
-              filter.level.some((b) => a.level.includes(b))
-            );
-          }
-          //if filter is only a string:
-          //if (filter.field) {
-          //  data = data.filter((b) => b.field.includes(filter.field));
-          //}
-          // if all values of filter should be in the result
-          //if (filter.field) {
-          //  data = data.filter((a) =>
-          //    filter.field.every((b) => a.field.includes(b))
-          // );
-          //}
+          const result = filterMe(data, filter);
+          return result;
 
-          if (filter.field) {
-            data = data.filter((a) =>
-              filter.field.some((b) => a.field.includes(b))
-            );
-          }
-          if (filter.availability) {
-            data = data.filter((a) =>
-              filter.availability.some((b) => a.availability.includes(b))
-            );
-          }
-          if (filter.techKnowHow) {
-            data = data.filter((a) =>
-              filter.techKnowHow.some((b) => a.techKnowHow.includes(b))
-            );
-          }
           if (filter.timeslots) {
             data = data.filter((a) =>
               filter.timeslots.some((b) => a.timeslots.includes(b))
             );
           }
-          //TODO date filter
-          //if (filter.date) {
-          //  data = data.filter((a) =>)
-          //}
-          return data;
         }
       } catch (err) {
         console.error("mentoring error", err);
