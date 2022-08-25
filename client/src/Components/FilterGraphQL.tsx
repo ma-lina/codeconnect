@@ -1,6 +1,9 @@
 import { useQuery, gql } from "@apollo/client";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormLabel from "@mui/material/FormLabel";
 import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -8,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { usePinboardFilters } from "../Utils/usePinboardFilters";
 import {
   TechKnowHow,
@@ -112,6 +116,32 @@ function FilterGraphQL() {
   return (
     <>
       <div>
+        <FormControl>
+          <FormLabel id="offer">Gender</FormLabel>
+          <RadioGroup
+            aria-labelledby="offer"
+            name="offer"
+            value={models.filters.offer}
+            onChange={(e) => {
+              if (e.target.value === "mentor") {
+                operations.updateFilter("offer", true);
+              } else {
+                operations.updateFilter("offer", false);
+              }
+            }}
+          >
+            <FormControlLabel
+              value="mentor"
+              control={<Radio />}
+              label="Mentor"
+            />
+            <FormControlLabel
+              value="mentee"
+              control={<Radio />}
+              label="Mentee"
+            />
+          </RadioGroup>
+        </FormControl>
         <FormControl sx={{ m: 1, width: 300 }}>
           <InputLabel id="techknowhow-label">Techknowhow</InputLabel>
           <Select

@@ -3,13 +3,13 @@ import { useState } from "react";
 const usePinboardFilters = () => {
   const [filters, _updateFilter] = useState<any>({
     field: [],
-    location: undefined,
+    location: null,
     date: undefined,
     techKnowHow: [],
     level: [],
     availability: [],
     timeslots: [],
-    offer: undefined,
+    offer: null,
   });
 
   const updateFilter = (filterType: any, value: any) => {
