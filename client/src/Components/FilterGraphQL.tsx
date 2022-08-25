@@ -248,7 +248,7 @@ function FilterGraphQL() {
             labelId="level-label"
             id="level"
             multiple
-            value={field}
+            value={level}
             onChange={handleChange5}
             input={<OutlinedInput id="select-fields" label="Chip" />}
             renderValue={(selected) => (

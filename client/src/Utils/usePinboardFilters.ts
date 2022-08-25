@@ -3,7 +3,7 @@ import { useState } from "react";
 const usePinboardFilters = () => {
   const [filters, _updateFilter] = useState<any>({
     field: [],
-    location: null,
+    location: "",
     date: undefined,
     techKnowHow: [],
     level: [],
