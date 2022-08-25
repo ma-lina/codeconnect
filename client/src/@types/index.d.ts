@@ -7,16 +7,15 @@ interface Query {
     lastName: string;
     image: string;
   };
-  field: any;
+  field: Array<String>;
   location: string;
   description: string;
-  // date: Date; -> is not date but string, causing bugs
   date: string;
   starred: any;
-  techKnowHow: any;
+  techKnowHow: Array<String>;
   level: string;
-  availability: any;
-  timeslots: any;
+  availability: Array<String>;
+  timeslots: Array<String>;
   offer: boolean;
 }
 
