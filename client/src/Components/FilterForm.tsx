@@ -9,6 +9,8 @@ import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Switch from "@mui/material/Switch";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { usePinboardFilters } from "../Utils/usePinboardFilters";
 import {
@@ -18,6 +20,8 @@ import {
   Field,
   Level,
 } from "../Utils/enums";
+
+//TODO add reset button filter
 
 export default function FilterForm(props: any) {
   const { operations, models } = usePinboardFilters();
@@ -47,13 +51,27 @@ export default function FilterForm(props: any) {
     };
   }
 
-  const handleChange = (event: any) => {
+  const handleChangeFilter = (
+    event: any,
+    callback: Function,
+    filter: string
+    // state: any
+  ) => {
+    const {
+      target: { value },
+    } = event;
+    callback(value);
+    operations.updateFilter(filter, value);
+    // console.log("state", state);
+  };
+
+  /*   const handleChange = (event: any) => {
     const {
       target: { value },
     } = event;
     setTechKnowHow(value);
     operations.updateFilter("techKnowHow", value);
-  };
+  }; */
 
   const handleChange2 = (event: any) => {
     const {
@@ -91,21 +109,27 @@ export default function FilterForm(props: any) {
     <>
       <div>
         <Box>
-          <Switch
-            checked={models.filters.offer}
-            onChange={(e: any) =>
-              operations.updateFilter("offer", e.target.checked)
-            }
-            inputProps={{ "aria-label": "controlled" }}
-          />
-          <FormControl sx={{ m: 1, width: 300 }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Typography>Mentee</Typography>
+            <Switch
+              checked={models.filters.offer}
+              onChange={(e: any) =>
+                operations.updateFilter("offer", e.target.checked)
+              }
+              inputProps={{ "aria-label": "controlled" }}
+            />
+            <Typography>Mentor</Typography>
+          </Stack>
+          <FormControl sx={{ m: 1, width: 250 }}>
             <InputLabel id="techknowhow-label">Techknowhow</InputLabel>
             <Select
               labelId="techknowhow-label"
               id="techknowhow"
               multiple
               value={techKnowHow}
-              onChange={handleChange}
+              onChange={(event) =>
+                handleChangeFilter(event, setTechKnowHow, "techKnowHow")
+              }
               input={<OutlinedInput id="select-techknowhow" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>

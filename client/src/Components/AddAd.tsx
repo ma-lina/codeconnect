@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_AD } from "../GraphQL/Mutations";
 
 const AddMentoringPin = () => {
-  let input: any;
+  //let input: any;
   const [addMentoring, { data, loading, error }] = useMutation(ADD_AD);
   const [pin, setPin] = useState<any>({
     creator: null,
@@ -22,7 +22,7 @@ const AddMentoringPin = () => {
   if (loading) return "Submitting...";
   if (error) return `Submission error! ${error.message}`;
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+  /*   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setPin({ ...pin, [e.target.name]: e.target.value });
 
   const handleCLick = (e: FormEvent<HTMLFormElement>) => {
@@ -33,14 +33,14 @@ const AddMentoringPin = () => {
       !sign.lastName ||
       !sign.email ||
       !sign.username ||
-      !sign.password
+      !sign.password 
     ) {
       alert("Enter your details!");
     } else {
       addMentoring({
         variables: {
-          addUserUser: {
-            firstName: sign.firstName,
+          addMentoring: {
+          /*   firstName: sign.firstName,
             lastName: sign.lastName,
             password: sign.password,
             birthday: sign.birthday,
@@ -55,7 +55,6 @@ const AddMentoringPin = () => {
         console.log("pin up");
       }
     }
-  };
 
   return (
     <div>
@@ -74,7 +73,6 @@ const AddMentoringPin = () => {
         <button type="submit">Add Pin</button>
       </form>
     </div>
-  );
+  );*/
 };
-
 export default AddMentoringPin;
