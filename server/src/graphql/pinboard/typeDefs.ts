@@ -36,7 +36,7 @@ export default gql`
     location: String
     date: Date
     techKnowHow: [String]
-    level: String
+    level: [String]
     availability: [String]
     timeslots: [String]
     offer: Boolean
