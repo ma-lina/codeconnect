@@ -14,6 +14,8 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Chip, Divider, Stack } from '@mui/material';
+import { Box } from '@mui/system';
 
 const loremText = "This is a random event description text. It's the event of the year, you must join, otherwise severe FOMO. Still missing 100 signs, so I will continue writing. 40 signs left, not to bad, just a bit more."
 
@@ -45,11 +47,14 @@ const BoardCard:React.FC<CardDetailProps> = ({cardDetail}) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 345 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="Avatar">
-            A
+          <Avatar aria-label="Avatar of the event creator"
+          src={cardDetail.creator.image}
+
+          >
+            
           </Avatar>
         }
         action={
@@ -57,22 +62,38 @@ const BoardCard:React.FC<CardDetailProps> = ({cardDetail}) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="This is the event title"
+        title="This is the pin title"
         // title={cardDetail.title}
-        subheader={cardDetail.date}
+        subheader={new Date(cardDetail.date).toLocaleDateString("en-GB", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
         align='left'
       />
+      {/* <Divider sx={{m:1}} variant="middle" /> */}
       <CardContent>
-        <Typography variant="body2" color="text.secondary" align='left'>
+      <Stack flexGrow={1}  sx={{pb:2}}  direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+            <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center" }} flexGrow={1}>
+              <Chip label={cardDetail.location} />
+            </Box>
+            {cardDetail.offer? 
+            <Chip color="secondary" label="Mentor" /> :
+            <Chip color="warning" label="Mentee" />}
+            <Chip color="primary" label={cardDetail.level} />
+        </Stack>
+        <Typography paragraph variant="body2" color="text.secondary" align='left'>
           {cardDetail.description.slice(0, 90) + "..."}
-          {/* {loremText.slice(0, 90) + "..."} */}
         </Typography>
+          {/* <Stack sx={{pb:2}}  direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
+          {cardDetail.field.map( (item, index) => (<Chip key={index} size="small" label={item}/>)
+          )}
+          </Stack> */}
+          <Typography paragraph variant="body2" color="text.secondary" align='right'>
+          {cardDetail.field.reduce((first, next) => first + " | " + next)}
+          </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <BookmarkIcon />
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton aria-label="request appointment">
           <InsertInvitationIcon />
         </IconButton>
         <ExpandMore
@@ -86,10 +107,23 @@ const BoardCard:React.FC<CardDetailProps> = ({cardDetail}) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography variant='h6' align='left'>Event details</Typography>
-          <Typography variant="body1" color="text.secondary" align='left'>
+          <Divider sx={{mb:2}} variant="middle" />
+          <Typography paragraph variant='body2' color="text.secondary" align='left'>{`Created by ${cardDetail.creator.firstName} ${cardDetail.creator.lastName}`}</Typography>
+          <Stack sx={{pb:2}}  direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+          {cardDetail.techKnowHow.map( (techItem, index) => (<Chip key={index} color="secondary" size="small" label={techItem}/>)
+          )}
+          </Stack>
+          <Typography gutterBottom variant='body1' align='left'>Details</Typography>
+          <Typography paragraph variant="body2" color="text.secondary" align='left'>
           {cardDetail.description}
-          {/* {loremText} */}
+          </Typography>
+          <Typography gutterBottom variant='body2' align='left'>Availability</Typography>
+          <Typography paragraph variant="body2" color="text.secondary" align='left'>
+          {cardDetail.availability.reduce((first, next) => first + " | " + next)}
+          </Typography>
+          <Typography gutterBottom variant='body2' align='left'>Timing</Typography>
+          <Typography paragraph variant="body2" color="text.secondary" align='left'>
+          {cardDetail.timeslots.reduce((first, next) => first + " | " + next)}
           </Typography>
         </CardContent>
       </Collapse>
