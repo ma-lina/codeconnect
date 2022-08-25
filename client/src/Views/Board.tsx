@@ -18,7 +18,7 @@ const Board = () => {
     <>
       <FilterDrawer />
       <BoardTabs />
-      {data?.mentoring.map(
+      {/* {data?.mentoring.map(
         ({
           _id,
           creator,
@@ -40,7 +40,7 @@ const Board = () => {
             <br />
           </div>
         )
-      )}
+      )} */}
     </>
   );
 };

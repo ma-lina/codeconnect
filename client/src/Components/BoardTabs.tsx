@@ -75,10 +75,26 @@ export default function BoardTabs() {
                 </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                ***Coworking Items here***
+                <Box sx={{display:"flex", justifyContent:"center", flexWrap:"wrap", gap:2}}>
+                    {data?.coworking.map(
+                        (coworkingDetail) => (
+                        <div key={coworkingDetail._id}>
+                            <BoardCard cardDetail={coworkingDetail}/>
+                        </div>
+                        )
+                    )}
+                </Box>            
             </TabPanel>
             <TabPanel value={value} index={2}>
-                ***Shadowing Items here***
+                <Box sx={{display:"flex", justifyContent:"center", flexWrap:"wrap", gap:2}}>
+                    {data?.shadowing.map(
+                        (shadowingDetail) => (
+                        <div key={shadowingDetail._id}>
+                            <BoardCard cardDetail={shadowingDetail}/>
+                        </div>
+                        )
+                    )}
+                </Box>            
             </TabPanel>
         </Box>
     </Box>

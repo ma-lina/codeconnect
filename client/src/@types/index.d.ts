@@ -22,6 +22,8 @@ interface Query {
 
 interface QueryData {
   mentoring: Query[];
+  coworking: Query[];
+  shadowing: Query[];
 }
 /* 
 namespace Mentoring {
