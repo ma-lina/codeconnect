@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AuthContext } from '../Context/AuthContext'
 import { useQuery } from "@apollo/client";
 import { GET_ADS } from "../GraphQL/Queries";
 import Tabs from '@mui/material/Tabs';
@@ -8,6 +9,7 @@ import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import { Box, Typography } from '@mui/material';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import BoardCard from './BoardCard';
+import ButtonAddPin from './ButtonAddPin';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -44,6 +46,9 @@ function a11yProps(index: number) {
 
 export default function BoardTabs() {
   const [value, setValue] = React.useState(0); 
+  const { isUserLoggedIn } = React.useContext(AuthContext); 
+  console.log(isUserLoggedIn())
+
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -60,6 +65,7 @@ export default function BoardTabs() {
                 <Tab sx={{px:2.5}} icon={<RocketLaunchIcon />} label="Mentoring" {...a11yProps(0)} />
                 <Tab sx={{px:2.5}} icon={<EmojiObjectsIcon />} label="Coworking" {...a11yProps(1)} />
                 <Tab sx={{px:2.5}} icon={<PeopleAltTwoToneIcon />} label="Shadowing" {...a11yProps(2)} />
+                {(isUserLoggedIn()) && <ButtonAddPin/>}
             </Tabs>
         </Box>
         <Box>
@@ -75,10 +81,26 @@ export default function BoardTabs() {
                 </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                ***Coworking Items here***
+                <Box sx={{display:"flex", justifyContent:"center", flexWrap:"wrap", gap:2}}>
+                    {data?.coworking.map(
+                        (coworkingDetail) => (
+                        <div key={coworkingDetail._id}>
+                            <BoardCard cardDetail={coworkingDetail}/>
+                        </div>
+                        )
+                    )}
+                </Box>            
             </TabPanel>
             <TabPanel value={value} index={2}>
-                ***Shadowing Items here***
+                <Box sx={{display:"flex", justifyContent:"center", flexWrap:"wrap", gap:2}}>
+                    {data?.shadowing.map(
+                        (shadowingDetail) => (
+                        <div key={shadowingDetail._id}>
+                            <BoardCard cardDetail={shadowingDetail}/>
+                        </div>
+                        )
+                    )}
+                </Box>            
             </TabPanel>
         </Box>
     </Box>

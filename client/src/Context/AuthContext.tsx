@@ -171,7 +171,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     } else if (!token) {
       setUser(false); 
       //display a message for the user to log in
-      navigate("/login")
       console.log("user is NOT logged in");
       return false
     } else {
