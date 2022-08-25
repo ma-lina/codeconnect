@@ -36,6 +36,7 @@ function FilterGraphQL() {
   });
   const [techKnowHow, setTechKnowHow] = useState([]);
   const [availability, setAvailability] = useState([]);
+  const [timeSlots, setTimeSlots] = useState([]);
   const theme = useTheme();
 
   if (loading) return <div>Loading</div>;
@@ -51,25 +52,39 @@ function FilterGraphQL() {
       },
     },
   };
-  function getStyles(name: string, personName: any, theme: any) {
+  function getStyles(key: string, state: any, theme: any) {
     return {
       fontWeight:
-        personName.indexOf(name) === -1
+        state.indexOf(key) === -1
           ? theme.typography.fontWeightRegular
           : theme.typography.fontWeightMedium,
     };
   }
 
-  /*   const handleChange = (event: any) => {
+  const handleChange = (event: any) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setTechKnowHow(value);
+    operations.updateFilter("techKnowHow", value);
   };
- */
+
+  const handleChange2 = (event: any) => {
+    const {
+      target: { value },
+    } = event;
+    setAvailability(value);
+    operations.updateFilter("availability", value);
+  };
+
+  const handleChange3 = (event: any) => {
+    const {
+      target: { value },
+    } = event;
+    setTimeSlots(value);
+    operations.updateFilter("timeslots", value);
+  };
+
   return (
     <>
       <div>
@@ -79,10 +94,8 @@ function FilterGraphQL() {
             labelId="techknowhow-label"
             id="techknowhow"
             multiple
-            value={models.filters.techKnowHow}
-            onChange={(e) =>
-              operations.updateFilter("techKnowHow", e.target.value)
-            }
+            value={techKnowHow}
+            onChange={handleChange}
             input={<OutlinedInput id="select-techknowhow" label="Chip" />}
             renderValue={(selected) => (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -112,10 +125,8 @@ function FilterGraphQL() {
             labelId="availability-label"
             id="availability"
             multiple
-            value={models.filters.availability}
-            onChange={(e) =>
-              operations.updateFilter("availability", e.target.value)
-            }
+            value={availability}
+            onChange={handleChange2}
             input={<OutlinedInput id="select-availability" label="Chip" />}
             renderValue={(selected) => (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -139,6 +150,37 @@ function FilterGraphQL() {
             ))}
           </Select>
         </FormControl>
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="timeslots-label">Timeslots</InputLabel>
+          <Select
+            labelId="timeslots-label"
+            id="timeslots"
+            multiple
+            value={timeSlots}
+            onChange={handleChange3}
+            input={<OutlinedInput id="select-timeslots" label="Chip" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value: any) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {(Object.keys(TimeSlots) as Array<keyof typeof TimeSlots>).map(
+              (key) => (
+                <MenuItem
+                  key={TimeSlots[key]}
+                  value={TimeSlots[key]}
+                  style={getStyles(TimeSlots[key], timeSlots, theme)}
+                >
+                  {TimeSlots[key]}
+                </MenuItem>
+              )
+            )}
+          </Select>
+        </FormControl>
       </div>
       <div></div>
 
@@ -159,11 +201,11 @@ function FilterGraphQL() {
             refetch({
               input: {
                 location: models.filters.location,
-                //    level: models.filters.level,
-                //     offer: models.filters.offer,
-                //     availability: models.filters.availability,
-                //     timeslots: models.filters.timeslots,
-                //     field: models.filters.field,
+                level: models.filters.level,
+                offer: models.filters.offer,
+                availability: models.filters.availability,
+                timeslots: models.filters.timeslots,
+                field: models.filters.field,
                 techKnowHow: models.filters.techKnowHow,
               },
             })
