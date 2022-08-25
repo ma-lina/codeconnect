@@ -31,12 +31,6 @@ export const resolver = {
         } else {
           const result = filterMe(data, filter);
           return result;
-
-          if (filter.timeslots) {
-            data = data.filter((a) =>
-              filter.timeslots.some((b) => a.timeslots.includes(b))
-            );
-          }
         }
       } catch (err) {
         console.error("mentoring error", err);
@@ -48,9 +42,6 @@ export const resolver = {
     },
     shadowing: async (parent, args, context, info) => {
       const filter = args.input;
-      console.log("args", args);
-      console.log("args", args.input);
-      //console.log("filter", filter.location);
       const shouldApplyFilters = filter !== (null || undefined);
       try {
         let data = await shadowingModel
@@ -60,16 +51,8 @@ export const resolver = {
         if (!shouldApplyFilters) {
           return data;
         } else {
-          if (filter.location) {
-            data = data.filter((a) => a.location === filter.location);
-          }
-          if (filter.offer === true || filter.offer === false) {
-            data = data.filter((a) => a.offer === filter.offer);
-          }
-          if (filter.level) {
-            data = data.filter((a) => a.level === filter.level);
-          }
-          return data;
+          filterMe(data, filter);
+          return result;
         }
       } catch (err) {
         console.error("shadowing error", err);
@@ -81,9 +64,6 @@ export const resolver = {
     },
     coworking: async (parent, args, context, info) => {
       const filter = args.input;
-      console.log("args", args);
-      console.log("args", args.input);
-      //console.log("filter", filter.location);
       const shouldApplyFilters = filter !== (null || undefined);
       try {
         let data = await coworkingModel
@@ -121,6 +101,7 @@ export const resolver = {
         const {
           input: {
             creator,
+            title,
             field,
             location,
             description,
@@ -135,6 +116,7 @@ export const resolver = {
         const newMentoring = new mentoringModel({
           creator,
           field,
+          title,
           location,
           description,
           date,
@@ -156,6 +138,7 @@ export const resolver = {
         const {
           input: {
             creator,
+            title,
             field,
             location,
             description,
@@ -170,6 +153,7 @@ export const resolver = {
         } = args;
         const newShadowing = new shadowingModel({
           creator,
+          title,
           field,
           location,
           description,
@@ -193,6 +177,7 @@ export const resolver = {
         const {
           input: {
             creator,
+            title,
             field,
             location,
             description,
@@ -203,6 +188,7 @@ export const resolver = {
         } = args;
         const newCoworking = new coworkingModel({
           creator,
+          title,
           field,
           location,
           description,
