@@ -1,9 +1,7 @@
 import { useQuery, gql } from "@apollo/client";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormLabel from "@mui/material/FormLabel";
+import Switch from "@mui/material/Switch";
 import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -117,32 +115,11 @@ function FilterGraphQL() {
   return (
     <>
       <div>
-        <FormControl>
-          <FormLabel id="offer">Gender</FormLabel>
-          <RadioGroup
-            aria-labelledby="offer"
-            name="offer"
-            value={models.filters.offer}
-            onChange={(e) => {
-              if (e.target.value === "mentor") {
-                operations.updateFilter("offer", true);
-              } else {
-                operations.updateFilter("offer", false);
-              }
-            }}
-          >
-            <FormControlLabel
-              value="mentor"
-              control={<Radio />}
-              label="Mentor"
-            />
-            <FormControlLabel
-              value="mentee"
-              control={<Radio />}
-              label="Mentee"
-            />
-          </RadioGroup>
-        </FormControl>
+        <Switch
+          checked={models.filters.offer}
+          onChange={(e) => operations.updateFilter("offer", e.target.checked)}
+          inputProps={{ "aria-label": "controlled" }}
+        />
         <FormControl sx={{ m: 1, width: 300 }}>
           <InputLabel id="techknowhow-label">Techknowhow</InputLabel>
           <Select
