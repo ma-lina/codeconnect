@@ -9,7 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import { usePinboardFilters } from "../Utils/filter";
-import { TechKnowHow } from "../Utils/common";
+import { TechKnowHow, Availability, TimeSlots } from "../Utils/common";
 //import { GET_ADS } from "../GraphQL/Queries";
 
 const GET_ADS = gql`
@@ -34,7 +34,8 @@ function FilterGraphQL() {
   const { data, loading, error, refetch } = useQuery(GET_ADS, {
     variables: {},
   });
-  const [personName, setPersonName] = useState([]);
+  const [techKnowHow, setTechKnowHow] = useState([]);
+  const [availability, setAvailability] = useState([]);
   const theme = useTheme();
 
   if (loading) return <div>Loading</div>;
@@ -73,16 +74,16 @@ function FilterGraphQL() {
     <>
       <div>
         <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+          <InputLabel id="techknowhow-label">Techknowhow</InputLabel>
           <Select
-            labelId="demo-multiple-chip-label"
-            id="demo-multiple-chip"
+            labelId="techknowhow-label"
+            id="techknowhow"
             multiple
             value={models.filters.techKnowHow}
             onChange={(e) =>
               operations.updateFilter("techKnowHow", e.target.value)
             }
-            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+            input={<OutlinedInput id="select-techknowhow" label="Chip" />}
             renderValue={(selected) => (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                 {selected.map((value: any) => (
@@ -92,21 +93,12 @@ function FilterGraphQL() {
             )}
             MenuProps={MenuProps}
           >
-            {/*            {names.map((name) => (
-              <MenuItem
-                key={name}
-                value={name}
-                style={getStyles(name, personName, theme)}
-              >
-                {name}
-              </MenuItem>
-            ))} */}
             {(Object.keys(TechKnowHow) as Array<keyof typeof TechKnowHow>).map(
               (key) => (
                 <MenuItem
                   key={TechKnowHow[key]}
                   value={TechKnowHow[key]}
-                  style={getStyles(TechKnowHow[key], personName, theme)}
+                  style={getStyles(TechKnowHow[key], techKnowHow, theme)}
                 >
                   {TechKnowHow[key]}
                 </MenuItem>
@@ -114,17 +106,43 @@ function FilterGraphQL() {
             )}
           </Select>
         </FormControl>
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="availability-label">Availability</InputLabel>
+          <Select
+            labelId="availability-label"
+            id="availability"
+            multiple
+            value={models.filters.availability}
+            onChange={(e) =>
+              operations.updateFilter("availability", e.target.value)
+            }
+            input={<OutlinedInput id="select-availability" label="Chip" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value: any) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {(
+              Object.keys(Availability) as Array<keyof typeof Availability>
+            ).map((key) => (
+              <MenuItem
+                key={Availability[key]}
+                value={Availability[key]}
+                style={getStyles(Availability[key], availability, theme)}
+              >
+                {Availability[key]}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
       <div></div>
 
       <div>
-        {/*         <div>
-          {(Object.keys(TechKnowHow) as Array<keyof typeof TechKnowHow>).map(
-            (key) => {
-              return TechKnowHow[key];
-            }
-          )}
-        </div> */}
         <label>Location</label>
         <input
           onChange={(e) => operations.updateFilter("location", e.target.value)}
