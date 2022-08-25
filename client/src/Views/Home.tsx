@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React, { useLayoutEffect } from "react";
 import ButtonHomeNavigateTo from "../Components/ButtonHomeNavigateTo";
+import FilterGraphQL from "../Components/FilterGraphQL";
 
 const Home: React.FC = () => {
   useLayoutEffect(() => {
