@@ -8,8 +8,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
-import { usePinboardFilters } from "../Utils/filter";
-import { TechKnowHow, Availability, TimeSlots } from "../Utils/common";
+import { usePinboardFilters } from "../Utils/usePinboardFilters";
+import {
+  TechKnowHow,
+  Availability,
+  TimeSlots,
+  Field,
+  Level,
+} from "../Utils/enums";
 //import { GET_ADS } from "../GraphQL/Queries";
 
 const GET_ADS = gql`
@@ -37,6 +43,8 @@ function FilterGraphQL() {
   const [techKnowHow, setTechKnowHow] = useState([]);
   const [availability, setAvailability] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
+  const [field, setField] = useState([]);
+  const [level, setLevel] = useState([]);
   const theme = useTheme();
 
   if (loading) return <div>Loading</div>;
@@ -83,6 +91,22 @@ function FilterGraphQL() {
     } = event;
     setTimeSlots(value);
     operations.updateFilter("timeslots", value);
+  };
+
+  const handleChange4 = (event: any) => {
+    const {
+      target: { value },
+    } = event;
+    setField(value);
+    operations.updateFilter("field", value);
+  };
+
+  const handleChange5 = (event: any) => {
+    const {
+      target: { value },
+    } = event;
+    setLevel(value);
+    operations.updateFilter("level", value);
   };
 
   return (
@@ -181,6 +205,64 @@ function FilterGraphQL() {
             )}
           </Select>
         </FormControl>
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="fields-label">Field</InputLabel>
+          <Select
+            labelId="fields-label"
+            id="fields"
+            multiple
+            value={field}
+            onChange={handleChange4}
+            input={<OutlinedInput id="select-fields" label="Chip" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value: any) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {(Object.keys(Field) as Array<keyof typeof Field>).map((key) => (
+              <MenuItem
+                key={Field[key]}
+                value={Field[key]}
+                style={getStyles(Field[key], field, theme)}
+              >
+                {Field[key]}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="level-label">Level</InputLabel>
+          <Select
+            labelId="level-label"
+            id="level"
+            multiple
+            value={field}
+            onChange={handleChange5}
+            input={<OutlinedInput id="select-fields" label="Chip" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value: any) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {(Object.keys(Level) as Array<keyof typeof Level>).map((key) => (
+              <MenuItem
+                key={Level[key]}
+                value={Level[key]}
+                style={getStyles(Level[key], level, theme)}
+              >
+                {Level[key]}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
       <div></div>
 
@@ -211,7 +293,7 @@ function FilterGraphQL() {
             })
           }
         >
-          Filter!
+          Filter Pins
         </button>
       </div>
     </>

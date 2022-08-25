@@ -91,3 +91,9 @@ export enum TimeSlots {
   suaf = "Sunday afternoon",
   suev = "Sunday evening",
 }
+
+export enum Level {
+  junior = "Junior",
+  intermediate = "Intermediate",
+  senior = "Senior",
+}
