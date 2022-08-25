@@ -90,33 +90,35 @@ export default function FilterForm(props: any) {
   return (
     <>
       <div>
-        <Switch
-          checked={models.filters.offer}
-          onChange={(e: any) =>
-            operations.updateFilter("offer", e.target.checked)
-          }
-          inputProps={{ "aria-label": "controlled" }}
-        />
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="techknowhow-label">Techknowhow</InputLabel>
-          <Select
-            labelId="techknowhow-label"
-            id="techknowhow"
-            multiple
-            value={techKnowHow}
-            onChange={handleChange}
-            input={<OutlinedInput id="select-techknowhow" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {(Object.keys(TechKnowHow) as Array<keyof typeof TechKnowHow>).map(
-              (key) => (
+        <Box>
+          <Switch
+            checked={models.filters.offer}
+            onChange={(e: any) =>
+              operations.updateFilter("offer", e.target.checked)
+            }
+            inputProps={{ "aria-label": "controlled" }}
+          />
+          <FormControl sx={{ m: 1, width: 300 }}>
+            <InputLabel id="techknowhow-label">Techknowhow</InputLabel>
+            <Select
+              labelId="techknowhow-label"
+              id="techknowhow"
+              multiple
+              value={techKnowHow}
+              onChange={handleChange}
+              input={<OutlinedInput id="select-techknowhow" label="Chip" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value: any) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {(
+                Object.keys(TechKnowHow) as Array<keyof typeof TechKnowHow>
+              ).map((key) => (
                 <MenuItem
                   key={TechKnowHow[key]}
                   value={TechKnowHow[key]}
@@ -124,139 +126,138 @@ export default function FilterForm(props: any) {
                 >
                   {TechKnowHow[key]}
                 </MenuItem>
-              )
-            )}
-          </Select>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="availability-label">Availability</InputLabel>
-          <Select
-            labelId="availability-label"
-            id="availability"
-            multiple
-            value={availability}
-            onChange={handleChange2}
-            input={<OutlinedInput id="select-availability" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {(
-              Object.keys(Availability) as Array<keyof typeof Availability>
-            ).map((key) => (
-              <MenuItem
-                key={Availability[key]}
-                value={Availability[key]}
-                style={getStyles(Availability[key], availability, theme)}
-              >
-                {Availability[key]}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="timeslots-label">Timeslots</InputLabel>
-          <Select
-            labelId="timeslots-label"
-            id="timeslots"
-            multiple
-            value={timeSlots}
-            onChange={handleChange3}
-            input={<OutlinedInput id="select-timeslots" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {(Object.keys(TimeSlots) as Array<keyof typeof TimeSlots>).map(
-              (key) => (
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, width: 300 }}>
+            <InputLabel id="availability-label">Availability</InputLabel>
+            <Select
+              labelId="availability-label"
+              id="availability"
+              multiple
+              value={availability}
+              onChange={handleChange2}
+              input={<OutlinedInput id="select-availability" label="Chip" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value: any) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {(
+                Object.keys(Availability) as Array<keyof typeof Availability>
+              ).map((key) => (
                 <MenuItem
-                  key={TimeSlots[key]}
-                  value={TimeSlots[key]}
-                  style={getStyles(TimeSlots[key], timeSlots, theme)}
+                  key={Availability[key]}
+                  value={Availability[key]}
+                  style={getStyles(Availability[key], availability, theme)}
                 >
-                  {TimeSlots[key]}
+                  {Availability[key]}
                 </MenuItem>
-              )
-            )}
-          </Select>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="fields-label">Field</InputLabel>
-          <Select
-            labelId="fields-label"
-            id="fields"
-            multiple
-            value={field}
-            onChange={handleChange4}
-            input={<OutlinedInput id="select-fields" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {(Object.keys(Field) as Array<keyof typeof Field>).map((key) => (
-              <MenuItem
-                key={Field[key]}
-                value={Field[key]}
-                style={getStyles(Field[key], field, theme)}
-              >
-                {Field[key]}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="level-label">Level</InputLabel>
-          <Select
-            labelId="level-label"
-            id="level"
-            multiple
-            value={level}
-            onChange={handleChange5}
-            input={<OutlinedInput id="select-fields" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {(Object.keys(Level) as Array<keyof typeof Level>).map((key) => (
-              <MenuItem
-                key={Level[key]}
-                value={Level[key]}
-                style={getStyles(Level[key], level, theme)}
-              >
-                {Level[key]}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
-      <div>
-        <TextField
-          id="outlined-name"
-          label="Location"
-          value={models.filters.location}
-          onChange={(e) => operations.updateFilter("location", e.target.value)}
-        />
-        <br />
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, width: 300 }}>
+            <InputLabel id="timeslots-label">Timeslots</InputLabel>
+            <Select
+              labelId="timeslots-label"
+              id="timeslots"
+              multiple
+              value={timeSlots}
+              onChange={handleChange3}
+              input={<OutlinedInput id="select-timeslots" label="Chip" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value: any) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {(Object.keys(TimeSlots) as Array<keyof typeof TimeSlots>).map(
+                (key) => (
+                  <MenuItem
+                    key={TimeSlots[key]}
+                    value={TimeSlots[key]}
+                    style={getStyles(TimeSlots[key], timeSlots, theme)}
+                  >
+                    {TimeSlots[key]}
+                  </MenuItem>
+                )
+              )}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, width: 300 }}>
+            <InputLabel id="fields-label">Field</InputLabel>
+            <Select
+              labelId="fields-label"
+              id="fields"
+              multiple
+              value={field}
+              onChange={handleChange4}
+              input={<OutlinedInput id="select-fields" label="Chip" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value: any) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {(Object.keys(Field) as Array<keyof typeof Field>).map((key) => (
+                <MenuItem
+                  key={Field[key]}
+                  value={Field[key]}
+                  style={getStyles(Field[key], field, theme)}
+                >
+                  {Field[key]}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, width: 300 }}>
+            <InputLabel id="level-label">Level</InputLabel>
+            <Select
+              labelId="level-label"
+              id="level"
+              multiple
+              value={level}
+              onChange={handleChange5}
+              input={<OutlinedInput id="select-fields" label="Chip" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value: any) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {(Object.keys(Level) as Array<keyof typeof Level>).map((key) => (
+                <MenuItem
+                  key={Level[key]}
+                  value={Level[key]}
+                  style={getStyles(Level[key], level, theme)}
+                >
+                  {Level[key]}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField
+            id="outlined-name"
+            label="Location"
+            value={models.filters.location}
+            onChange={(e) =>
+              operations.updateFilter("location", e.target.value)
+            }
+          />
+        </Box>
         <Button
           onClick={() =>
             props.refetch({

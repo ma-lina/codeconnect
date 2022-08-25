@@ -1,15 +1,64 @@
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_AD } from "../GraphQL/Mutations";
 
-const AddAd = () => {
-  /*  let input: any;
+const AddMentoringPin = () => {
+  let input: any;
   const [addMentoring, { data, loading, error }] = useMutation(ADD_AD);
+  const [pin, setPin] = useState<any>({
+    creator: null,
+    title: "",
+    field: [],
+    location: "",
+    description: "",
+    date: "",
+    techKnowHow: [],
+    level: "",
+    availability: [],
+    timeslots: [],
+    offer: null,
+  });
 
   if (loading) return "Submitting...";
-  if (error) return `Submission error! ${error.message}`; */
+  if (error) return `Submission error! ${error.message}`;
 
-  return <div>test</div>;
-  /*     <div>
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setPin({ ...pin, [e.target.name]: e.target.value });
+
+  const handleCLick = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(sign);
+    if (
+      !sign.firstName ||
+      !sign.lastName ||
+      !sign.email ||
+      !sign.username ||
+      !sign.password
+    ) {
+      alert("Enter your details!");
+    } else {
+      addMentoring({
+        variables: {
+          addUserUser: {
+            firstName: sign.firstName,
+            lastName: sign.lastName,
+            password: sign.password,
+            birthday: sign.birthday,
+            email: sign.email,
+            username: sign.username,
+          },
+        },
+      });
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("pin up");
+      }
+    }
+  };
+
+  return (
+    <div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -22,12 +71,10 @@ const AddAd = () => {
             input = node;
           }}
         />
-        <button type="submit">Add Todo</button>
+        <button type="submit">Add Pin</button>
       </form>
-    </div> 
-
- 
-  ); */
+    </div>
+  );
 };
 
-export default AddAd;
+export default AddMentoringPin;

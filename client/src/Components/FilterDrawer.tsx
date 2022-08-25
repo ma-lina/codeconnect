@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -107,7 +106,6 @@ export default function FilterDrawer(props: any) {
           }}
         >
           <FilterForm refetch={props.refetch.refetch} />
-          {/* <Skeleton variant="rectangular" height="100%" /> */}
         </StyledBox>
       </SwipeableDrawer>
     </Root>
