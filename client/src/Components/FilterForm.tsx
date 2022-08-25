@@ -134,7 +134,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-techknowhow" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
@@ -165,7 +165,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-availability" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
@@ -196,7 +196,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-timeslots" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
@@ -227,7 +227,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-fields" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
@@ -256,7 +256,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-fields" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
