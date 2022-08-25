@@ -12,7 +12,6 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <FilterGraphQL />
       <Typography
         variant={"h1"}
         component={"div"}
