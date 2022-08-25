@@ -5,6 +5,7 @@ import {
   coworkingModel,
 } from "../../models/pinboardModel";
 import { userModel } from "../../models/userModel";
+import { filterMe } from "../../utils/filterMe";
 
 export const resolver = {
   Query: {
@@ -18,9 +19,7 @@ export const resolver = {
     },
     mentoring: async (parent, args, context, info) => {
       const filter = args.input;
-      console.log("args", args);
       console.log("args", args.input);
-      //console.log("filter", filter.location);
       const shouldApplyFilters = filter !== (null || undefined);
       try {
         let data = await mentoringModel
@@ -30,26 +29,14 @@ export const resolver = {
         if (!shouldApplyFilters) {
           return data;
         } else {
-          if (filter.location) {
-            data = data.filter((a) => a.location === filter.location);
+          const result = filterMe(data, filter);
+          return result;
+
+          if (filter.timeslots) {
+            data = data.filter((a) =>
+              filter.timeslots.some((b) => a.timeslots.includes(b))
+            );
           }
-          if (filter.offer === true || filter.offer === false) {
-            data = data.filter((a) => a.offer === filter.offer);
-          }
-          if (filter.level) {
-            data = data.filter((a) => a.level === filter.level);
-          }
-          /*           if (filter.field) {
-            data = data.filter((b) => {
-              console.log("b", b);
-              const x = filter.field.filter((a) => {
-                console.log("a", b.field.includes(a));
-                return b.field.includes(a);
-              });
-              console.log("x", x); //if x == x.lenght == 0, return false else true
-            });
-          } */
-          return data;
         }
       } catch (err) {
         console.error("mentoring error", err);

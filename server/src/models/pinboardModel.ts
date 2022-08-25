@@ -18,6 +18,7 @@ interface Base {
   description: string;
   date: Date;
   starred: Types.DocumentArray<UserData>;
+  title: string;
 }
 
 interface BaseDoc extends Base, Document {}
@@ -35,6 +36,7 @@ const baseSchemaFields: Record<keyof Base, any> = {
   description: String,
   date: Date,
   starred: Array,
+  title: String,
 };
 
 const baseSchema = new Schema(baseSchemaFields, options);
