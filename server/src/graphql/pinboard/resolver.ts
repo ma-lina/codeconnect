@@ -1,4 +1,4 @@
-import { ApolloError, AuthenticationError } from "apollo-server-express";
+import { ApolloError } from "apollo-server-express";
 import {
   mentoringModel,
   shadowingModel,

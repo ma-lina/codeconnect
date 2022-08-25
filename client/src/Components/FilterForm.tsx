@@ -6,6 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Switch from "@mui/material/Switch";
@@ -52,7 +53,7 @@ export default function FilterForm(props: any) {
   }
 
   const handleChangeFilter = (
-    event: any,
+    event: SelectChangeEvent<unknown>,
     callback: Function,
     filter: string
     // state: any
