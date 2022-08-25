@@ -11,6 +11,7 @@ export const GET_ADS = gql`
         image
         username
       }
+      title
       field
       location
       description
@@ -34,6 +35,7 @@ export const GET_ADS = gql`
         image
         username
       }
+      title
       field
       location
       description
@@ -57,6 +59,7 @@ export const GET_ADS = gql`
         image
         username
       }
+      title
       field
       location
       description

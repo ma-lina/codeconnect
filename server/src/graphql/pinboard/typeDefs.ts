@@ -18,6 +18,7 @@ export default gql`
 
   type Mentoring {
     _id: ID!
+    title: String!
     creator: User!
     field: [String!]!
     location: String!
@@ -45,6 +46,7 @@ export default gql`
   type Shadowing {
     _id: ID!
     creator: User!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -61,6 +63,7 @@ export default gql`
   type Coworking {
     _id: ID!
     creator: User!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -72,6 +75,7 @@ export default gql`
 
   input MentoringInput {
     creator: ID!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -85,6 +89,7 @@ export default gql`
 
   input ShadowingInput {
     creator: ID!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -99,6 +104,7 @@ export default gql`
 
   input CoworkingInput {
     creator: ID!
+    title: String!
     field: [String!]!
     location: String!
     description: String!
@@ -116,7 +122,7 @@ export default gql`
 
   extend type Mutation {
     addMentoring(input: MentoringInput): Mentoring
-    # updateAd():
+    ##TODO updatePin():
     addShadowing(input: ShadowingInput): Shadowing
     addCoworking(input: CoworkingInput): Coworking
   }
