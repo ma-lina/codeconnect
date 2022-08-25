@@ -51,7 +51,7 @@ export const resolver = {
         if (!shouldApplyFilters) {
           return data;
         } else {
-          filterMe(data, filter);
+          result = filterMe(data, filter);
           return result;
         }
       } catch (err) {
