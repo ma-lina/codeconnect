@@ -44,7 +44,8 @@ function a11yProps(index: number) {
   };
 }
 
-export default function BoardTabs() {
+export default function BoardTabs(props: any) {
+  const { queryRes } = props;
   const [value, setValue] = React.useState(0);
   const { isUserLoggedIn } = React.useContext(AuthContext);
   console.log(isUserLoggedIn());
@@ -52,10 +53,6 @@ export default function BoardTabs() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
-  const { loading, error, data } = useQuery<QueryData>(GET_ADS);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -105,7 +102,7 @@ export default function BoardTabs() {
               gap: 2,
             }}
           >
-            {data?.mentoring.map((mentoringDetail) => (
+            {queryRes?.data.mentoring.map((mentoringDetail: any) => (
               <div key={mentoringDetail._id}>
                 <BoardCard cardDetail={mentoringDetail} />
               </div>
@@ -121,7 +118,7 @@ export default function BoardTabs() {
               gap: 2,
             }}
           >
-            {data?.coworking.map((coworkingDetail) => (
+            {queryRes?.data?.coworking.map((coworkingDetail: any) => (
               <div key={coworkingDetail._id}>
                 <BoardCard cardDetail={coworkingDetail} />
               </div>
@@ -137,7 +134,7 @@ export default function BoardTabs() {
               gap: 2,
             }}
           >
-            {data?.shadowing.map((shadowingDetail) => (
+            {queryRes?.data?.shadowing.map((shadowingDetail: any) => (
               <div key={shadowingDetail._id}>
                 <BoardCard cardDetail={shadowingDetail} />
               </div>

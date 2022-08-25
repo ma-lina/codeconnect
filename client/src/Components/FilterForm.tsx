@@ -21,11 +21,11 @@ import {
 } from "../Utils/enums";
 import { GET_ADS } from "../GraphQL/Queries";
 
-export default function FilterForm() {
+export default function FilterForm(props: any) {
   const { operations, models } = usePinboardFilters();
-  const { data, loading, error, refetch } = useQuery(GET_ADS, {
-    variables: {},
-  });
+  // const { data, loading, error, refetch } = useQuery(GET_ADS, {
+  //   variables: {},
+  // });
   const [techKnowHow, setTechKnowHow] = useState([]);
   const [availability, setAvailability] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
@@ -33,8 +33,8 @@ export default function FilterForm() {
   const [level, setLevel] = useState([]);
   const theme = useTheme();
 
-  if (loading) return <div>Loading</div>;
-  if (error) return <div>error</div>;
+  // if (loading) return <div>Loading</div>;
+  // if (error) return <div>error</div>;
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -267,7 +267,7 @@ export default function FilterForm() {
         <br />
         <Button
           onClick={() =>
-            refetch({
+            props.refetch({
               input: {
                 location: models.filters.location,
                 level: models.filters.level,

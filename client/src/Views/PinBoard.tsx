@@ -11,10 +11,14 @@ const PinBoard = () => {
     document.body.classList.remove("home-transition-settings");
   });
 
+  const { loading, error, data, refetch } = useQuery<QueryData>(GET_ADS);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
   return (
     <>
-      <FilterDrawer />
-      <BoardTabs />
+      <FilterDrawer refetch={refetch} />
+      <BoardTabs queryRes={{ data, loading, error }} />
     </>
   );
 };
