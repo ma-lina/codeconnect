@@ -14,6 +14,7 @@ const PinBoard = () => {
   const { loading, error, data, refetch } = useQuery<QueryData>(GET_ADS, {
     variables: {},
   });
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 

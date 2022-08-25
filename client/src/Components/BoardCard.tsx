@@ -1,20 +1,20 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Chip, Divider, Stack } from '@mui/material';
-import { Box } from '@mui/system';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import InsertInvitationIcon from "@mui/icons-material/InsertInvitation";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Chip, Divider, Stack } from "@mui/material";
+import { Box } from "@mui/system";
 interface CardDetailProps {
-  cardDetail: Query
+  cardDetail: Query;
 }
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -24,15 +24,14 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
   }),
 }));
 
-const BoardCard:React.FC<CardDetailProps> = ({cardDetail}) => {
-  console.log(typeof cardDetail.date)
+const BoardCard: React.FC<CardDetailProps> = ({ cardDetail }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -43,31 +42,62 @@ const BoardCard:React.FC<CardDetailProps> = ({cardDetail}) => {
     <Card sx={{ width: 345 }}>
       <CardHeader
         avatar={
-          <Avatar aria-label="Avatar of the event creator"
-          src={cardDetail.creator.image}
-          >
-          </Avatar>
+          <Avatar
+            aria-label="Avatar of the event creator"
+            src={cardDetail.creator.image}
+          ></Avatar>
         }
         title={cardDetail.title}
-        subheader={new Date(cardDetail.date).toLocaleDateString("en-GB", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-        align='left'
+        subheader={new Date(cardDetail.date).toLocaleDateString("en-GB", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+        align="left"
       />
       <CardContent>
-      <Stack flexGrow={1}  sx={{pb:2}}  direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-            <Box sx={{display:"flex", justifyContent:"flex-start", alignItems:"center" }} flexGrow={1}>
-              <Chip label={cardDetail.location} />
-            </Box>
-            {cardDetail.offer? 
-            <Chip color="secondary" label="Mentor" /> :
-            <Chip color="warning" label="Mentee" />}
-            <Chip color="primary" label={cardDetail.level} />
+        <Stack
+          flexGrow={1}
+          sx={{ pb: 2 }}
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+          spacing={1}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
+            }}
+            flexGrow={1}
+          >
+            <Chip label={cardDetail.location} />
+          </Box>
+          {cardDetail.offer ? (
+            <Chip color="secondary" label="Mentor" />
+          ) : (
+            <Chip color="warning" label="Mentee" />
+          )}
+          <Chip color="primary" label={cardDetail.level} />
         </Stack>
-        <Typography paragraph variant="body2" color="text.secondary" align='left'>
+        <Typography
+          paragraph
+          variant="body2"
+          color="text.secondary"
+          align="left"
+        >
           {cardDetail.description.slice(0, 90) + "..."}
         </Typography>
-          <Typography paragraph variant="body2" color="text.secondary" align='right'>
+        <Typography
+          paragraph
+          variant="body2"
+          color="text.secondary"
+          align="right"
+        >
           {cardDetail.field.reduce((first, next) => first + " | " + next)}
-          </Typography>
+        </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
@@ -87,28 +117,68 @@ const BoardCard:React.FC<CardDetailProps> = ({cardDetail}) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Divider sx={{mb:2}} variant="middle" />
-          <Typography paragraph variant='body2' color="text.secondary" align='left'>{`Created by ${cardDetail.creator.firstName} ${cardDetail.creator.lastName}`}</Typography>
-          <Stack sx={{pb:2}}  direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-          {cardDetail.techKnowHow.map( (techItem, index) => (<Chip key={index} color="secondary" size="small" label={techItem}/>)
-          )}
+          <Divider sx={{ mb: 2 }} variant="middle" />
+          <Typography
+            paragraph
+            variant="body2"
+            color="text.secondary"
+            align="left"
+          >{`Created by ${cardDetail.creator.firstName} ${cardDetail.creator.lastName}`}</Typography>
+          <Stack
+            sx={{ pb: 2 }}
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={1}
+          >
+            {cardDetail.techKnowHow.map((techItem, index) => (
+              <Chip
+                key={index}
+                color="secondary"
+                size="small"
+                label={techItem}
+              />
+            ))}
           </Stack>
-          <Typography gutterBottom variant='body1' align='left'>Details</Typography>
-          <Typography paragraph variant="body2" color="text.secondary" align='left'>
-          {cardDetail.description}
+          <Typography gutterBottom variant="body1" align="left">
+            Details
           </Typography>
-          <Typography gutterBottom variant='body2' align='left'>Availability</Typography>
-          <Typography paragraph variant="body2" color="text.secondary" align='left'>
-          {cardDetail.availability.reduce((first, next) => first + " | " + next)}
+          <Typography
+            paragraph
+            variant="body2"
+            color="text.secondary"
+            align="left"
+          >
+            {cardDetail.description}
           </Typography>
-          <Typography gutterBottom variant='body2' align='left'>Timing</Typography>
-          <Typography paragraph variant="body2" color="text.secondary" align='left'>
-          {cardDetail.timeslots.reduce((first, next) => first + " | " + next)}
+          <Typography gutterBottom variant="body2" align="left">
+            Availability
+          </Typography>
+          <Typography
+            paragraph
+            variant="body2"
+            color="text.secondary"
+            align="left"
+          >
+            {cardDetail.availability.reduce(
+              (first, next) => first + " | " + next
+            )}
+          </Typography>
+          <Typography gutterBottom variant="body2" align="left">
+            Timing
+          </Typography>
+          <Typography
+            paragraph
+            variant="body2"
+            color="text.secondary"
+            align="left"
+          >
+            {cardDetail.timeslots.reduce((first, next) => first + " | " + next)}
           </Typography>
         </CardContent>
       </Collapse>
     </Card>
   );
-}
+};
 
-export default BoardCard; 
+export default BoardCard;
