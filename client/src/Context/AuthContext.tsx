@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import serverURL from "../config";
 import { getToken } from "../Utils/getToken";
 
-//TODO decide if array should include object id or something else, then change 'any';
 //TODO display error messages
 interface Props {
   children: ReactNode;
@@ -31,7 +30,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     token: "",
   });
   const [userProfile, setUserProfile] = useState<User.User | null>(null);
-  const [updatedUserProfile, setUpdatedUserProfile] = useState<User.UpdatedUser | null>(null);
+  const [updatedUserProfile, setUpdatedUserProfile] =
+    useState<User.UpdatedUser | null>(null);
 
   let navigate = useNavigate();
 
@@ -93,7 +93,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           setUserProfile(result.user);
           setUser(true);
           navigate("/profile");
-//TODO error messages with timeout
+          //TODO error messages with timeout
         } else {
           console.log("error seting token");
         }
@@ -126,7 +126,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           setUserProfile(result.user);
           setUser(true);
           navigate("/profile");
-//TODO error messages with timeout
+          //TODO error messages with timeout
         } else {
           console.log("error seting token");
         }
@@ -137,45 +137,44 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   };
 
   const getUserProfile = async (token: string): Promise<void> => {
+    const myHeaders: Headers = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
-      const myHeaders: Headers = new Headers();
-      myHeaders.append("Authorization", `Bearer ${token}`);
-    
-      const requestOptions: RequestOptions = {
-        method: "GET",
-        headers: myHeaders,
-      };
+    const requestOptions: RequestOptions = {
+      method: "GET",
+      headers: myHeaders,
+    };
 
     try {
-        const response :Response = await fetch(
-          serverURL+"/users/profile",
-          requestOptions
-        );
+      const response: Response = await fetch(
+        serverURL + "/users/profile",
+        requestOptions
+      );
       const result: User.GetProfileResult = await response.json();
       setUserProfile(result.user);
       setUser(true);
-      
-//what happens when the token expires and the authentication fails?
-//implement isLoggedin on the backend side
-      } catch (error) {
-//TODO display a notification for the user to log in
-        setUser(false);
-        console.log("Client error, could not get user profile", error);
-      }
+
+      //what happens when the token expires and the authentication fails?
+      //implement isLoggedin on the backend side
+    } catch (error) {
+      //TODO display a notification for the user to log in
+      setUser(false);
+      console.log("Client error, could not get user profile", error);
+    }
   };
 
   const isUserLoggedIn = (): boolean => {
     const token = getToken();
     if (token && user && userProfile) {
-      return true
+      return true;
     } else if (!token) {
-      setUser(false); 
+      setUser(false);
       //display a message for the user to log in
       console.log("user is NOT logged in");
-      return false
+      return false;
     } else {
-      getUserProfile(token); 
-      return true
+      getUserProfile(token);
+      return true;
     }
   };
 
@@ -195,28 +194,26 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
 
     const myHeaders: Headers = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
-    
+
     const requestOptions: RequestOptions = {
       method: "DELETE",
       headers: myHeaders,
     };
 
     try {
-        const response :Response = await fetch(
-          serverURL+"/users/profile",
-          requestOptions
-        );
+      const response: Response = await fetch(
+        serverURL + "/users/profile",
+        requestOptions
+      );
       const result: User.DeleteProfileResult = await response.json();
-        logOut()
-      
-      } catch (error) {
-        console.log("Client error while deleting the profile", error);
-      }
+      logOut();
+    } catch (error) {
+      console.log("Client error while deleting the profile", error);
+    }
   };
 
   const updateProfile = async (): Promise<void> => {
     if (updatedUserProfile !== null) {
-
       const token = getToken();
       const myHeaders: Headers = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
@@ -229,18 +226,19 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       };
 
       try {
-         const response :Response = await fetch(
-            serverURL+"/users/profile",
-            requestOptions
-          );
+        const response: Response = await fetch(
+          serverURL + "/users/profile",
+          requestOptions
+        );
         const result: User.GetProfileResult = await response.json();
         setUserProfile(result.user);
-        
-        } catch (error) {
-          console.log("Client error while updating the profile", error);
-        }
+      } catch (error) {
+        console.log("Client error while updating the profile", error);
+      }
     } else {
-      console.log("Updated User data has not beed stored in the state variable.")
+      console.log(
+        "Updated User data has not beed stored in the state variable."
+      );
     }
   };
 
@@ -258,7 +256,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
         loginUser,
         setLoginUser,
         logIn,
-        getUserProfile, 
+        getUserProfile,
         logOut,
         userProfile,
         setUserProfile,

@@ -1,4 +1,4 @@
-import { ApolloError, AuthenticationError } from "apollo-server-express";
+import { ApolloError } from "apollo-server-express";
 import {
   mentoringModel,
   shadowingModel,
@@ -71,18 +71,6 @@ export const resolver = {
           .populate({ path: "creator" })
           .exec();
         if (!shouldApplyFilters) {
-          return data;
-        } else {
-          if (filter.location) {
-            data = data.filter((a) => a.location === filter.location);
-          }
-          if (filter.offer === true || filter.offer === false) {
-            data = data.filter((a) => a.offer === filter.offer);
-          }
-          if (filter.level) {
-            data = data.filter((a) => a.level === filter.level);
-          }
-
           return data;
         }
       } catch (err) {

@@ -6,6 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Switch from "@mui/material/Switch";
@@ -52,7 +53,7 @@ export default function FilterForm(props: any) {
   }
 
   const handleChangeFilter = (
-    event: any,
+    event: SelectChangeEvent<unknown>,
     callback: Function,
     filter: string
     // state: any
@@ -120,7 +121,7 @@ export default function FilterForm(props: any) {
             />
             <Typography>Mentor</Typography>
           </Stack>
-          <FormControl sx={{ m: 1, width: 250 }}>
+          <FormControl sx={{ m: 1, width: 300 }}>
             <InputLabel id="techknowhow-label">Techknowhow</InputLabel>
             <Select
               labelId="techknowhow-label"
@@ -133,7 +134,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-techknowhow" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
@@ -164,7 +165,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-availability" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
@@ -195,7 +196,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-timeslots" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
@@ -226,7 +227,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-fields" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
@@ -255,7 +256,7 @@ export default function FilterForm(props: any) {
               input={<OutlinedInput id="select-fields" label="Chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value: any) => (
+                  {selected.map((value: string) => (
                     <Chip key={value} label={value} />
                   ))}
                 </Box>

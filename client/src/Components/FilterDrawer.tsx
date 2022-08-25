@@ -33,7 +33,6 @@ const Puller = styled(Box)(({ theme }) => ({
 
 export default function FilterDrawer(props: any) {
   const [open, setOpen] = React.useState(false);
-  console.log(props.refetch.data);
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };

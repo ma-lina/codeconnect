@@ -4,7 +4,7 @@ const usePinboardFilters = () => {
   const [filters, _updateFilter] = useState<any>({
     field: [],
     location: "",
-    date: undefined,
+    //date: undefined,
     techKnowHow: [],
     level: [],
     availability: [],

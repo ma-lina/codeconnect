@@ -7,9 +7,9 @@ interface UserData {
   image?: string;
   _id: string;
   isAdmin?: boolean;
-  starredMentorship?: any;
-  starredCoworking?: any;
-  starredShadowing?: any;
+  starredMentorship?: Array<string>;
+  starredCoworking?: Array<string>;
+  starredShadowing?: Array<string>;
 }
 interface Base {
   creator: Types.ObjectId;
