@@ -1,9 +1,8 @@
 import { Box, Modal, Button, Typography, Grid, TextField, Avatar} from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from '../Context/AuthContext'
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
-import TextHeaderLine from "./TextHeaderLine";
 
 const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
   const { userProfile, updatedUserProfile, setUpdatedUserProfile, updateProfile } = useContext(AuthContext);
@@ -31,7 +30,6 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                 <Box
                     sx={{
                     dispay: "flex",
-                    // gap: 2,
                     alignItems: "center",
                     justifyContent: "center",
                     }}
@@ -125,7 +123,6 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                                     name="username"
                                     placeholder={userProfile.username}
                                     // defaultValue={props.default}
-        //TODO white the onchange handler here
                                     onChange={handleInputChange}
                                 />
                             </Grid>
@@ -148,7 +145,6 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                                     name="email"
                                     placeholder={userProfile.email}
                                     // defaultValue={props.default}
-        //TODO white the onchange handler here
                                     onChange={handleInputChange}
                                 />
                             </Grid>
