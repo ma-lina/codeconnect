@@ -11,6 +11,7 @@ export enum Field {
   backend = "Backend",
   devOps = "DevOps",
   softskills = "Softskills",
+  datascience = "Data Science",
 }
 
 export enum TechKnowHow {

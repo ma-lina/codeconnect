@@ -6,7 +6,7 @@ const usePinboardFilters = () => {
     location: undefined,
     description: undefined,
     date: undefined,
-    techKnowHow: undefined,
+    techKnowHow: [],
     level: undefined,
     availability: undefined,
     timeslots: undefined,

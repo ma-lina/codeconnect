@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React, { useLayoutEffect } from "react";
 import ButtonHomeNavigateTo from "../Components/ButtonHomeNavigateTo";
+import FilterGraphQL from "../Components/FilterGraphQL";
 import Board from "./Board";
 
 const Home: React.FC = () => {
@@ -11,6 +12,7 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <FilterGraphQL />
       <Typography
         variant={"h1"}
         component={"div"}
