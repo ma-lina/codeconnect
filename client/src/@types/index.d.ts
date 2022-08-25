@@ -4,7 +4,6 @@ interface Query {
   field: any;
   location: string;
   description: string;
-  // date: Date; -> is not date but string, causing bugs
   date: string;
   starred: any;
   techKnowHow: any;
