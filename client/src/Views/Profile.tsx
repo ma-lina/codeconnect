@@ -1,3 +1,4 @@
+import { Divider } from "@mui/material";
 import React, { useLayoutEffect } from "react";
 import FavoriteItemsDisplay from "../Components/FavoriteItemsDisplay";
 import ProfileDisplay from "../Components/ProfileDisplay";
@@ -14,6 +15,7 @@ const Profile :React.FC = () => {
     <div className="page-transition-settings">
       <TextHeaderLine text="profile" />
       <ProfileDisplay/>
+      <Divider sx={{mb:2}} variant="middle" />
       <FavoriteItemsDisplay/>
     </div>
     )
