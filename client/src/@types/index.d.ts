@@ -1,15 +1,15 @@
 interface Query {
   _id: any;
   creator: any;
-  field: any;
+  field: Array<String>;
   location: string;
   description: string;
   date: string;
   starred: any;
-  techKnowHow: any;
+  techKnowHow: Array<String>;
   level: string;
-  availability: any;
-  timeslots: any;
+  availability: Array<String>;
+  timeslots: Array<String>;
   offer: boolean;
 }
 
