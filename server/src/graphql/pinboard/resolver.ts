@@ -72,18 +72,6 @@ export const resolver = {
           .exec();
         if (!shouldApplyFilters) {
           return data;
-        } else {
-          if (filter.location) {
-            data = data.filter((a) => a.location === filter.location);
-          }
-          if (filter.offer === true || filter.offer === false) {
-            data = data.filter((a) => a.offer === filter.offer);
-          }
-          if (filter.level) {
-            data = data.filter((a) => a.level === filter.level);
-          }
-
-          return data;
         }
       } catch (err) {
         console.error("coworking error", err);

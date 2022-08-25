@@ -120,7 +120,7 @@ export default function FilterForm(props: any) {
             />
             <Typography>Mentor</Typography>
           </Stack>
-          <FormControl sx={{ m: 1, width: 250 }}>
+          <FormControl sx={{ m: 1, width: 300 }}>
             <InputLabel id="techknowhow-label">Techknowhow</InputLabel>
             <Select
               labelId="techknowhow-label"
