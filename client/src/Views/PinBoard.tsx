@@ -4,7 +4,7 @@ import BoardTabs from "../Components/BoardTabs";
 import FilterDrawer from "../Components/FilterDrawer";
 import { GET_ADS } from "../GraphQL/Queries";
 
-const Board = () => {
+const PinBoard = () => {
   //removing background
   useLayoutEffect(() => {
     document.body.classList.remove("background-image");
@@ -18,7 +18,7 @@ const Board = () => {
     <>
       <FilterDrawer />
       <BoardTabs />
-      {data?.mentoring.map(
+      {/* {data?.mentoring.map(
         ({
           _id,
           creator,
@@ -40,9 +40,9 @@ const Board = () => {
             <br />
           </div>
         )
-      )}
+      )} */}
     </>
   );
 };
 
-export default Board;
+export default PinBoard;

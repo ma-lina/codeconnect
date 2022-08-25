@@ -4,19 +4,19 @@ import { AuthContext } from '../Context/AuthContext'
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
-  const { userProfile, updatedUserProfile, setUpdatedUserProfile, updateProfile } = useContext(AuthContext);
+const ModalAddPin:React.FC<ModalProps> = ({ open, close }) => {
+//   const { userProfile, updatedUserProfile, setUpdatedUserProfile, updateProfile } = useContext(AuthContext);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdatedUserProfile({ ...updatedUserProfile, [e.target.name]: e.target.value });
-    console.log(updatedUserProfile)
-  };
+//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setUpdatedUserProfile({ ...updatedUserProfile, [e.target.name]: e.target.value });
+//     console.log(updatedUserProfile)
+//   };
 
-  const handleSubmitProfileChange = (event: React.FormEvent) => {
-    event.preventDefault();
-    updateProfile();
-    close();
-  }
+//   const handleSubmitProfileChange = (event: React.FormEvent) => {
+//     event.preventDefault();
+//     updateProfile();
+//     close();
+//   }
 
 
   return (
@@ -25,7 +25,6 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
         open={open} 
         onClose={close}>
 
-            {userProfile ? 
             <Box className="modal-style modal-style-paper" sx={{ p: 2 }}>
                 <Box
                     sx={{
@@ -35,117 +34,82 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                     }}
                 >
                     <Box component="form" >
-                        {/* <Box sx={{py:2}}>
-                            <TextHeaderLine text={userProfile.username} />
-                        </Box> */}
 
                         <Typography variant={"h4"} textAlign={"center"} component={"div"} color="primary" align="left" sx={{ pt: 2, pb:1 }}>
                             <Box className="fira-code">
-                            {`${userProfile.username} user profile`}
+                            Add a new pin on the board
                             </Box>
                         </Typography>
 
                         <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
                             <Grid item xs={4} md={3} >
-                            <Avatar
-                                alt={`${userProfile.firstName} ${userProfile.lastName}`}
-                                src={userProfile.image}
-                                sx={{ width: 50, height: 50 }}
-                            />
-                            </Grid>
-
-                            <Grid item xs>
-                                {/* TODO place buttons to change avatar image */}
-                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Change avatar image (PLACEHOLDER)</Typography>
-                            </Grid>
-                        </Grid>
-
-                        <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
-                            <Grid item xs={4} md={3} >
-                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>First name:</Typography>
+                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Title:</Typography>
                             </Grid>
 
                             <Grid item xs>
                                 <TextField
-                                    // required
+                                    required
                                     size='small'
-                                    // id="email-input"
-                                    // label={props.label}
-                                    // type={props.type}
                                     fullWidth
                                     inputProps={{ maxLength: 120 }}
                                     name="firstName"
-                                    placeholder={userProfile.firstName}
-                                    // defaultValue={props.default}
-        //TODO white the onchange handler here
-                                    onChange={handleInputChange}
+                                    placeholder="Add a title to your advert"
+                                    // onChange={handleInputChange}
                                 />
                             </Grid>
                         </Grid>
 
                         <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
                             <Grid item xs={4} md={3} >
-                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Last name:</Typography>
+                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Location:</Typography>
                             </Grid>
 
                             <Grid item xs>
                                 <TextField
-                                    // required
+                                    required
                                     size='small'
-                                    // id="email-input"
-                                    // label={props.label}
-                                    // type={props.type}
                                     fullWidth
                                     inputProps={{ maxLength: 120 }}
                                     name="lastName"
-                                    placeholder={userProfile.lastName}
-                                    // defaultValue={props.default}
-        //TODO white the onchange handler here
-                                    onChange={handleInputChange}
+                                    placeholder="Location"
+                                    // onChange={handleInputChange}
                                 />
                             </Grid>
                         </Grid>
 
                         <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
                             <Grid item xs={4} md={3} >
-                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Username:</Typography>
+                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Description:</Typography>
                             </Grid>
 
                             <Grid item xs>
                                 <TextField
-                                    // required
+                                    required
+                                    multiline
                                     size='small'
-                                    // id="email-input"
-                                    // label={props.label}
-                                    // type={props.type}
                                     fullWidth
                                     inputProps={{ maxLength: 120 }}
                                     name="username"
-                                    placeholder={userProfile.username}
-                                    // defaultValue={props.default}
-                                    onChange={handleInputChange}
+                                    placeholder="Tell others more about what you are looking for"
+                                    // onChange={handleInputChange}
                                 />
                             </Grid>
                         </Grid>
 
                         <Grid pb={0.5} container direction="row" justifyContent="flex-start" alignItems="center" spacing={1} wrap="nowrap">
                             <Grid item xs={4} md={3} >
-                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Email:</Typography>
+                            <Typography variant="body2" color="text.secondary" textAlign={"left"}>Field:</Typography>
                             </Grid>
 
                             <Grid item xs>
                                 <TextField
-                                    // required
+                                    required
                                     size='small'
-                                    // id="email-input"
-                                    // label={props.label}
-                                    // type={props.type}
                                     fullWidth
                                     inputProps={{ maxLength: 120 }}
                                     name="email"
-                                    placeholder={userProfile.email}
-                                    // defaultValue={props.default}
-                                    onChange={handleInputChange}
+                                    placeholder="what is your field / areas of interest?"
+                                    // onChange={handleInputChange}
                                 />
                             </Grid>
                         </Grid>
@@ -163,7 +127,7 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
                                 endIcon={<SaveIcon />}
                                 variant="contained"
                                 color="primary"
-                                onClick={handleSubmitProfileChange}
+                                // onClick={handleSubmitProfileChange}
                             >
                                 Save
                             </Button>
@@ -172,12 +136,11 @@ const ModalUpdateProfile:React.FC<ModalProps> = ({ open, close }) => {
 
                 </Box>
 
-            </Box> :
-            <p>Loading</p>}
+            </Box>
 
       </Modal>
     </div>
   );
 }
 
-export default ModalUpdateProfile;
+export default ModalAddPin;

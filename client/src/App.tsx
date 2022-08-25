@@ -13,7 +13,7 @@ import Profile from "./Views/Profile";
 import { Container } from "@mui/material";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Navbar from "./Components/Navbar";
-import Board from "./Views/Board";
+import PinBoard from "./Views/PinBoard";
 
 function App() {
   const themeLight: Theme = createTheme(themeLightOptions);
@@ -40,7 +40,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/board" element={<Board />} />
+              <Route path="/board" element={<PinBoard />} />
               <Route
                 path="/profile"
                 element={
