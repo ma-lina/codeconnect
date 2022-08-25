@@ -17,6 +17,7 @@ interface Query {
   availability: Array<String>;
   timeslots: Array<String>;
   offer: boolean;
+  title: string;
 }
 
 interface QueryData {
