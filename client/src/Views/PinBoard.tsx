@@ -17,7 +17,7 @@ const PinBoard = () => {
 
   return (
     <>
-      <FilterDrawer refetch={refetch} />
+      <FilterDrawer refetch={{ refetch, data }} />
       <BoardTabs queryRes={{ data, loading, error }} />
     </>
   );

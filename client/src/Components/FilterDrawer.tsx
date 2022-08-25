@@ -34,7 +34,7 @@ const Puller = styled(Box)(({ theme }) => ({
 
 export default function FilterDrawer(props: any) {
   const [open, setOpen] = React.useState(false);
-
+  console.log(props.refetch.data);
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
@@ -93,7 +93,9 @@ export default function FilterDrawer(props: any) {
             }}
           >
             <FilterAltIcon color="inherit" />
-            <Typography sx={{ p: 2, color: "inherit" }}>51 results</Typography>
+            <Typography sx={{ p: 2, color: "inherit" }}>
+              {props?.refetch.data.mentoring.length}
+            </Typography>
           </Box>
         </StyledBox>
         <StyledBox
@@ -104,7 +106,7 @@ export default function FilterDrawer(props: any) {
             overflow: "auto",
           }}
         >
-          <FilterForm refetch={props.refetch} />
+          <FilterForm refetch={props.refetch.refetch} />
           {/* <Skeleton variant="rectangular" height="100%" /> */}
         </StyledBox>
       </SwipeableDrawer>
