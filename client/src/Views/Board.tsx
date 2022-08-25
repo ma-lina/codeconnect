@@ -14,7 +14,7 @@ const Board = () => {
   const { loading, error, data } = useQuery<QueryData>(GET_ADS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-
+  console.log("Name", data?.mentoring[1].creator.firstName);
   return (
     <>
       <FilterDrawer />
@@ -22,7 +22,7 @@ const Board = () => {
       {data?.mentoring.map(
         ({
           _id,
-          //        creator,
+          creator,
           field,
           location,
           description,
@@ -34,7 +34,7 @@ const Board = () => {
           offer,
         }) => (
           <div key={_id}>
-            {/* <p>{creator}</p> */}
+            <p>{creator.firstName}</p>
             <p>{location}</p>
             <p>{field}</p>
             <p>{description}</p>

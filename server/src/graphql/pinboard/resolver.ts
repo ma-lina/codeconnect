@@ -39,16 +39,14 @@ export const resolver = {
           if (filter.level) {
             data = data.filter((a) => a.level === filter.level);
           }
-          /*           if (filter.field) {
-            data = data.filter((b) => {
-              console.log("b", b);
-              const x = filter.field.filter((a) => {
-                console.log("a", b.field.includes(a));
-                return b.field.includes(a);
-              });
-              console.log("x", x); //if x == x.lenght == 0, return false else true
-            });
+          /*     if (filter.field) {
+            data = data.filter((b) => b.field.includes(filter.field));
           } */
+          if (filter.field) {
+            data = data.filter((a) =>
+              filter.field.every((b) => a.field.includes(b))
+            );
+          }
           return data;
         }
       } catch (err) {

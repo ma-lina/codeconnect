@@ -1,6 +1,12 @@
 interface Query {
   _id: any;
-  creator: any;
+  creator: {
+    _id: ObjectId;
+    username: string;
+    firstName: string;
+    lastName: string;
+    image: string;
+  };
   field: any;
   location: string;
   description: string;
