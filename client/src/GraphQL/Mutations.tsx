@@ -4,6 +4,7 @@ export const ADD_AD = gql`
   mutation Mutation() {
     addMentoring() {
       creator
+      title
       field
       location
       description

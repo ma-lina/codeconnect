@@ -11,36 +11,17 @@ const PinBoard = () => {
     document.body.classList.remove("home-transition-settings");
   });
 
-  const { loading, error, data } = useQuery<QueryData>(GET_ADS);
+  const { loading, error, data, refetch } = useQuery<QueryData>(GET_ADS, {
+    variables: {},
+  });
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
+
   return (
     <>
-      <FilterDrawer />
-      <BoardTabs />
-      {/* {data?.mentoring.map(
-        ({
-          _id,
-          creator,
-          field,
-          location,
-          description,
-          date,
-          techKnowHow,
-          level,
-          availability,
-          timeslots,
-          offer,
-        }) => (
-          <div key={_id}>
-            <p>{creator.firstName}</p>
-            <p>{location}</p>
-            <p>{field}</p>
-            <p>{description}</p>
-            <br />
-          </div>
-        )
-      )} */}
+      <FilterDrawer refetch={{ refetch, data }} />
+      <BoardTabs queryRes={{ data, loading, error }} />
     </>
   );
 };

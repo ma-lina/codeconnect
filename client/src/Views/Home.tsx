@@ -29,7 +29,7 @@ const Home: React.FC = () => {
         }}
       >
         <ButtonHomeNavigateTo buttonText="Login" destination="/login" />
-        <ButtonHomeNavigateTo buttonText="Sign up" destination="/signup" />
+        <ButtonHomeNavigateTo buttonText="Board" destination="/board" />
       </Box>
     </>
   );
