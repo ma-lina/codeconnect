@@ -125,6 +125,14 @@ const Navbar: React.FC = () => {
             <Divider />
             <List>
               <ListItem disablePadding>
+                <ListItemButton onClick={() => handleNavigateToInDrawer("/")}>
+                  <ListItemIcon>
+                    <HomeIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="Home" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
                 <ListItemButton
                   onClick={() => handleNavigateToInDrawer("/board")}
                 >
@@ -132,14 +140,6 @@ const Navbar: React.FC = () => {
                     <PushPinIcon color="primary" />
                   </ListItemIcon>
                   <ListItemText primary="Board" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton onClick={() => handleNavigateToInDrawer("/")}>
-                  <ListItemIcon>
-                    <HomeIcon color="primary" />
-                  </ListItemIcon>
-                  <ListItemText primary="Home" />
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
