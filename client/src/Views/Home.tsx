@@ -6,6 +6,8 @@ const Home: React.FC = () => {
   useLayoutEffect(() => {
     document.body.classList.add("background-settings");
     document.body.classList.add("background-image");
+    // document.body.classList.add("home-transition-settings");
+
   });
 
   return (
@@ -15,11 +17,12 @@ const Home: React.FC = () => {
         component={"div"}
         sx={{ marginLeft: "0.8rem" }}
       >
-        <Box className="homepage-text fira-code cursor white-cursor">
+        <Box className="homepage-text fira-code cursor white-cursor page-transition-settings">
           codeconnect
         </Box>
       </Typography>
       <Box
+        className="home-transition-settings"
         sx={{
           display: "flex",
           alignItems: "center",

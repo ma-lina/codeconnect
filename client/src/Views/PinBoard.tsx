@@ -19,10 +19,10 @@ const PinBoard = () => {
   if (error) return <p>Error :(</p>;
 
   return (
-    <>
+    <div className="page-transition-settings">
       <FilterDrawer refetch={{ refetch, data }} />
       <BoardTabs queryRes={{ data, loading, error }} />
-    </>
+    </div>
   );
 };
 
