@@ -27,7 +27,7 @@ import {
 export default function FilterForm(props: any) {
   const { operations, models } = usePinboardFilters();
   const [techKnowHow, setTechKnowHow] = useState([]);
-  const [availability, setAvailability] = useState([]);
+  const [availability, setAvailability] = useState<string[]>([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const [field, setField] = useState([]);
   const [level, setLevel] = useState([]);
@@ -74,11 +74,11 @@ export default function FilterForm(props: any) {
     operations.updateFilter("techKnowHow", value);
   }; */
 
-  const handleChange2 = (event: any) => {
+  const handleChange2 = (event: SelectChangeEvent<typeof availability>) => {
     const {
       target: { value },
     } = event;
-    setAvailability(value);
+    setAvailability(typeof value === "string" ? value.split(",") : value);
     operations.updateFilter("availability", value);
   };
 
