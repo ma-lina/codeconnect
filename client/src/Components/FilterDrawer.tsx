@@ -92,7 +92,7 @@ export default function FilterDrawer(props: any) {
           >
             <FilterAltIcon color="inherit" />
             <Typography sx={{ p: 2, color: "inherit" }}>
-              {props?.refetch.data.mentoring.length}
+              {`Your search matches ${props?.refetch.data.mentoring.length} pins`}
             </Typography>
           </Box>
         </StyledBox>

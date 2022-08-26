@@ -1,10 +1,7 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { AuthContext } from "../Context/AuthContext";
 
-function Logout() {
-  const { logOut } = useContext(AuthContext);
+function ButtonSignup() {
   const navigateTo = useNavigate();
   return (
     <Button
@@ -17,4 +14,4 @@ function Logout() {
   );
 }
 
-export default Logout;
+export default ButtonSignup;

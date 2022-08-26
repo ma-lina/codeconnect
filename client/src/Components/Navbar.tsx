@@ -22,7 +22,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import Logout from "./Logout";
+import ButtonSignup from "./ButtonSignup";
 import PushPinIcon from "@mui/icons-material/PushPin";
 
 const Navbar: React.FC = () => {
@@ -125,6 +125,14 @@ const Navbar: React.FC = () => {
             <Divider />
             <List>
               <ListItem disablePadding>
+                <ListItemButton onClick={() => handleNavigateToInDrawer("/")}>
+                  <ListItemIcon>
+                    <HomeIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary="Home" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
                 <ListItemButton
                   onClick={() => handleNavigateToInDrawer("/board")}
                 >
@@ -132,14 +140,6 @@ const Navbar: React.FC = () => {
                     <PushPinIcon color="primary" />
                   </ListItemIcon>
                   <ListItemText primary="Board" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton onClick={() => handleNavigateToInDrawer("/")}>
-                  <ListItemIcon>
-                    <HomeIcon color="primary" />
-                  </ListItemIcon>
-                  <ListItemText primary="Home" />
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
@@ -164,7 +164,7 @@ const Navbar: React.FC = () => {
                 marginRight: "1rem",
               }}
             >
-              <Logout />
+              <ButtonSignup />
             </Box>
           </Drawer>
         </Toolbar>

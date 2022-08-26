@@ -78,7 +78,7 @@ const BoardCard: React.FC<CardDetailProps> = ({ cardDetail }) => {
           {cardDetail.offer ? (
             <Chip color="secondary" label="Mentor" />
           ) : (
-            <Chip color="warning" label="Mentee" />
+            <Chip color="info" label="Mentee" />
           )}
           <Chip color="primary" label={cardDetail.level} />
         </Stack>
