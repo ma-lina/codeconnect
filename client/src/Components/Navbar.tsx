@@ -24,9 +24,10 @@ import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import ButtonSignup from "./ButtonSignup";
 import PushPinIcon from "@mui/icons-material/PushPin";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar: React.FC = () => {
-  const { user, userProfile, logOut } = useContext(AuthContext);
+  const { user, userProfile, logOut, isUserLoggedIn } = useContext(AuthContext);
   const navigateTo = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
@@ -66,9 +67,9 @@ const Navbar: React.FC = () => {
             </Box>
           </Typography>
           {user ? (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Logout">
-                <IconButton onClick={logOut} sx={{ p: 0 }}>
+            <Box sx={{ display:"flex", flexGrow: 0, gap:3 }}>
+              <Tooltip title="Profile">
+                <IconButton onClick={() => (navigateTo("/profile"))} sx={{ p: 0 }}>
                   {userProfile && (
                     <Avatar
                       alt={`Avatar of ${userProfile.firstName}`}
@@ -77,6 +78,19 @@ const Navbar: React.FC = () => {
                   )}
                 </IconButton>
               </Tooltip>
+              {/* {isUserLoggedIn() &&  */}
+                <Tooltip title="Logout">
+                  <IconButton onClick={logOut}
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="logout"
+                  sx={{ mr: 2, p: 0 }}
+                >
+                    <LogoutIcon/>
+                  </IconButton>
+                </Tooltip>
+                {/* } */}
             </Box>
           ) : (
             <Box sx={{ flexGrow: 0 }}>
