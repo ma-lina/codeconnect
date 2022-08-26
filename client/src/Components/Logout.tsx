@@ -8,7 +8,7 @@ function Logout() {
   const navigateTo = useNavigate();
   return (
     <Button
-      onSubmit={() => navigateTo("/login")}
+      onClick={() => navigateTo("/signup")}
       variant="contained"
       color="primary"
     >
