@@ -70,9 +70,7 @@ export const resolver = {
           .find()
           .populate({ path: "creator" })
           .exec();
-        if (!shouldApplyFilters) {
-          return data;
-        }
+        return data;
       } catch (err) {
         console.error("coworking error", err);
         throw new ApolloError(

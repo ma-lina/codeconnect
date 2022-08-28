@@ -20,7 +20,7 @@ const PinBoard = () => {
 
   return (
     <div className="page-transition-settings">
-      <FilterDrawer refetch={{ refetch, data }} />
+      <FilterDrawer filterQuery={{ refetch, data }} />
       <BoardTabs queryRes={{ data, loading, error }} />
     </div>
   );
