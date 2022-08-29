@@ -66,14 +66,6 @@ export default function FilterForm(props: any) {
     // console.log("state", state);
   };
 
-  /*   const handleChange = (event: any) => {
-    const {
-      target: { value },
-    } = event;
-    setTechKnowHow(value);
-    operations.updateFilter("techKnowHow", value);
-  }; */
-
   const handleChange2 = (event: SelectChangeEvent<typeof availability>) => {
     const {
       target: { value },

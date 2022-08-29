@@ -87,11 +87,12 @@ export const resolver = {
         const {
           input: {
             creator,
-            title,
             field,
             location,
             description,
             date,
+            starred,
+            title,
             techKnowHow,
             level,
             availability,
@@ -102,10 +103,11 @@ export const resolver = {
         const newMentoring = new mentoringModel({
           creator,
           field,
-          title,
           location,
           description,
           date,
+          starred,
+          title,
           techKnowHow,
           level,
           availability,
