@@ -17,7 +17,7 @@ export default gql`
   }
 
   type Mentoring {
-    _id: ID!
+    _id: ID
     title: String!
     creator: User!
     field: [String!]!
@@ -44,7 +44,7 @@ export default gql`
   }
 
   type Shadowing {
-    _id: ID!
+    _id: ID
     creator: User!
     title: String!
     field: [String!]!
@@ -61,7 +61,7 @@ export default gql`
   }
 
   type Coworking {
-    _id: ID!
+    _id: ID
     creator: User!
     title: String!
     field: [String!]!
@@ -75,11 +75,12 @@ export default gql`
 
   input MentoringInput {
     creator: ID!
-    title: String!
     field: [String!]!
     location: String!
     description: String!
     date: Date!
+    starred: [ID]
+    title: String!
     techKnowHow: [String!]!
     level: String!
     availability: [String!]!

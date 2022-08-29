@@ -13,9 +13,11 @@ import InsertInvitationIcon from "@mui/icons-material/InsertInvitation";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Chip, Divider, Stack } from "@mui/material";
 import { Box } from "@mui/system";
+
 interface CardDetailProps {
-  cardDetail: Query;
+  cardDetail: QueryC;
 }
+
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -31,7 +33,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const BoardCard: React.FC<CardDetailProps> = ({ cardDetail }) => {
+const BoardCardC: React.FC<CardDetailProps> = ({ cardDetail }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -75,12 +77,7 @@ const BoardCard: React.FC<CardDetailProps> = ({ cardDetail }) => {
           >
             <Chip label={cardDetail.location} />
           </Box>
-          {cardDetail.offer ? (
-            <Chip color="secondary" label="Mentor" />
-          ) : (
-            <Chip color="info" label="Mentee" />
-          )}
-          <Chip color="primary" label={cardDetail.level} />
+          <Chip color="primary" label={`${cardDetail.time}:00`} />
         </Stack>
         <Typography
           paragraph
@@ -124,22 +121,6 @@ const BoardCard: React.FC<CardDetailProps> = ({ cardDetail }) => {
             color="text.secondary"
             align="left"
           >{`Created by ${cardDetail.creator.firstName} ${cardDetail.creator.lastName}`}</Typography>
-          <Stack
-            sx={{ pb: 2 }}
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={1}
-          >
-            {cardDetail.techKnowHow.map((techItem, index) => (
-              <Chip
-                key={index}
-                color="secondary"
-                size="small"
-                label={techItem}
-              />
-            ))}
-          </Stack>
           <Typography gutterBottom variant="body1" align="left">
             Details
           </Typography>
@@ -152,7 +133,7 @@ const BoardCard: React.FC<CardDetailProps> = ({ cardDetail }) => {
             {cardDetail.description}
           </Typography>
           <Typography gutterBottom variant="body2" align="left">
-            Availability
+            Frequency
           </Typography>
           <Typography
             paragraph
@@ -160,20 +141,7 @@ const BoardCard: React.FC<CardDetailProps> = ({ cardDetail }) => {
             color="text.secondary"
             align="left"
           >
-            {cardDetail.availability.reduce(
-              (first, next) => first + " | " + next
-            )}
-          </Typography>
-          <Typography gutterBottom variant="body2" align="left">
-            Timing
-          </Typography>
-          <Typography
-            paragraph
-            variant="body2"
-            color="text.secondary"
-            align="left"
-          >
-            {cardDetail.timeslots.reduce((first, next) => first + " | " + next)}
+            {cardDetail.frequency.reduce((first, next) => first + " | " + next)}
           </Typography>
         </CardContent>
       </Collapse>
@@ -181,4 +149,4 @@ const BoardCard: React.FC<CardDetailProps> = ({ cardDetail }) => {
   );
 };
 
-export default BoardCard;
+export default BoardCardC;

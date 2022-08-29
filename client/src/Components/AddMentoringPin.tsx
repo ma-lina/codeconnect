@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { ADD_AD } from "../GraphQL/Mutations";
 import {
   Box,
   Modal,
@@ -5,26 +8,96 @@ import {
   Typography,
   Grid,
   TextField,
-  Avatar,
+  InputLabel,
+  Select,
+  OutlinedInput,
+  Chip,
+  MenuItem,
 } from "@mui/material";
-import React, { useContext } from "react";
+import { useTheme } from "@mui/material/styles";
 import { AuthContext } from "../Context/AuthContext";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
+import {
+  TechKnowHow,
+  Availability,
+  TimeSlots,
+  Field,
+  Level,
+} from "../Utils/enums";
 
-const ModalAddPin: React.FC<ModalProps> = ({ open, close }) => {
-  //   const { userProfile, updatedUserProfile, setUpdatedUserProfile, updateProfile } = useContext(AuthContext);
+const AddMentoringPin: any = ({ open, close }: any) => {
+  const theme = useTheme();
+  //let input: any;
+  const [addMentoring, { data, loading, error }] = useMutation(ADD_AD);
+  const [pin, setPin] = useState<any>({
+    creator: null,
+    title: "",
+    field: [],
+    location: "",
+    description: "",
+    date: "",
+    techKnowHow: [],
+    level: "",
+    availability: [],
+    timeslots: [],
+    offer: null,
+  });
 
-  //   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     setUpdatedUserProfile({ ...updatedUserProfile, [e.target.name]: e.target.value });
-  //     console.log(updatedUserProfile)
-  //   };
+  if (loading) return "Submitting...";
+  if (error) return `Submission error! ${error.message}`;
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+  function getStyles(key: string, state: any, theme: any) {
+    return {
+      fontWeight:
+        state.indexOf(key) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
 
-  //   const handleSubmitProfileChange = (event: React.FormEvent) => {
-  //     event.preventDefault();
-  //     updateProfile();
-  //     close();
-  //   }
+  /*   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setPin({ ...pin, [e.target.name]: e.target.value });
+
+  const handleCLick = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(sign);
+    if (
+      !sign.firstName ||
+      !sign.lastName ||
+      !sign.email ||
+      !sign.username ||
+      !sign.password 
+    ) {
+      alert("Enter your details!");
+    } else {
+      addMentoring({
+        variables: {
+          addMentoring: {
+          /*   firstName: sign.firstName,
+            lastName: sign.lastName,
+            password: sign.password,
+            birthday: sign.birthday,
+            email: sign.email,
+            username: sign.username,
+          },
+        },
+      });
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("pin up");
+      }
+    }*/
 
   return (
     <div>
@@ -156,13 +229,35 @@ const ModalAddPin: React.FC<ModalProps> = ({ open, close }) => {
                 wrap="nowrap"
               >
                 <Grid item xs={4} md={3}>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    textAlign={"left"}
+                  <InputLabel id="fields-label">Field</InputLabel>
+                  <Select
+                    labelId="fields-label"
+                    id="fields"
+                    multiple
+                    value={pin.field}
+                    //onChange={}
+                    input={<OutlinedInput id="select-fields" label="Chip" />}
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value: string) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
+                    MenuProps={MenuProps}
                   >
-                    Field:
-                  </Typography>
+                    {(Object.keys(Field) as Array<keyof typeof Field>).map(
+                      (key) => (
+                        <MenuItem
+                          key={Field[key]}
+                          value={Field[key]}
+                          style={getStyles(Field[key], pin.field, theme)}
+                        >
+                          {Field[key]}
+                        </MenuItem>
+                      )
+                    )}
+                  </Select>
                 </Grid>
 
                 <Grid item xs>
@@ -212,6 +307,23 @@ const ModalAddPin: React.FC<ModalProps> = ({ open, close }) => {
       </Modal>
     </div>
   );
+  /*
+    <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          addMentoring({ variables: { type: input.value } });
+          input.value = "";
+        }}
+      >
+        <input
+          ref={(node) => {
+            input = node;
+          }}
+        />
+        <button type="submit">Add Pin</button>
+      </form>
+    </div>
+  );*/
 };
-
-export default ModalAddPin;
+export default AddMentoringPin;

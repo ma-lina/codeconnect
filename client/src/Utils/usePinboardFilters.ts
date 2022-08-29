@@ -9,7 +9,7 @@ const usePinboardFilters = () => {
     level: [],
     availability: [],
     timeslots: [],
-    offer: true,
+    offer: false,
   });
 
   const updateFilter = (filterType: any, value: any) => {
