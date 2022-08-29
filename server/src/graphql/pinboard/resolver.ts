@@ -17,7 +17,7 @@ export const resolver = {
         throw new ApolloError("Error retrieving all user data", "400");
       }
     },
-    mentoring: async (parent, args, context, info) => {
+    mentoring: async (parent, args) => {
       const filter = args.input;
       console.log("args", args.input);
       const shouldApplyFilters = filter !== (null || undefined);
