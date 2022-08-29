@@ -82,7 +82,7 @@ export const resolver = {
   },
   //add typescript to mutation!
   Mutation: {
-    addMentoring: async (args) => {
+    addMentoring: async (parent, args) => {
       try {
         const {
           input: {
@@ -121,7 +121,7 @@ export const resolver = {
         return new ApolloError("Couldn't save entry in DB", "500");
       }
     },
-    addShadowing: async (args) => {
+    addShadowing: async (parent, args) => {
       try {
         const {
           input: {
@@ -160,7 +160,7 @@ export const resolver = {
         return new ApolloError("Couldn't save entry in DB", "500");
       }
     },
-    addCoworking: async (args) => {
+    addCoworking: async (parent, args) => {
       try {
         const {
           input: {
