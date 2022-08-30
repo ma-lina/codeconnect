@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_PIN } from "../GraphQL/Mutations";
 import {
@@ -28,23 +28,25 @@ import {
 import { getStyles } from "../Utils/getStyles";
 
 const AddMentoringPin: any = ({ open, close }: any) => {
+  const { userProfile } = useContext(AuthContext);
   const theme = useTheme();
   //let input: any;
   const [addMentoring, { data, loading, error }] = useMutation(ADD_PIN);
   const [pin, setPin] = useState<any>({
-    creator: null,
+    creator: userProfile?._id,
     title: "",
-    field: [],
+    field: ["Backend"],
     location: "",
     description: "",
-    date: "",
-    techKnowHow: [],
-    level: "",
-    availability: [],
-    timeslots: [],
-    offer: null,
+    date: "2022-01-09T23:00:00.000+00:00",
+    techKnowHow: ["Java"],
+    level: "Junior",
+    availability: ["daily"],
+    timeslots: ["Monday morning"],
+    offer: false,
   });
-
+  const [field, setField] = useState<string[]>([]);
+  console.log(pin);
   if (loading) return "Submitting...";
   if (error) return `Submission error! ${error.message}`;
 
@@ -64,18 +66,19 @@ const AddMentoringPin: any = ({ open, close }: any) => {
       ...pin,
       [e.target.name]: e.target.value,
     });
-    console.log(pin);
+    // console.log(pin);
   };
 
   const handleSelectChange = (e: SelectChangeEvent<typeof pin>) => {
     const {
       target: { value },
     } = e;
-    setPin(
-      [...pin]
-      /*  // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value */
+    setField(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
     );
+    setPin({ field: [...field] });
+    console.log(field);
   };
 
   /*   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -259,9 +262,9 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     labelId="fields-label"
                     id="fields"
                     multiple
-                    value={pin.field}
+                    value={field}
                     onChange={handleSelectChange}
-                    input={<OutlinedInput id="select-fields" label="Chip" />}
+                    // input={<OutlinedInput id="select-fields" label="Chip" />}
                     renderValue={(selected) => (
                       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                         {selected.map((value: string) => (
@@ -276,7 +279,7 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                         <MenuItem
                           key={Field[key]}
                           value={Field[key]}
-                          style={getStyles(Field[key], pin.field, theme)}
+                          style={getStyles(Field[key], field, theme)}
                         >
                           {Field[key]}
                         </MenuItem>
@@ -309,7 +312,9 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                   endIcon={<SaveIcon />}
                   variant="contained"
                   color="primary"
-                  // onClick={handleSubmitProfileChange}
+                  onClick={(e) => {
+                    addMentoring({ variables: { input: pin } });
+                  }}
                 >
                   Save
                 </Button>
@@ -320,23 +325,5 @@ const AddMentoringPin: any = ({ open, close }: any) => {
       </Modal>
     </div>
   );
-  /*
-    <div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          addMentoring({ variables: { type: input.value } });
-          input.value = "";
-        }}
-      >
-        <input
-          ref={(node) => {
-            input = node;
-          }}
-        />
-        <button type="submit">Add Pin</button>
-      </form>
-    </div>
-  );*/
 };
 export default AddMentoringPin;
