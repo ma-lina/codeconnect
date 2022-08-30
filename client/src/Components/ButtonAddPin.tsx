@@ -4,6 +4,7 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import ModalAddPin from "./ModalAddPin";
 import { Tooltip } from "@mui/material";
+import AddMentoringPin from "./AddMentoringPin";
 
 export default function ButtonAddPin() {
   const [openAddPinModal, setOpenAddPinModal] = React.useState<boolean>(false);
@@ -32,7 +33,7 @@ export default function ButtonAddPin() {
           </Fab>
         </Tooltip>
       </Box>
-      <ModalAddPin
+      <AddMentoringPin
         open={openAddPinModal}
         close={() => toggle(openAddPinModal, setOpenAddPinModal)}
       />

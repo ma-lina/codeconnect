@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_AD } from "../GraphQL/Mutations";
+import { ADD_PIN } from "../GraphQL/Mutations";
 import {
   Box,
   Modal,
@@ -9,11 +9,11 @@ import {
   Grid,
   TextField,
   InputLabel,
-  Select,
   OutlinedInput,
   Chip,
   MenuItem,
 } from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
 import { AuthContext } from "../Context/AuthContext";
 import SaveIcon from "@mui/icons-material/Save";
@@ -25,11 +25,12 @@ import {
   Field,
   Level,
 } from "../Utils/enums";
+import { getStyles } from "../Utils/getStyles";
 
 const AddMentoringPin: any = ({ open, close }: any) => {
   const theme = useTheme();
   //let input: any;
-  const [addMentoring, { data, loading, error }] = useMutation(ADD_AD);
+  const [addMentoring, { data, loading, error }] = useMutation(ADD_PIN);
   const [pin, setPin] = useState<any>({
     creator: null,
     title: "",
@@ -46,6 +47,7 @@ const AddMentoringPin: any = ({ open, close }: any) => {
 
   if (loading) return "Submitting...";
   if (error) return `Submission error! ${error.message}`;
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -56,14 +58,25 @@ const AddMentoringPin: any = ({ open, close }: any) => {
       },
     },
   };
-  function getStyles(key: string, state: any, theme: any) {
-    return {
-      fontWeight:
-        state.indexOf(key) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPin({
+      ...pin,
+      [e.target.name]: e.target.value,
+    });
+    console.log(pin);
+  };
+
+  const handleSelectChange = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin(
+      [...pin]
+      /*  // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value */
+    );
+  };
 
   /*   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setPin({ ...pin, [e.target.name]: e.target.value });
@@ -147,9 +160,10 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     size="small"
                     fullWidth
                     inputProps={{ maxLength: 120 }}
-                    name="firstName"
+                    name="title"
                     placeholder="Add a title to your advert"
-                    // onChange={handleInputChange}
+                    value={pin.title}
+                    onChange={handleInputChange}
                   />
                 </Grid>
               </Grid>
@@ -179,9 +193,10 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     size="small"
                     fullWidth
                     inputProps={{ maxLength: 120 }}
-                    name="lastName"
+                    name="location"
                     placeholder="Location"
-                    // onChange={handleInputChange}
+                    value={pin.location}
+                    onChange={handleInputChange}
                   />
                 </Grid>
               </Grid>
@@ -212,9 +227,10 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     size="small"
                     fullWidth
                     inputProps={{ maxLength: 120 }}
-                    name="username"
+                    name="description"
                     placeholder="Tell others more about what you are looking for"
-                    // onChange={handleInputChange}
+                    value={pin.description}
+                    onChange={handleInputChange}
                   />
                 </Grid>
               </Grid>
@@ -229,13 +245,22 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                 wrap="nowrap"
               >
                 <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Field:
+                  </Typography>
+                </Grid>
+                <Grid item xs>
                   <InputLabel id="fields-label">Field</InputLabel>
                   <Select
                     labelId="fields-label"
                     id="fields"
                     multiple
                     value={pin.field}
-                    //onChange={}
+                    onChange={handleSelectChange}
                     input={<OutlinedInput id="select-fields" label="Chip" />}
                     renderValue={(selected) => (
                       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -258,18 +283,6 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                       )
                     )}
                   </Select>
-                </Grid>
-
-                <Grid item xs>
-                  <TextField
-                    required
-                    size="small"
-                    fullWidth
-                    inputProps={{ maxLength: 120 }}
-                    name="email"
-                    placeholder="what is your field / areas of interest?"
-                    // onChange={handleInputChange}
-                  />
                 </Grid>
               </Grid>
 

@@ -1,18 +1,20 @@
 import { gql } from "@apollo/client";
 
-export const ADD_AD = gql`
-  mutation Mutation() {
-    addMentoring() {
-      creator
+export const ADD_PIN = gql`
+  mutation Mutation($input: MentoringInput) {
+    addMentoring(input: $input) {
       title
+      creator {
+        _id
+      }
       field
       location
       description
       date
       techKnowHow
       level
-      availability
       timeslots
+      availability
       offer
     }
   }
