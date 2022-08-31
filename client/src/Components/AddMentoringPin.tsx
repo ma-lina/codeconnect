@@ -8,8 +8,6 @@ import {
   Typography,
   Grid,
   TextField,
-  InputLabel,
-  OutlinedInput,
   Chip,
   MenuItem,
 } from "@mui/material";
@@ -40,10 +38,10 @@ const AddMentoringPin: any = ({ open, close }: any) => {
     location: "",
     description: "",
     date: "2022-01-09T23:00:00.000+00:00",
-    techKnowHow: ["Java"],
+    techKnowHow: [],
     level: "Junior",
-    availability: ["daily"],
-    timeslots: ["Monday morning"],
+    availability: [],
+    timeslots: [],
     offer: false,
   });
   console.log(pin);
@@ -74,6 +72,27 @@ const AddMentoringPin: any = ({ open, close }: any) => {
       target: { value },
     } = e;
     setPin({ ...pin, field: [...value] });
+  };
+
+  const handleSelectChange2 = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, techKnowHow: [...value] });
+  };
+
+  const handleSelectChange3 = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, timeslots: [...value] });
+  };
+
+  const handleSelectChange4 = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, availability: [...value] });
   };
   /*
 
@@ -250,7 +269,7 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                   </Typography>
                 </Grid>
                 <Grid item xs>
-                  <FormControl sx={{ m: 1, width: 300 }}>
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
                     <Select
                       labelId="fields-label"
                       id="fields"
@@ -279,6 +298,179 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                           </MenuItem>
                         )
                       )}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    TechKnowHow:
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      multiple
+                      value={pin.techKnowHow}
+                      onChange={handleSelectChange2}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          {selected.map((value: string) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(
+                        Object.keys(TechKnowHow) as Array<
+                          keyof typeof TechKnowHow
+                        >
+                      ).map((key) => (
+                        <MenuItem
+                          key={TechKnowHow[key]}
+                          value={TechKnowHow[key]}
+                          style={getStyles(
+                            TechKnowHow[key],
+                            pin.techKnowHow,
+                            theme
+                          )}
+                        >
+                          {TechKnowHow[key]}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Timeslots:
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      multiple
+                      value={pin.timeslots}
+                      onChange={handleSelectChange3}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          {selected.map((value: string) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(
+                        Object.keys(TimeSlots) as Array<keyof typeof TimeSlots>
+                      ).map((key) => (
+                        <MenuItem
+                          key={TimeSlots[key]}
+                          value={TimeSlots[key]}
+                          style={getStyles(
+                            TimeSlots[key],
+                            pin.timeslots,
+                            theme
+                          )}
+                        >
+                          {TimeSlots[key]}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Availability:
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      multiple
+                      value={pin.availability}
+                      onChange={handleSelectChange4}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          {selected.map((value: string) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(
+                        Object.keys(Availability) as Array<
+                          keyof typeof Availability
+                        >
+                      ).map((key) => (
+                        <MenuItem
+                          key={Availability[key]}
+                          value={Availability[key]}
+                          style={getStyles(
+                            Availability[key],
+                            pin.availability,
+                            theme
+                          )}
+                        >
+                          {Availability[key]}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </Grid>
