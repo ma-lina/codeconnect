@@ -250,7 +250,9 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     <Typography>Mentee</Typography>
                     <Switch
                       checked={pin.offer}
-                      onChange={(e: any) => e.target.checked}
+                      onChange={(e: any) =>
+                        setPin({ ...pin, offer: e.target.checked })
+                      }
                       inputProps={{ "aria-label": "controlled" }}
                     />
                     <Typography>Mentor</Typography>
