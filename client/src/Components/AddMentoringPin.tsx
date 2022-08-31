@@ -13,6 +13,8 @@ import {
   TextField,
   Chip,
   MenuItem,
+  Switch,
+  Stack,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
@@ -35,15 +37,14 @@ const AddMentoringPin: any = ({ open, close }: any) => {
   const theme = useTheme();
 
   const [addMentoring, { data, loading, error }] = useMutation(ADD_PIN);
-
-  //fix error if user not logged in!
+  //TODO current date as default
   const [pin, setPin] = useState<any>({
     creator: userProfile?._id,
     title: "",
     field: [],
     location: "",
     description: "",
-    date: "2022-01-09T23:00:00.000+00:00",
+    date: "2022-10-01T23:00:00.000+00:00",
     techKnowHow: [],
     level: "",
     availability: [],
@@ -223,6 +224,37 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     value={pin.location}
                     onChange={handleInputChange}
                   />
+                </Grid>
+              </Grid>
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Description:
+                  </Typography>
+                </Grid>
+
+                <Grid item xs>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography>Mentee</Typography>
+                    <Switch
+                      checked={pin.offer}
+                      onChange={(e: any) => e.target.checked}
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+                    <Typography>Mentor</Typography>
+                  </Stack>
                 </Grid>
               </Grid>
 
@@ -438,10 +470,12 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                 <Grid item xs>
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <DatePicker
-                      views={["day", "month", "year"]}
+                      views={["day"]}
                       label=""
                       value={pin.date}
-                      onChange={handleChangeDate}
+                      onChange={(newDate) =>
+                        setPin({ ...pin, date: newDate._d })
+                      }
                       renderInput={(params) => (
                         <TextField {...params} helperText={null} />
                       )}
