@@ -1,6 +1,9 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_PIN } from "../GraphQL/Mutations";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import type {} from "@mui/x-date-pickers/themeAugmentation";
 import {
   Box,
   Modal,
@@ -17,6 +20,7 @@ import { useTheme } from "@mui/material/styles";
 import { AuthContext } from "../Context/AuthContext";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { ADD_PIN } from "../GraphQL/Mutations";
 import {
   TechKnowHow,
   Availability,
@@ -31,6 +35,8 @@ const AddMentoringPin: any = ({ open, close }: any) => {
   const theme = useTheme();
 
   const [addMentoring, { data, loading, error }] = useMutation(ADD_PIN);
+
+  //fix error if user not logged in!
   const [pin, setPin] = useState<any>({
     creator: userProfile?._id,
     title: "",
@@ -39,7 +45,7 @@ const AddMentoringPin: any = ({ open, close }: any) => {
     description: "",
     date: "2022-01-09T23:00:00.000+00:00",
     techKnowHow: [],
-    level: "Junior",
+    level: "",
     availability: [],
     timeslots: [],
     offer: false,
@@ -94,6 +100,20 @@ const AddMentoringPin: any = ({ open, close }: any) => {
     } = e;
     setPin({ ...pin, availability: [...value] });
   };
+
+  const handleSelectChange5 = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, level: value });
+  };
+
+  const handleChangeDate = (e: any) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, date: value });
+  };
   /*
 
   const handleCLick = (e: FormEvent<HTMLFormElement>) => {
@@ -109,16 +129,6 @@ const AddMentoringPin: any = ({ open, close }: any) => {
       alert("Enter your details!");
     } else {
       addMentoring({
-        variables: {
-          addMentoring: {
-          /*   firstName: sign.firstName,
-            lastName: sign.lastName,
-            password: sign.password,
-            birthday: sign.birthday,
-            email: sign.email,
-            username: sign.username,
-          },
-        },
       });
       if (error) {
         console.log(error);
@@ -360,6 +370,86 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                   </FormControl>
                 </Grid>
               </Grid>
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Level of Experience:
+                  </Typography>
+                </Grid>
+
+                <Grid item xs>
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      value={pin.level}
+                      onChange={handleSelectChange5}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          <Chip key={selected} label={selected} />
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(Object.keys(Level) as Array<keyof typeof Level>).map(
+                        (key) => (
+                          <MenuItem key={Level[key]} value={Level[key]}>
+                            {Level[key]}
+                          </MenuItem>
+                        )
+                      )}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Start date:
+                  </Typography>
+                </Grid>
+
+                <Grid item xs>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      views={["day", "month", "year"]}
+                      label=""
+                      value={pin.date}
+                      onChange={handleChangeDate}
+                      renderInput={(params) => (
+                        <TextField {...params} helperText={null} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Grid>
+              </Grid>
+
               <Grid
                 pb={0.5}
                 container
