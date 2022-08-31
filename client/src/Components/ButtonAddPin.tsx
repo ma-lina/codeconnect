@@ -5,10 +5,11 @@ import AddIcon from "@mui/icons-material/Add";
 import ModalAddPin from "./ModalAddPin";
 import { Tooltip } from "@mui/material";
 import AddMentoringPin from "./AddMentoringPin";
+import AddShadowingPin from "./AddShadowingPin";
 
-export default function ButtonAddPin() {
+export default function ButtonAddPin(props: any) {
   const [openAddPinModal, setOpenAddPinModal] = React.useState<boolean>(false);
-
+  console.log("props", props);
   const toggle = (
     value: boolean,
     setValue: React.Dispatch<React.SetStateAction<boolean>>
@@ -33,10 +34,17 @@ export default function ButtonAddPin() {
           </Fab>
         </Tooltip>
       </Box>
-      <AddMentoringPin
-        open={openAddPinModal}
-        close={() => toggle(openAddPinModal, setOpenAddPinModal)}
-      />
+      {props.indexTab.value == 0 ? (
+        <AddMentoringPin
+          open={openAddPinModal}
+          close={() => toggle(openAddPinModal, setOpenAddPinModal)}
+        />
+      ) : (
+        <AddShadowingPin
+          open={openAddPinModal}
+          close={() => toggle(openAddPinModal, setOpenAddPinModal)}
+        />
+      )}
     </>
   );
 }

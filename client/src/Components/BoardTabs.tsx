@@ -88,7 +88,7 @@ export default function BoardTabs(props: any) {
             label="Shadowing"
             {...a11yProps(2)}
           />
-          {isUserLoggedIn() && <ButtonAddPin />}
+          {isUserLoggedIn() && <ButtonAddPin indexTab={{ value }} />}
         </Tabs>
       </Box>
       <Box>
