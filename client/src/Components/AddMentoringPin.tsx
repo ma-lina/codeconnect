@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_AD } from "../GraphQL/Mutations";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import type {} from "@mui/x-date-pickers/themeAugmentation";
 import {
   Box,
   Modal,
@@ -8,16 +11,18 @@ import {
   Typography,
   Grid,
   TextField,
-  InputLabel,
-  Select,
-  OutlinedInput,
   Chip,
   MenuItem,
+  Switch,
+  Stack,
 } from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 import { useTheme } from "@mui/material/styles";
 import { AuthContext } from "../Context/AuthContext";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { ADD_PIN } from "../GraphQL/Mutations";
 import {
   TechKnowHow,
   Availability,
@@ -25,27 +30,32 @@ import {
   Field,
   Level,
 } from "../Utils/enums";
+import { getStyles } from "../Utils/getStyles";
 
 const AddMentoringPin: any = ({ open, close }: any) => {
+  const { userProfile } = useContext(AuthContext);
   const theme = useTheme();
-  //let input: any;
-  const [addMentoring, { data, loading, error }] = useMutation(ADD_AD);
+
+  const [addMentoring, { data, loading, error }] = useMutation(ADD_PIN);
+  //TODO current date as default
   const [pin, setPin] = useState<any>({
-    creator: null,
+    creator: userProfile?._id,
     title: "",
     field: [],
     location: "",
     description: "",
-    date: "",
+    date: "2022-10-01T23:00:00.000+00:00",
     techKnowHow: [],
     level: "",
     availability: [],
     timeslots: [],
-    offer: null,
+    offer: false,
   });
+  console.log(pin);
 
   if (loading) return "Submitting...";
   if (error) return `Submission error! ${error.message}`;
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -56,17 +66,56 @@ const AddMentoringPin: any = ({ open, close }: any) => {
       },
     },
   };
-  function getStyles(key: string, state: any, theme: any) {
-    return {
-      fontWeight:
-        state.indexOf(key) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
 
-  /*   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setPin({ ...pin, [e.target.name]: e.target.value });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPin({
+      ...pin,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSelectChange = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, field: [...value] });
+  };
+
+  const handleSelectChange2 = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, techKnowHow: [...value] });
+  };
+
+  const handleSelectChange3 = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, timeslots: [...value] });
+  };
+
+  const handleSelectChange4 = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, availability: [...value] });
+  };
+
+  const handleSelectChange5 = (e: SelectChangeEvent<typeof pin>) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, level: value });
+  };
+
+  const handleChangeDate = (e: any) => {
+    const {
+      target: { value },
+    } = e;
+    setPin({ ...pin, date: value });
+  };
+  /*
 
   const handleCLick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -81,16 +130,6 @@ const AddMentoringPin: any = ({ open, close }: any) => {
       alert("Enter your details!");
     } else {
       addMentoring({
-        variables: {
-          addMentoring: {
-          /*   firstName: sign.firstName,
-            lastName: sign.lastName,
-            password: sign.password,
-            birthday: sign.birthday,
-            email: sign.email,
-            username: sign.username,
-          },
-        },
       });
       if (error) {
         console.log(error);
@@ -147,9 +186,10 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     size="small"
                     fullWidth
                     inputProps={{ maxLength: 120 }}
-                    name="firstName"
+                    name="title"
                     placeholder="Add a title to your advert"
-                    // onChange={handleInputChange}
+                    value={pin.title}
+                    onChange={handleInputChange}
                   />
                 </Grid>
               </Grid>
@@ -179,10 +219,44 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     size="small"
                     fullWidth
                     inputProps={{ maxLength: 120 }}
-                    name="lastName"
+                    name="location"
                     placeholder="Location"
-                    // onChange={handleInputChange}
+                    value={pin.location}
+                    onChange={handleInputChange}
                   />
+                </Grid>
+              </Grid>
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Description:
+                  </Typography>
+                </Grid>
+
+                <Grid item xs>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography>Mentee</Typography>
+                    <Switch
+                      checked={pin.offer}
+                      onChange={(e: any) =>
+                        setPin({ ...pin, offer: e.target.checked })
+                      }
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+                    <Typography>Mentor</Typography>
+                  </Stack>
                 </Grid>
               </Grid>
 
@@ -212,9 +286,10 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     size="small"
                     fullWidth
                     inputProps={{ maxLength: 120 }}
-                    name="username"
+                    name="description"
                     placeholder="Tell others more about what you are looking for"
-                    // onChange={handleInputChange}
+                    value={pin.description}
+                    onChange={handleInputChange}
                   />
                 </Grid>
               </Grid>
@@ -229,47 +304,301 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                 wrap="nowrap"
               >
                 <Grid item xs={4} md={3}>
-                  <InputLabel id="fields-label">Field</InputLabel>
-                  <Select
-                    labelId="fields-label"
-                    id="fields"
-                    multiple
-                    value={pin.field}
-                    //onChange={}
-                    input={<OutlinedInput id="select-fields" label="Chip" />}
-                    renderValue={(selected) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                        {selected.map((value: string) => (
-                          <Chip key={value} label={value} />
-                        ))}
-                      </Box>
-                    )}
-                    MenuProps={MenuProps}
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
                   >
-                    {(Object.keys(Field) as Array<keyof typeof Field>).map(
-                      (key) => (
-                        <MenuItem
-                          key={Field[key]}
-                          value={Field[key]}
-                          style={getStyles(Field[key], pin.field, theme)}
+                    Field:
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      multiple
+                      value={pin.field}
+                      onChange={handleSelectChange}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
                         >
-                          {Field[key]}
+                          {selected.map((value: string) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(Object.keys(Field) as Array<keyof typeof Field>).map(
+                        (key) => (
+                          <MenuItem
+                            key={Field[key]}
+                            value={Field[key]}
+                            style={getStyles(Field[key], pin.field, theme)}
+                          >
+                            {Field[key]}
+                          </MenuItem>
+                        )
+                      )}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    TechKnowHow:
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      multiple
+                      value={pin.techKnowHow}
+                      onChange={handleSelectChange2}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          {selected.map((value: string) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(
+                        Object.keys(TechKnowHow) as Array<
+                          keyof typeof TechKnowHow
+                        >
+                      ).map((key) => (
+                        <MenuItem
+                          key={TechKnowHow[key]}
+                          value={TechKnowHow[key]}
+                          style={getStyles(
+                            TechKnowHow[key],
+                            pin.techKnowHow,
+                            theme
+                          )}
+                        >
+                          {TechKnowHow[key]}
                         </MenuItem>
-                      )
-                    )}
-                  </Select>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Level of Experience:
+                  </Typography>
                 </Grid>
 
                 <Grid item xs>
-                  <TextField
-                    required
-                    size="small"
-                    fullWidth
-                    inputProps={{ maxLength: 120 }}
-                    name="email"
-                    placeholder="what is your field / areas of interest?"
-                    // onChange={handleInputChange}
-                  />
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      value={pin.level}
+                      onChange={handleSelectChange5}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          <Chip key={selected} label={selected} />
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(Object.keys(Level) as Array<keyof typeof Level>).map(
+                        (key) => (
+                          <MenuItem key={Level[key]} value={Level[key]}>
+                            {Level[key]}
+                          </MenuItem>
+                        )
+                      )}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Start date:
+                  </Typography>
+                </Grid>
+
+                <Grid item xs>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      views={["day"]}
+                      label=""
+                      value={pin.date}
+                      onChange={(newDate) =>
+                        setPin({ ...pin, date: newDate._d })
+                      }
+                      renderInput={(params) => (
+                        <TextField {...params} helperText={null} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Grid>
+              </Grid>
+
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Timeslots:
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      multiple
+                      value={pin.timeslots}
+                      onChange={handleSelectChange3}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          {selected.map((value: string) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(
+                        Object.keys(TimeSlots) as Array<keyof typeof TimeSlots>
+                      ).map((key) => (
+                        <MenuItem
+                          key={TimeSlots[key]}
+                          value={TimeSlots[key]}
+                          style={getStyles(
+                            TimeSlots[key],
+                            pin.timeslots,
+                            theme
+                          )}
+                        >
+                          {TimeSlots[key]}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+
+              <Grid
+                pb={0.5}
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={1}
+                wrap="nowrap"
+              >
+                <Grid item xs={4} md={3}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    textAlign={"left"}
+                  >
+                    Availability:
+                  </Typography>
+                </Grid>
+                <Grid item xs>
+                  <FormControl sx={{ m: 1, width: 300 }} size="small">
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      multiple
+                      value={pin.availability}
+                      onChange={handleSelectChange4}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          {selected.map((value: string) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(
+                        Object.keys(Availability) as Array<
+                          keyof typeof Availability
+                        >
+                      ).map((key) => (
+                        <MenuItem
+                          key={Availability[key]}
+                          value={Availability[key]}
+                          style={getStyles(
+                            Availability[key],
+                            pin.availability,
+                            theme
+                          )}
+                        >
+                          {Availability[key]}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
               </Grid>
 
@@ -296,7 +625,9 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                   endIcon={<SaveIcon />}
                   variant="contained"
                   color="primary"
-                  // onClick={handleSubmitProfileChange}
+                  onClick={(e) => {
+                    addMentoring({ variables: { input: pin } });
+                  }}
                 >
                   Save
                 </Button>
@@ -307,23 +638,5 @@ const AddMentoringPin: any = ({ open, close }: any) => {
       </Modal>
     </div>
   );
-  /*
-    <div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          addMentoring({ variables: { type: input.value } });
-          input.value = "";
-        }}
-      >
-        <input
-          ref={(node) => {
-            input = node;
-          }}
-        />
-        <button type="submit">Add Pin</button>
-      </form>
-    </div>
-  );*/
 };
 export default AddMentoringPin;
