@@ -9,7 +9,7 @@ import AddShadowingPin from "./AddShadowingPin";
 
 export default function ButtonAddPin(props: any) {
   const [openAddPinModal, setOpenAddPinModal] = React.useState<boolean>(false);
-  console.log("props", props);
+
   const toggle = (
     value: boolean,
     setValue: React.Dispatch<React.SetStateAction<boolean>>

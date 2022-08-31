@@ -38,6 +38,8 @@ const AddMentoringPin: any = ({ open, close }: any) => {
 
   const [addMentoring, { data, loading, error }] = useMutation(ADD_PIN);
   //TODO current date as default
+  //TODO refetch after submit
+  //TODO success message after submit
   const [pin, setPin] = useState<any>({
     creator: userProfile?._id,
     title: "",
@@ -67,54 +69,23 @@ const AddMentoringPin: any = ({ open, close }: any) => {
     },
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<typeof pin> | SelectChangeEvent<typeof pin>
+  ) => {
     setPin({
       ...pin,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSelectChange = (e: SelectChangeEvent<typeof pin>) => {
+  /*   const handleSelectChange = (e: SelectChangeEvent<typeof pin>) => {
     const {
       target: { value },
     } = e;
-    setPin({ ...pin, field: [...value] });
+    console.log(e);
+    setPin({ ...pin, [e.target.name]: [...value] });
   };
-
-  const handleSelectChange2 = (e: SelectChangeEvent<typeof pin>) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, techKnowHow: [...value] });
-  };
-
-  const handleSelectChange3 = (e: SelectChangeEvent<typeof pin>) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, timeslots: [...value] });
-  };
-
-  const handleSelectChange4 = (e: SelectChangeEvent<typeof pin>) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, availability: [...value] });
-  };
-
-  const handleSelectChange5 = (e: SelectChangeEvent<typeof pin>) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, level: value });
-  };
-
-  const handleChangeDate = (e: any) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, date: value });
-  };
+ */
   /*
 
   const handleCLick = (e: FormEvent<HTMLFormElement>) => {
@@ -317,9 +288,10 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                     <Select
                       labelId="fields-label"
                       id="fields"
+                      name="field"
                       multiple
                       value={pin.field}
-                      onChange={handleSelectChange}
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
@@ -370,8 +342,9 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                       labelId="fields-label"
                       id="fields"
                       multiple
+                      name="techKnowHow"
                       value={pin.techKnowHow}
-                      onChange={handleSelectChange2}
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
@@ -429,7 +402,8 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                       labelId="fields-label"
                       id="fields"
                       value={pin.level}
-                      onChange={handleSelectChange5}
+                      name="level"
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
@@ -510,8 +484,9 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                       labelId="fields-label"
                       id="fields"
                       multiple
+                      name="timeslots"
                       value={pin.timeslots}
-                      onChange={handleSelectChange3}
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
@@ -567,8 +542,9 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                       labelId="fields-label"
                       id="fields"
                       multiple
+                      name="availability"
                       value={pin.availability}
-                      onChange={handleSelectChange4}
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}

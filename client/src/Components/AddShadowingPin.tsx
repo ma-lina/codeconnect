@@ -67,76 +67,14 @@ const AddShadowingPin: any = ({ open, close }: any) => {
     },
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<typeof pin> | SelectChangeEvent<typeof pin>
+  ) => {
     setPin({
       ...pin,
       [e.target.name]: e.target.value,
     });
   };
-
-  const handleSelectChange = (e: SelectChangeEvent<typeof pin>) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, field: [...value] });
-  };
-
-  const handleSelectChange2 = (e: SelectChangeEvent<typeof pin>) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, techKnowHow: [...value] });
-  };
-
-  const handleSelectChange3 = (e: SelectChangeEvent<typeof pin>) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, timeslots: [...value] });
-  };
-
-  const handleSelectChange4 = (e: SelectChangeEvent<typeof pin>) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, availability: [...value] });
-  };
-
-  const handleSelectChange5 = (e: SelectChangeEvent<typeof pin>) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, level: value });
-  };
-
-  const handleChangeDate = (e: any) => {
-    const {
-      target: { value },
-    } = e;
-    setPin({ ...pin, date: value });
-  };
-  /*
-
-  const handleCLick = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(sign);
-    if (
-      !sign.firstName ||
-      !sign.lastName ||
-      !sign.email ||
-      !sign.username ||
-      !sign.password 
-    ) {
-      alert("Enter your details!");
-    } else {
-      addMentoring({
-      });
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("pin up");
-      }
-    }*/
 
   return (
     <div>
@@ -319,7 +257,7 @@ const AddShadowingPin: any = ({ open, close }: any) => {
                       id="fields"
                       multiple
                       value={pin.field}
-                      onChange={handleSelectChange}
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
@@ -371,7 +309,7 @@ const AddShadowingPin: any = ({ open, close }: any) => {
                       id="fields"
                       multiple
                       value={pin.techKnowHow}
-                      onChange={handleSelectChange2}
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
@@ -429,7 +367,7 @@ const AddShadowingPin: any = ({ open, close }: any) => {
                       labelId="fields-label"
                       id="fields"
                       value={pin.level}
-                      onChange={handleSelectChange5}
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
@@ -511,7 +449,7 @@ const AddShadowingPin: any = ({ open, close }: any) => {
                       id="fields"
                       multiple
                       value={pin.timeslots}
-                      onChange={handleSelectChange3}
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
@@ -568,7 +506,7 @@ const AddShadowingPin: any = ({ open, close }: any) => {
                       id="fields"
                       multiple
                       value={pin.availability}
-                      onChange={handleSelectChange4}
+                      onChange={handleInputChange}
                       renderValue={(selected) => (
                         <Box
                           sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
