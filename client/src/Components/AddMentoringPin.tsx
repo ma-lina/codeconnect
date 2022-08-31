@@ -14,6 +14,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 import { useTheme } from "@mui/material/styles";
 import { AuthContext } from "../Context/AuthContext";
 import SaveIcon from "@mui/icons-material/Save";
@@ -30,12 +31,12 @@ import { getStyles } from "../Utils/getStyles";
 const AddMentoringPin: any = ({ open, close }: any) => {
   const { userProfile } = useContext(AuthContext);
   const theme = useTheme();
-  //let input: any;
+
   const [addMentoring, { data, loading, error }] = useMutation(ADD_PIN);
   const [pin, setPin] = useState<any>({
     creator: userProfile?._id,
     title: "",
-    field: ["Backend"],
+    field: [],
     location: "",
     description: "",
     date: "2022-01-09T23:00:00.000+00:00",
@@ -45,8 +46,8 @@ const AddMentoringPin: any = ({ open, close }: any) => {
     timeslots: ["Monday morning"],
     offer: false,
   });
-  const [field, setField] = useState<string[]>([]);
   console.log(pin);
+
   if (loading) return "Submitting...";
   if (error) return `Submission error! ${error.message}`;
 
@@ -66,23 +67,15 @@ const AddMentoringPin: any = ({ open, close }: any) => {
       ...pin,
       [e.target.name]: e.target.value,
     });
-    // console.log(pin);
   };
 
   const handleSelectChange = (e: SelectChangeEvent<typeof pin>) => {
     const {
       target: { value },
     } = e;
-    setField(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-    setPin({ field: [...field] });
-    console.log(field);
+    setPin({ ...pin, field: [...value] });
   };
-
-  /*   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setPin({ ...pin, [e.target.name]: e.target.value });
+  /*
 
   const handleCLick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -257,35 +250,37 @@ const AddMentoringPin: any = ({ open, close }: any) => {
                   </Typography>
                 </Grid>
                 <Grid item xs>
-                  <InputLabel id="fields-label">Field</InputLabel>
-                  <Select
-                    labelId="fields-label"
-                    id="fields"
-                    multiple
-                    value={field}
-                    onChange={handleSelectChange}
-                    // input={<OutlinedInput id="select-fields" label="Chip" />}
-                    renderValue={(selected) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                        {selected.map((value: string) => (
-                          <Chip key={value} label={value} />
-                        ))}
-                      </Box>
-                    )}
-                    MenuProps={MenuProps}
-                  >
-                    {(Object.keys(Field) as Array<keyof typeof Field>).map(
-                      (key) => (
-                        <MenuItem
-                          key={Field[key]}
-                          value={Field[key]}
-                          style={getStyles(Field[key], field, theme)}
+                  <FormControl sx={{ m: 1, width: 300 }}>
+                    <Select
+                      labelId="fields-label"
+                      id="fields"
+                      multiple
+                      value={pin.field}
+                      onChange={handleSelectChange}
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
                         >
-                          {Field[key]}
-                        </MenuItem>
-                      )
-                    )}
-                  </Select>
+                          {selected.map((value: string) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {(Object.keys(Field) as Array<keyof typeof Field>).map(
+                        (key) => (
+                          <MenuItem
+                            key={Field[key]}
+                            value={Field[key]}
+                            style={getStyles(Field[key], pin.field, theme)}
+                          >
+                            {Field[key]}
+                          </MenuItem>
+                        )
+                      )}
+                    </Select>
+                  </FormControl>
                 </Grid>
               </Grid>
 
