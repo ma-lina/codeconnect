@@ -6,7 +6,9 @@ import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import PeopleAltTwoToneIcon from "@mui/icons-material/PeopleAltTwoTone";
 import { Box, Typography } from "@mui/material";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
-import BoardCard from "./BoardCard";
+import BoardCardM from "./BoardCardM";
+import BoardCardC from "./BoardCardC";
+import BoardCardS from "./BoardCardS";
 import ButtonAddPin from "./ButtonAddPin";
 
 interface TabPanelProps {
@@ -17,7 +19,6 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -28,7 +29,8 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 1 }}>
-          <Typography>{children}</Typography>
+          <Typography component="div">{children}</Typography>
+          {/* {children} */}
         </Box>
       )}
     </div>
@@ -99,9 +101,9 @@ export default function BoardTabs(props: any) {
               gap: 2,
             }}
           >
-            {queryRes?.data.mentoring.map((mentoringDetail: any) => (
+            {queryRes?.data.mentoring.map((mentoringDetail: QueryM) => (
               <div key={mentoringDetail._id}>
-                <BoardCard cardDetail={mentoringDetail} />
+                <BoardCardM cardDetail={mentoringDetail} />
               </div>
             ))}
           </Box>
@@ -115,9 +117,9 @@ export default function BoardTabs(props: any) {
               gap: 2,
             }}
           >
-            {queryRes?.data?.coworking.map((coworkingDetail: any) => (
+            {queryRes?.data?.coworking.map((coworkingDetail: QueryC) => (
               <div key={coworkingDetail._id}>
-                <BoardCard cardDetail={coworkingDetail} />
+                <BoardCardC cardDetail={coworkingDetail} />
               </div>
             ))}
           </Box>
@@ -131,9 +133,9 @@ export default function BoardTabs(props: any) {
               gap: 2,
             }}
           >
-            {queryRes?.data?.shadowing.map((shadowingDetail: any) => (
+            {queryRes?.data?.shadowing.map((shadowingDetail: QueryS) => (
               <div key={shadowingDetail._id}>
-                <BoardCard cardDetail={shadowingDetail} />
+                <BoardCardS cardDetail={shadowingDetail} />
               </div>
             ))}
           </Box>
