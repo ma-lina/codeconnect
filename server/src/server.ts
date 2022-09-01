@@ -17,7 +17,7 @@ interface ApolloContext {
   token?: String;
 }
 
-const allowedDomains = ["BACKEND_URL", "http://localhost:3000"]
+const allowedDomains = ["FRONTEND_URL", "http://localhost:3000"]
 
 const createOrigin = (origin,callback) => {
   if (!origin) return callback(null, true);

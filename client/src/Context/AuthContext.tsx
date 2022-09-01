@@ -52,7 +52,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     };
     try {
       const response = await fetch(
-        process.env.NODE_ENV+"/users/profile/photoUpload",
+        serverURL+"/users/profile/photoUpload",
         requestOptions
       );
       const result: User.ImageResult = await response.json();
@@ -82,7 +82,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
 
       try {
         const response = await fetch(
-          process.env.NODE_ENV+"/users/register",
+          serverURL+"/users/register",
           requestOptions
         );
         const result: User.SignupResult = await response.json();
@@ -116,7 +116,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       };
       try {
         const response = await fetch(
-          process.env.NODE_ENV+"/users/login",
+          serverURL+"/users/login",
           requestOptions
         );
         const result: User.LoginResult = await response.json();
