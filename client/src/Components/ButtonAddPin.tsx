@@ -34,7 +34,7 @@ export default function ButtonAddPin(props: any) {
           </Fab>
         </Tooltip>
       </Box>
-      {props.indexTab.value == 0 ? (
+      {props.indexTab.value === 0 ? (
         <AddMentoringPin
           open={openAddPinModal}
           close={() => toggle(openAddPinModal, setOpenAddPinModal)}

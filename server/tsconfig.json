@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "ESnext",
+    "module": "es2022",
+    "target": "ESNext",
     "moduleResolution": "node",
     "watch": true,
     "lib": ["dom", "es2020"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "outDir": "./build"
-  }
+  },
+  "exclude": ["node_modules"]
 }

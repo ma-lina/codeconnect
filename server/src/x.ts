@@ -8,12 +8,21 @@ import {
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
-import resolvers from "./resolvers";
-import typeDefs from "./typeDefs";
+//import resolvers from "./resolvers";
+//import typeDefs from "./typeDefs";
+import cors from "cors";
+import * as dotenv from "dotenv";
+import mongoose from "mongoose";
+import passport from "passport";
+import { json } from "body-parser";
+import { schema } from "./graphql/schema";
+import { cloudinaryConfig } from "./config/cloudinaryConfig";
+import usersRoute from "./routes/usersRoute";
+import passportConfig from "./config/passportConfig";
 
 // Create the schema, which will be used separately by ApolloServer and
 // the WebSocket server.
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+//const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 // Create an Express app and HTTP server; we will attach both the WebSocket
 // server and the ApolloServer to this HTTP server.
