@@ -72,3 +72,34 @@ httpServer.listen(PORT, () => {
     `Server is now running on http://localhost:${PORT}${server.graphqlPath}`
   );
 });
+
+//REST config
+const middlewareSetup = (server) => {
+  server.use(express.json());
+  server.use(
+    express.urlencoded({
+      extended: true,
+    })
+  );
+  const corsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true,
+  };
+  server.use(cors(corsOptions));
+  cloudinaryConfig();
+  server.use(passport.initialize());
+  passportConfig(passport);
+};
+
+const mongoDbConection = async () => {
+  try {
+    await mongoose.connect(process.env.DB);
+    console.log("Connection to Mongo DB established");
+  } catch (error) {
+    console.log("error connection to Mongo DB", error);
+  }
+};
+
+(async () => {
+  mongoDbConection();
+})();
