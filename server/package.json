@@ -5,7 +5,7 @@
   "main": "src/server.ts",
   "types": "src/@types/",
   "scripts": {
-    "build": "rimraf ./build && tsc",
+    "build": "tsc",
     "postinstall": "npm run build",
     "start": "concurrently \"tsc\"  \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
     "dev": "concurrently \"tsc\" \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
