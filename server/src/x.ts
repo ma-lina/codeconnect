@@ -74,6 +74,9 @@ httpServer.listen(PORT, () => {
 });
 
 //REST config
+
+app.use("/users", usersRoute);
+
 const middlewareSetup = (server) => {
   server.use(express.json());
   server.use(
