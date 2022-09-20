@@ -1,3 +1,3 @@
-web: nodemon build/server.js. 
+web: node ./build/server.js. 
 
 //worker: npm start
