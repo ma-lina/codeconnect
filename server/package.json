@@ -11,7 +11,7 @@
     "lint": "ts-standard"
   },
   "engines": {
-    "node": "18.0.0"
+    "node": "v16.15.1"
   },
   "author": "Marta, Angelina",
   "license": "ISC",
