@@ -17,17 +17,17 @@ interface ApolloContext {
   token?: String;
 }
 
-const allowedDomains = ["FRONTEND_URL", "http://localhost:3000"]
+const allowedDomains = ["FRONTEND_URL", "http://localhost:3000"];
 
-const createOrigin = (origin,callback) => {
+const createOrigin = (origin, callback) => {
   if (!origin) return callback(null, true);
 
   if (allowedDomains.indexOf(origin) === -1) {
-      const msg = `This site ${origin} does not have an access. Only specific domains are allowed to access it.`;
-      return callback(new Error(msg), false);
+    const msg = `This site ${origin} does not have an access. Only specific domains are allowed to access it.`;
+    return callback(new Error(msg), false);
   }
   return callback(null, true);
-  };
+};
 
 const startApolloServer = async () => {
   const app = express();
@@ -62,7 +62,7 @@ const startApolloServer = async () => {
       } */
     )
   );
-  await new Promise<void>((resolve) => httpServer.listen({ port, '0.0.0.0' }, resolve));
+  await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
   console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
 };
 

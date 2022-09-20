@@ -5,6 +5,8 @@
   "main": "src/server.ts",
   "types": "src/@types/",
   "scripts": {
+    "build": "rimraf ./build && tsc",
+    "postinstall": "npm run build",
     "start": "concurrently \"tsc\"  \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
     "dev": "concurrently \"tsc\" \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
     "testdev": "concurrently \"tsc\"  \"nodemon ./build/server.js\"",
@@ -41,6 +43,7 @@
     "nodemon": "^2.0.19",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
+    "rimraf": "^3.0.2",
     "ts-node": "^10.9.1",
     "@types/express": "^4.17.13",
     "@types/node": "^18.0.6",
