@@ -5,7 +5,7 @@
   "main": "src/server.ts",
   "types": "src/@types/",
   "scripts": {
-    "start": "nodemon build/server.js",
+    "start": "node build/server.js",
     "dev": "concurrently \"tsc\" \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
     "testdev": "concurrently \"tsc\"  \"nodemon ./build/server.js\"",
     "lint": "ts-standard"
