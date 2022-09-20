@@ -7,8 +7,13 @@
   "scripts": {
     "start": "concurrently \"tsc\"  \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
     "dev": "concurrently \"tsc\" \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
-    "testdev": "concurrently \"tsc\"  \"nodemon ./build/server.js\""
+    "testdev": "concurrently \"tsc\"  \"nodemon ./build/server.js\"", 
+    "postinstall": "tsc",
+    "watch-node": "nodemon ./build/server.js",
+    "watch-ts": "tsc -w",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
+  "engines": { "node": "18.0.0" },
   "author": "Marta, Angelina",
   "license": "ISC",
   "dependencies": {
