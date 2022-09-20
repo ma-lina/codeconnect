@@ -92,7 +92,7 @@ export default function FilterDrawer(props: any) {
           >
             <FilterAltIcon color="inherit" />
             <Typography sx={{ p: 2, color: "inherit" }}>
-              {`Your search matches ${props?.refetch.data.mentoring.length} pins`}
+              {`Your search matches ${props?.filterQuery.data.mentoring.length} pins`}
             </Typography>
           </Box>
         </StyledBox>
@@ -104,7 +104,7 @@ export default function FilterDrawer(props: any) {
             overflow: "auto",
           }}
         >
-          <FilterForm refetch={props.refetch.refetch} />
+          <FilterForm refetch={props.filterQuery.refetch} />
         </StyledBox>
       </SwipeableDrawer>
     </Root>

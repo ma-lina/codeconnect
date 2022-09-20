@@ -1,4 +1,4 @@
-interface Query {
+interface QueryM {
   _id: any;
   creator: {
     _id: ObjectId;
@@ -20,10 +20,53 @@ interface Query {
   title: string;
 }
 
+interface QueryS {
+  _id: any;
+  creator: {
+    _id: ObjectId;
+    username: string;
+    firstName: string;
+    lastName: string;
+    image: string;
+  };
+  field: Array<String>;
+  location: string;
+  description: string;
+  date: string;
+  starred: any;
+  techKnowHow: Array<String>;
+  level: string;
+  availability: Array<String>;
+  timeslots: Array<String>;
+  offer: boolean;
+  title: string;
+  length: number;
+  title: string;
+}
+
+interface QueryC {
+  _id: any;
+  creator: {
+    _id: ObjectId;
+    username: string;
+    firstName: string;
+    lastName: string;
+    image: string;
+  };
+  field: Array<String>;
+  location: string;
+  description: string;
+  date: string;
+  starred: any;
+  frequency: Array<String>;
+  time: number;
+  title: string;
+}
+
 interface QueryData {
-  mentoring: Query[];
-  coworking: Query[];
-  shadowing: Query[];
+  mentoring: QueryM[];
+  coworking: QueryC[];
+  shadowing: QueryS[];
 }
 /* 
 namespace Mentoring {

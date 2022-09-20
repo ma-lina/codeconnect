@@ -27,7 +27,7 @@ import {
 export default function FilterForm(props: any) {
   const { operations, models } = usePinboardFilters();
   const [techKnowHow, setTechKnowHow] = useState([]);
-  const [availability, setAvailability] = useState([]);
+  const [availability, setAvailability] = useState<string[]>([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const [field, setField] = useState([]);
   const [level, setLevel] = useState([]);
@@ -66,19 +66,11 @@ export default function FilterForm(props: any) {
     // console.log("state", state);
   };
 
-  /*   const handleChange = (event: any) => {
+  const handleChange2 = (event: SelectChangeEvent<typeof availability>) => {
     const {
       target: { value },
     } = event;
-    setTechKnowHow(value);
-    operations.updateFilter("techKnowHow", value);
-  }; */
-
-  const handleChange2 = (event: any) => {
-    const {
-      target: { value },
-    } = event;
-    setAvailability(value);
+    setAvailability(typeof value === "string" ? value.split(",") : value);
     operations.updateFilter("availability", value);
   };
 
@@ -109,6 +101,23 @@ export default function FilterForm(props: any) {
   return (
     <>
       <div>
+        <Button
+          onClick={() =>
+            props.refetch({
+              input: {
+                location: models.filters.location,
+                level: models.filters.level,
+                offer: models.filters.offer,
+                availability: models.filters.availability,
+                timeslots: models.filters.timeslots,
+                field: models.filters.field,
+                techKnowHow: models.filters.techKnowHow,
+              },
+            })
+          }
+        >
+          Filter Pins
+        </Button>
         <Box>
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography>Mentee</Typography>
@@ -121,7 +130,7 @@ export default function FilterForm(props: any) {
             />
             <Typography>Mentor</Typography>
           </Stack>
-          <FormControl sx={{ m: 1, width: 300 }}>
+          <FormControl sx={{ m: 1, width: 300 }} size="small">
             <InputLabel id="techknowhow-label">Techknowhow</InputLabel>
             <Select
               labelId="techknowhow-label"
@@ -154,7 +163,7 @@ export default function FilterForm(props: any) {
               ))}
             </Select>
           </FormControl>
-          <FormControl sx={{ m: 1, width: 300 }}>
+          <FormControl sx={{ m: 1, width: 300 }} size="small">
             <InputLabel id="availability-label">Availability</InputLabel>
             <Select
               labelId="availability-label"
@@ -185,7 +194,7 @@ export default function FilterForm(props: any) {
               ))}
             </Select>
           </FormControl>
-          <FormControl sx={{ m: 1, width: 300 }}>
+          <FormControl sx={{ m: 1, width: 300 }} size="small">
             <InputLabel id="timeslots-label">Timeslots</InputLabel>
             <Select
               labelId="timeslots-label"
@@ -216,7 +225,7 @@ export default function FilterForm(props: any) {
               )}
             </Select>
           </FormControl>
-          <FormControl sx={{ m: 1, width: 300 }}>
+          <FormControl sx={{ m: 1, width: 300 }} size="small">
             <InputLabel id="fields-label">Field</InputLabel>
             <Select
               labelId="fields-label"
@@ -245,7 +254,7 @@ export default function FilterForm(props: any) {
               ))}
             </Select>
           </FormControl>
-          <FormControl sx={{ m: 1, width: 300 }}>
+          <FormControl sx={{ m: 1, width: 300 }} size="small">
             <InputLabel id="level-label">Level</InputLabel>
             <Select
               labelId="level-label"
@@ -275,31 +284,15 @@ export default function FilterForm(props: any) {
             </Select>
           </FormControl>
           <TextField
+            size="small"
             id="outlined-name"
-            label="Location"
+            label="City"
             value={models.filters.location}
             onChange={(e) =>
               operations.updateFilter("location", e.target.value)
             }
           />
         </Box>
-        <Button
-          onClick={() =>
-            props.refetch({
-              input: {
-                location: models.filters.location,
-                level: models.filters.level,
-                offer: models.filters.offer,
-                availability: models.filters.availability,
-                timeslots: models.filters.timeslots,
-                field: models.filters.field,
-                techKnowHow: models.filters.techKnowHow,
-              },
-            })
-          }
-        >
-          Filter Pins
-        </Button>
       </div>
     </>
   );

@@ -17,6 +17,18 @@ interface ApolloContext {
   token?: String;
 }
 
+const allowedDomains = ["FRONTEND_URL", "http://localhost:3000"]
+
+const createOrigin = (origin,callback) => {
+  if (!origin) return callback(null, true);
+
+  if (allowedDomains.indexOf(origin) === -1) {
+      const msg = `This site ${origin} does not have an access. Only specific domains are allowed to access it.`;
+      return callback(new Error(msg), false);
+  }
+  return callback(null, true);
+  };
+
 const startApolloServer = async () => {
   const app = express();
   dotenv.config();
@@ -31,11 +43,12 @@ const startApolloServer = async () => {
   await server.start();
   //For REST routes middleware setup:
   middlewareSetup(app);
+
   app.use("/users", usersRoute);
   app.use(
     "/graphql",
     cors<cors.CorsRequest>({
-      origin: "http://localhost:3000",
+      origin: createOrigin,
       credentials: true,
     }),
     json(),
@@ -61,7 +74,7 @@ const middlewareSetup = (server) => {
     })
   );
   const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: createOrigin,
     credentials: true,
   };
   server.use(cors(corsOptions));
