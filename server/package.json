@@ -6,7 +6,6 @@
   "types": "src/@types/",
   "scripts": {
     "start": "node build/server.js",
-    "postinstall":"tsc",
     "dev": "concurrently \"tsc\" \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
     "testdev": "concurrently \"tsc\"  \"nodemon ./build/server.js\"",
     "lint": "ts-standard"
