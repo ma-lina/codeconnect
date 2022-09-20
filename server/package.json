@@ -5,7 +5,6 @@
   "main": "src/server.ts",
   "types": "src/@types/",
   "scripts": {
-    "build": "webpack",
     "start": "concurrently \"tsc\"  \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
     "dev": "concurrently \"tsc\" \"nodemon ./build/server.js\" \"cd ../client && npm start\"",
     "testdev": "concurrently \"tsc\"  \"nodemon ./build/server.js\"",
